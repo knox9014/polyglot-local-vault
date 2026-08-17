@@ -139,7 +139,16 @@ filename exact
 `17`의 "링크 복구 코퍼스" 절에 실제로 적힌 13개 저장소(django, scikit-learn, flask, requests, hugo, cobra, gin, vue core, prettier, date-fns, tokio, clap, serde)를 그대로 쓴다. 저장소가 계속 갱신되므로 **각 저장소의 커밋 SHA를 고정**한다.
 
 - SHA 목록은 `research/bench/PINNED_COMMITS.txt`에 저장소별 1줄(`<owner>/<repo> <sha>`)로 기록한다.
-- **SHA 값은 아직 없다.** Phase 0에서 코퍼스를 다시 받으며 채운다. 그 전까지 값을 지어내지 않는다.
-- CI 벤치마크는 이 파일의 SHA로 얕은 체크아웃(shallow clone at SHA)해 재현성을 보장한다.
+- **SHA는 2026-08-17에 채웠다** (`git ls-remote`로 각 기본 브랜치 HEAD를 받았다).
+- CI 벤치마크는 **전체 히스토리를 클론한 뒤 이 SHA로 체크아웃**한다. 얕은 클론은 쓸 수 없다 — 링크 복구 측정이 git rename 체인을 따라가므로 히스토리가 없으면 측정 자체가 성립하지 않는다(→ `research/bench/README.md`).
+
+```bash
+git clone https://github.com/<owner>/<repo>.git
+git -C <repo> checkout <sha>
+```
+
+**이전 판은 "얕은 체크아웃(shallow clone at SHA)"이라고 적었다.** 재현성만 보고 쓴 문장인데, 그렇게 하면 rename 체인이 없어 복구율 게이트(93% / 78%)를 측정할 수 없다. 재현성과 측정 가능성이 충돌하면 측정 가능성이 먼저다.
+
+**고정된 SHA는 `17`의 수치를 만든 커밋이 아니다.** 측정은 2026-08-16에 수행됐고 그때의 HEAD를 기록해 두지 않았다(flask만 우연히 같다). 게이트 여유가 2.7%p / 2.0%p로 얇으므로 **Phase 0에서 이 SHA 기준으로 기준선을 다시 재고, 여유가 사라지면 게이트 값을 조정한다.** 추정하지 말고 다시 잰다.
 
 측정 코드는 `vault-bench` 패키지에 있다. (→ `17_MEASUREMENT_BASIS.md`)
