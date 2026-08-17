@@ -15,8 +15,9 @@ Polyglot_Local_Vault_Design_v0.2/
 ├── 13_FUTURE_EXTENSIONS.md               장기 확장, 유예 항목과 재검토 조건
 ├── 14_LOCKED_DECISIONS.md                확정 의사결정 + 측정 근거
 ├── 15_REVIEW_HISTORY.md                  v0.1 20회 검토 + v0.2 실측 개정 이력
-├── 16_SUGGESTION_ENGINE.md               [신규] 콜드스타트 해법, 규칙 R1~R5
+├── 16_SUGGESTION_ENGINE.md               [신규] 콜드스타트 해법, 규칙 R1~R6
 ├── 17_MEASUREMENT_BASIS.md               [신규] 확정 수치의 출처, 조건, 한계
+├── 18_DATA_FORMATS.md                    [신규] vault:// 주소, .vault/ 형식, rel 어휘
 ├── FILE_TREE.txt                         이 파일
 │
 └── measurement/                          v0.2의 근거가 된 실측 자료

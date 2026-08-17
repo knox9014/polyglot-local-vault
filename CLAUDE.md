@@ -11,14 +11,15 @@ AI가 핵심 기능을 수행하는 앱이 **아니다.** 핵심 정리·검색�
 ## 현재 상태
 
 ```
-설계 문서   v0.2 완료 (docs/design/, 18개 문서, 2,928줄)
-실측        10건 완료 (research/, 실제 저장소 18개 / 커밋 13만 / 파일 23만)
-문서 검토   완료 — blocker 7, major 7, minor 3 미해결 (2026-08-17 재검증, B7 추가)
+설계 문서   v0.2 (docs/design/, 19개 문서, 3,619줄)
+실측        10건 + R6 측정 (research/, 실제 저장소 18개 / 커밋 13만 / 파일 23만)
+문서 검토   blocker 7, major 7, minor 3 (2026-08-17 재검증, B7 추가·해소)
 R6 반영     완료 (2026-08-17, `17`/`16`/`06`/`01` — Sphinx role 추출 규칙 신설, 정본은 `17`)
+18 작성     완료 (2026-08-17, 557줄 — 주소·형식·rel 정의). **단 형제 문서 반영이 남았다**
 구현 코드   0줄. 벤치마크 코드만 있음 (research/bench/)
 ```
 
-**아직 한 줄도 구현하지 않았다.** 다음 작업은 구현이 아니라 **`18_DATA_FORMATS.md`** 작성이다 (아래 참조).
+**아직 한 줄도 구현하지 않았다.** 다음 작업은 **`18` 의 결정을 형제 문서에 반영하는 것**이다 (아래 참조).
 
 ## 저장소 구조
 
@@ -37,33 +38,38 @@ TODO.md               미해결 항목 체크리스트
 
 ## 지금 해야 할 일 (순서 고정)
 
-### 1. `docs/design/18_DATA_FORMATS.md` 작성 — Phase 0 착수 전 필수
+### 1. `18` 의 결정을 형제 문서에 반영 — 최우선
 
-v0.2 검토에서 나온 **blocker 6건 중 5건이 여기로 수렴한다.** `.vault/` 는 git 커밋 대상이고 사용자가 실제로 건 링크가 들어가는 곳이라, 나중에 바꾸면 사용자 데이터를 마이그레이션해야 한다.
-
-담아야 할 것:
+`18_DATA_FORMATS.md` 는 작성됐다. 그런데 **정의됐다고 blocker 가 닫힌 것이 아니다.** 형제 문서에 옛 서술이 남아 있으면 문서끼리 모순난다. 이 반영이 끝나야 B1·B2·B3·B4·B6·M2 를 체크할 수 있다.
 
 ```
-vault:// URI 문법 (ABNF 수준)
-  - 경로 정규화 (Windows 대소문자/260자, 유니코드 NFC/NFD)
-  - fragment 타입 접두사 체계 — 네임스페이스 충돌 제거
-    현재 #/(json pointer) #col: #row: #cell: #Sym.Sub(qualname) #slug(heading) 가 뒤섞임
-  - heading slug 규칙 + 중복 heading 처리 + 한글/유니코드
-  - 이스케이핑 (파일명의 #, 심볼명의 . — Rust impl, TS 네임스페이스)
-
-.vault/links.jsonl      레코드 ID, tombstone, 재지정 이력, 마지막 알려진 주소
-.vault/aliases.jsonl    경로 alias / 심볼 alias / 출처(watcher|git|user) / 신뢰도
-.vault/decisions.jsonl  승인·거절 + 재생성된 후보와의 매칭 키(내용 해시)
-.vault/sketches.jsonl   링크 생성 시점의 심볼 스케치  ← S4 구현에 필수 (아래 설명)
-.vault/pending.jsonl    AI가 MCP로 밀어넣은 미승인 제안 (재생성 불가이므로 .vault-ai/ 아님)
-
-rel 어휘 표준           정방향 목록 + 역관계 표현 방식(저장 vs direction="in")
-주소 타입별 해석 계단    heading / json pointer / row / cell / column
+04   주소 예시 #h: 통일 / 타입별 해석 계단 추가 / alias 소스에 user / 스케치 위치
+03   저장소 트리에 sketches.jsonl·pending.jsonl / links.jsonl 예시를 새 스키마로
+02   58행 defines → defined_in
+01   08   역관계 이름 예시 → direction="in" 표기
+07   16   08   AI 제안 저장 위치 (.vault-ai/suggestions/ → .vault/pending.jsonl)
+12   rel 표준화를 Phase 4로 미룬 서술 (18에서 이미 확정됨)
 ```
 
-**S4 문제를 반드시 이해하고 시작할 것**: 심볼 유사도 매칭(S4)은 "사라진 옛 심볼의 본문"과 "현재 심볼"을 비교해야 한다. 그런데 v0.2는 스케치를 `.vault-ai/similarity/` 에 두고 "인덱싱 시점에 계산"한다고 썼다. 옛 심볼은 파일에서 이미 사라졌으므로 **재생성이 불가능하다.** 벤치마크에서는 git으로 과거 커밋 본문을 꺼낼 수 있었지만 제품에서는 그 보장이 없다(git 없는 vault도 허용). 링크 생성 시점 스케치를 `.vault/` 에 영구 저장해야 한다.
+상세 목록은 `TODO.md` 의 "완료 후 다음" 2번.
 
-**갱신 정책도 같이 정할 것** (B1-b): 생성 시점 스케치만 고정하면 정상 진화한 심볼이 오랜 시간 뒤 rename될 때 Jaccard가 0.40 아래로 떨어져 S4가 조용히 죽는다. 임계값 0.40은 "직전 커밋 vs 현재"로 스윕한 값이다. S1/S2 해석 성공 시마다 갱신하되, 이 구간은 실측이 없으므로 새 파라미터를 만들지 말 것.
+### 1-a. `18` 이 무엇을 정했나 (참고)
+
+```
+§1~2  vault:// 문법 — 심볼만 접두사 없음, 소제목은 #h:, slug 7단계 규칙,
+      경로 정규화(NFC·대소문자 보존), 인코딩은 # % / 제어문자만
+§3    타입별 해석 계단 — 파일 3단(F1a 추가) / 심볼 5단 / heading 3단 /
+      JSON pointer 3단 / 열 2단 / 행·셀 2단
+§4    .vault/ 파일 5종 — links(ULID·op·hint) / aliases(source=user 추가) /
+      decisions(내용 해시 키) / sketches(created·refreshed) / pending
+      + origin 에 extracted 신설
+§5    rel 어휘 — 정방향만 저장, 역관계는 direction="in"
+§6    Sphinx role → rel 매핑, 짧은 이름 참조 처리(모호하면 승인 경로로)
+```
+
+**되돌리기 비싼 결정이 여기 다 들어 있다.** 뒤집기 전에 `18` §8("미해결·측정하지 않은 것")을 먼저 읽을 것.
+
+**S4 문제의 해법이 `18` §4.4 다** — 기억해 둘 것. 심볼 유사도 매칭(S4)은 "사라진 옛 심볼의 본문"과 현재 심볼을 비교하는데, 옛 심볼은 파일에서 이미 사라졌으므로 **재스캔으로 재생성할 수 없다.** 그래서 스케치를 `.vault/sketches.jsonl` 에 영구 저장하고, S1/S2 해석 성공 시마다 갱신한다. 스케치를 `.vault-ai/` 로 되돌리자는 제안이 나오면 이 이유로 거절할 것.
 
 ### 2. CI 목표 재정의
 

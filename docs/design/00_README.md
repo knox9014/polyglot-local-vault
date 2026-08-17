@@ -79,6 +79,7 @@ v0.1은 설계 검토 20회를 거쳐 방향을 정했으나, 되돌리기 비�
 | `15_REVIEW_HISTORY.md` | v0.1 20회 검토 + v0.2 실측 개정 |
 | `16_SUGGESTION_ENGINE.md` | **신규** — 콜드스타트 해법 |
 | `17_MEASUREMENT_BASIS.md` | **신규** — 확정 수치의 출처와 한계 |
+| `18_DATA_FORMATS.md` | **신규** — `vault://` 주소, `.vault/` 파일 형식, `rel` 어휘 |
 
 ## 확정 수치 요약
 
