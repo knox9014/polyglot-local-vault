@@ -22,7 +22,7 @@ File Tree        Semantic Web
                            ▼
 config.json ─────── TeacherRouter ─────── router.py
                            │
-                       tested_by
+                   tests (direction="in")
                            │
                            ▼
                   experiment.ipynb
@@ -39,9 +39,11 @@ v0.2는 **출처(origin)** 와 **신뢰도(confidence)** 를 별개 축으로 �
 | origin | 설명 | 저장 위치 |
 |---|---|---|
 | `manual` | 사용자가 직접 생성 | `.vault/links.jsonl` |
+| `extracted` | 문서에 사람이 명시적으로 쓴 참조를 추출 (R6/R2) | `.vault-ai/` (재생성 가능) |
 | `parser` | 정적 분석 | `.vault-ai/` (재생성 가능) |
 | `git` | 로컬 git 히스토리 | `.vault-ai/` (재생성 가능) |
 | `suggested` | 제안 엔진 후보, 미승인 | `.vault-ai/suggestions/` |
+| `ai` | MCP를 통해 AI가 직접 기록 (즉시 반영 모드) | `.vault/links.jsonl` |
 | `imported` | 외부 도구에서 가져옴 | `.vault/links.jsonl` |
 
 승인된 제안은 `origin=manual` 로 승격되어 `.vault/links.jsonl` 로 이동한다. 승인·거절 이력은 `.vault/decisions.jsonl` 에 남는다.
@@ -95,12 +97,12 @@ Git 히스토리 전체를 Graph에 넣으면 노드가 폭증한다. 다음만 
 
 AI는 Core Graph를 자동 변경하지 않는다. MCP를 통해 관계를 제안할 수는 있으나, 실제 저장은 사용자의 명시적 승인 후에만 수행된다.
 
-제안 엔진(결정론적)과 AI 제안(MCP 경유)은 **같은 승인 파이프라인을 공유**한다. 사용자 입장에서 흐름이 하나이며, 시스템 입장에서 승인 전에는 둘 다 `.vault-ai/suggestions/` 에만 존재한다.
+제안 엔진(결정론적)과 AI 제안(MCP 경유)은 **같은 승인 UX를 공유**한다. 사용자 입장에서 흐름이 하나다. 다만 저장 위치는 다르다 — 결정론적 제안은 재스캔으로 재생성되므로 `.vault-ai/`, AI 제안은 재생성 불가하므로 `.vault/` 다. (→ `18_DATA_FORMATS.md` §4.5)
 
 ```text
-결정론적 제안 ─┐
-              ├→ .vault-ai/suggestions/ → 사용자 승인 → .vault/links.jsonl
-AI 제안(MCP) ─┘                                          origin=manual
+결정론적 제안(R1/R3/R4) ─→ .vault-ai/suggestions/ → 사용자 승인 → .vault/links.jsonl (origin=manual)
+AI 제안(MCP, 승인 모드)  ─→ .vault/pending.jsonl   → 사용자 승인 → .vault/links.jsonl (origin=manual)
+AI 제안(MCP, 즉시 반영)  ─→ .vault/links.jsonl 직접 기록                            (origin=ai)
 ```
 
 ## Graph UI 원칙
@@ -138,7 +140,7 @@ AI 제안(MCP) ─┘                                          origin=manual
 주소는 조회 시점에 계단식으로 해석된다. (→ `04_VAULT_AND_DATA_MODEL.md`)
 
 ```text
-파일 링크   L1 경로 → L2 git alias → BROKEN            자동 복구 95.7%
+파일 링크   F1 경로 → F2 git alias → BROKEN            자동 복구 95.7%
 심볼 링크   S1 → S2 → S3 이름 유일 → S4 유사도 → BROKEN  자동 80.0%, +1클릭 93.7%
 ```
 

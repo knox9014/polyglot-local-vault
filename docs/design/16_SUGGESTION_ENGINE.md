@@ -247,14 +247,14 @@ R2~R5까지 합치면 가장 작은 저장소(flask, 236 파일)도 438건이 �
 
 ## AI 제안과의 관계
 
-MCP를 통한 AI 제안도 **같은 파이프라인**을 쓴다.
+MCP를 통한 AI 제안도 **같은 승인 UX**를 쓴다. 그러나 저장 위치는 결정론적 제안과 다르다.
 
 ```text
-결정론적 제안 ─┐
-              ├→ .vault-ai/suggestions/ → 승인 → .vault/links.jsonl
-AI 제안(MCP) ─┘
+결정론적 제안(R1/R3/R4) ─→ .vault-ai/suggestions/ → 승인 → .vault/links.jsonl (origin=manual)
+AI 제안(MCP, 승인 모드)  ─→ .vault/pending.jsonl   → 승인 → .vault/links.jsonl (origin=manual)
+AI 제안(MCP, 즉시 반영)  ─→ .vault/links.jsonl 직접 기록                     (origin=ai)
 ```
 
-사용자 입장에서 흐름이 하나다. 시스템 입장에서 승인 전에는 둘 다 캐시에만 존재하므로 `.vault-ai/` 를 지워도 Core Graph가 오염되지 않는다.
+사용자 입장에서 흐름이 하나다. 그러나 시스템 입장에서는 다르다 — 결정론적 제안은 문서/코드를 재파싱하면 재생성되므로 `.vault-ai/` 에 둬도 되지만, AI 제안은 재생성 불가한 판단이므로 `.vault/` 에 둔다. `.vault-ai/` 를 지우면 결정론적 제안 후보만 사라지고(재스캔으로 복구), AI 제안은 영향받지 않는다. (→ `18_DATA_FORMATS.md` §4.5)
 
 각 제안에는 **불변 ID**를 발급한다. AI가 제안하고 사용자가 승인하는 사이에 다른 제안이 끼어들어 무엇을 승인했는지 불명확해지는 것을 막는다. (→ `08_MCP_AND_AI.md`)

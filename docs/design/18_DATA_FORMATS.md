@@ -217,9 +217,9 @@ C2   BROKEN — 그 파일의 열 목록 제시
 행 번호와 셀 인덱스는 **삽입·삭제로 밀린다.** 안정적 식별자가 없으므로 `anchor_hint` 에 기댄다.
 
 ```text
-R1   같은 번호의 행/셀이 있고 anchor_hint 와 일치     → HIT
-R2   같은 파일에서 anchor_hint 로 재탐색             → HIT (밀림 흡수)
-R3   BROKEN
+I1   같은 번호의 행/셀이 있고 anchor_hint 와 일치     → HIT
+I2   같은 파일에서 anchor_hint 로 재탐색             → HIT (밀림 흡수)
+I3   BROKEN
 ```
 
 `anchor_hint` 는 링크 생성 시점에 기록한다(→ 4.1).
@@ -357,6 +357,15 @@ refreshed  S1 또는 S2 로 해석에 성공할 때마다 갱신
 
 같은 `addr` 의 마지막 레코드가 유효하다. 이전 레코드는 이력으로 남는다.
 
+**`.vault/sketches.jsonl` 과 `.vault-ai/` 의 유사도 인덱스는 다른 것이다.**
+
+```text
+.vault/sketches.jsonl         링크가 걸린 심볼의 스케치 스냅샷. 재생성 불가
+.vault-ai/ 의 유사도 인덱스     현재 살아있는 전체 심볼. 재스캔으로 재생성됨
+```
+
+S4 는 앞의 것을 질의(사라진 옛 심볼)로, 뒤의 것을 후보 집합(지금 파일에 있는 심볼)으로 쓴다. (→ `04_VAULT_AND_DATA_MODEL.md` "심볼 유사도 인덱스")
+
 ### 4.5 `pending.jsonl`
 
 MCP 를 통해 외부 AI 가 밀어넣은 미승인 제안. **M2 해소.**
@@ -421,6 +430,8 @@ suggested                  → .vault-ai/suggestions/
 | `configured_by` | `configures` | in |
 | `tested_by` | `tests` | in |
 | `implemented_by` | `implements` | in |
+
+조회 응답에서 방향별 개수를 보여줄 때는(`neighbors_hint` 등) `{"out": {rel: count}, "in": {rel: count}}` 형태로 방향을 키로 중첩한다. 안쪽 키는 항상 저장된 정방향 rel 이름이다. rel 이름에 `(in)` 처럼 괄호를 붙이지 않는다 — JSON 키에 괄호가 들어가면 파싱 부담이 생긴다. (→ `08_MCP_AND_AI.md`)
 
 ### 5.2 어휘 목록
 

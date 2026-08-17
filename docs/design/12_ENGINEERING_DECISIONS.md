@@ -64,9 +64,10 @@ filename exact
 
 - `search` 의 `filters` 스키마
 - `read` 의 `outline` 모드가 반환하는 구조의 상세
-- `neighbors` 의 `rel` 어휘 표준화
 - 응답 크기 상한 및 페이지네이션
 - 에러 형식
+
+(`rel` 어휘 자체는 `18_DATA_FORMATS.md` §5 에서 이미 확정됐다 — 미결 대상이 아니다.)
 
 **이것도 벤치마크로 정할 수 없다.** 실제 모델 하네스로 호출 효율을 재야 한다.
 

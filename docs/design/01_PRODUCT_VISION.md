@@ -57,16 +57,18 @@ architecture.md
       │ describes
       ▼
 TeacherRouter
-      │ implemented_by
+      │ implements (direction="in")
       ▼
 router.py
-      │ configured_by
+      │ configures (direction="in")
       ▼
 config.json
-      │ tested_by
+      │ tests (direction="in")
       ▼
 experiment.ipynb
 ```
+
+역관계는 별도 이름으로 저장하지 않는다. 저장은 항상 정방향이고, 조회 시 `direction="in"` 으로 반대 방향을 표현한다. (→ `18_DATA_FORMATS.md` §5.1)
 
 ### 4. 관계가 시간을 견딤
 

@@ -55,7 +55,7 @@ Jupyter  → notebook parser
 자동 생성이 허용되는 것은 프로그램이 결정론적으로 확정할 수 있는 관계다.
 
 ```text
-defines / imports / contains / parent_of / json_pointer
+defined_in / imports / contains / parent_of / json_pointer
 ```
 
 **그리고 그 관계에는 신뢰도를 붙인다.** 확실한 것(`defined_in`)과 불확실한 것(`calls`)을 같은 라벨로 저장하면 신뢰 수준 판단이 무의미해진다.

@@ -12,7 +12,7 @@ Vault는 사용자의 일반 로컬 폴더다. 특수한 데이터베이스 포�
 | 재생성 | 불가 | 재스캔으로 완전 복구 |
 | git | 커밋 대상 | ignore 대상 |
 | 형식 | JSONL / TOML (사람이 읽음) | 바이너리 인덱스 |
-| 내용 | manual link, alias, 승인 이력, 설정 | 검색 인덱스, 파서 캐시, 유사도 스케치, 미승인 제안 |
+| 내용 | manual link, alias, 승인 이력, 설정, 링크된 심볼의 유사도 스케치 | 검색 인덱스, 파서 캐시, 현재 심볼의 유사도 인덱스, 미승인 제안 |
 
 ## 객체의 두 가지 지위
 
@@ -55,7 +55,7 @@ vault://src/router.py
 vault://src/router.py#TeacherRouter
 vault://src/router.py#TeacherRouter.select_teacher
 vault://config/model.json#/router/threshold
-vault://docs/architecture.md#teacher-router
+vault://docs/architecture.md#h:teacher-router
 vault://data/train.csv#col:label
 vault://data/train.csv#row:1042
 vault://experiments/run.ipynb#cell:12
@@ -93,9 +93,11 @@ confidence: certain
 
 ```text
 manual      사용자가 직접 생성
+extracted   문서에 사람이 명시적으로 쓴 참조를 추출 (R6/R2)
 parser      정적 분석으로 도출
 git         로컬 git 히스토리에서 도출
 suggested   제안 엔진이 만든 후보 (미승인 상태. .vault-ai/ 에만 존재)
+ai          MCP를 통해 AI가 직접 기록 (즉시 반영 모드)
 imported    외부 도구에서 가져옴
 ```
 
@@ -125,17 +127,18 @@ heuristic   co_change, 승인 전 제안
 ### 파일 주소 — 3단
 
 ```text
-L1  경로 그대로 존재                → HIT (비용 0)
-L2  aliases.jsonl (git rename)      → HIT
-L3  BROKEN — 링크를 보존하고 UI에 표시
+F1   경로 그대로 존재                       → HIT (비용 0)
+F1a    정확 일치 실패 시 대소문자 무시 재시도  → HIT (플랫폼 무관하게 시도, → `18_DATA_FORMATS.md` §3.1 F1a)
+F2   aliases.jsonl (git rename)           → HIT
+F3   BROKEN — 링크를 보존하고 UI에 표시
 ```
 
 **측정 근거** (실제 저장소 4개, 약 10년 히스토리, 대상이 생존한 링크 4,961건 기준):
 
 | 단계 | 비율 |
 |---|---:|
-| L1 경로 유지 | 88.2% |
-| L2 git alias | 7.5% |
+| F1 경로 유지 | 88.2% |
+| F2 git alias | 7.5% |
 | **자동 복구 계** | **95.7%** |
 | 단서 없음 | 3.7% |
 
@@ -168,6 +171,43 @@ S3+S4가 13.7%p를 채운다. **파일 주소에서는 뺐지만 심볼 주소�
 
 언어별 편차도 측정했다. 자동 복구 80.2~94.5%, +1클릭 최종 91.6~97.5%. Python이 자동 복구 최하위이며 S3+S4 의존도가 가장 높다(13.5%p). TypeScript는 3.0%p만 의존한다. **최종 수치는 언어를 가리지 않고 수렴한다.**
 
+### Heading 주소 — 3단
+
+```text
+H1   같은 파일에 같은 slug                 → HIT
+H2   같은 파일에서 anchor_hint 텍스트 일치   → HIT (번호 밀림·오타 수정 흡수)
+H3   BROKEN — 그 파일의 소제목 목록 제시
+```
+
+유사도 계단은 두지 않는다. 심볼의 임계값 0.40은 심볼 본문으로 스윕한 값이지 소제목 텍스트가 아니다. (→ `18_DATA_FORMATS.md` §3.3)
+
+### JSON Pointer 주소 — 3단
+
+```text
+J1   포인터가 그대로 존재       → HIT
+J2   파일 alias를 따라간 뒤 존재 → HIT
+J3   BROKEN — 마지막 세그먼트 이름이 문서 안에서 유일하면 후보 제시
+```
+
+### 열 주소 — 2단
+
+```text
+C1   같은 이름의 열이 존재  → HIT
+C2   BROKEN — 그 파일의 열 목록 제시
+```
+
+### 행 · 노트북 셀 주소 — 2단
+
+행 번호와 셀 인덱스는 삽입·삭제로 밀린다. `anchor_hint`(행: 첫 열 값 + 짧은 해시, 셀: 소스 짧은 해시)로 흡수한다.
+
+```text
+I1   같은 번호의 행/셀이 있고 anchor_hint와 일치  → HIT
+I2   같은 파일에서 anchor_hint로 재탐색          → HIT (밀림 흡수)
+I3   BROKEN
+```
+
+이 네 계단의 스키마·근거 전문은 `18_DATA_FORMATS.md` §3.3~3.6 참조.
+
 ### BROKEN 처리 원칙
 
 깨진 링크를 조용히 삭제하지 않는다. 사용자가 고칠 수 있는 정보를 시스템이 버려서는 안 된다.
@@ -176,10 +216,11 @@ S3+S4가 13.7%p를 채운다. **파일 주소에서는 뺐지만 심볼 주소�
 
 ## alias 테이블
 
-`aliases.jsonl` 은 두 소스에서 자동 축적된다.
+`aliases.jsonl` 은 세 소스에서 축적된다.
 
 1. **Watcher rename 이벤트** — 신뢰도는 높지만 항상 도착하지 않는다
 2. **Git rename detection** (`--diff-filter=R -M`) — 유사도 기반 추적. 실질적 주력
+3. **사용자 확정 (`source=user`)** — S3/S4 후보를 사용자가 1클릭으로 확정한 결과. 이 소스가 없으면 같은 후보를 매번 다시 물어보게 된다. (→ `18_DATA_FORMATS.md` §4.2)
 
 체인은 압축해서 저장한다. `a → b → c` 는 `a → c` 로.
 

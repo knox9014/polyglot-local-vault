@@ -73,7 +73,7 @@ confidence  certain / probable / heuristic
 - **계단의 깊이는 주소 종류마다 다르다.**
 
 ```text
-파일   L1 경로 → L2 git alias → BROKEN                      (3단)
+파일   F1 경로 → F2 git alias → BROKEN                      (3단)
 심볼   S1 → S2 → S3 이름 유일 → S4 본문 유사도 → BROKEN      (5단)
 ```
 
@@ -127,7 +127,7 @@ confidence  certain / probable / heuristic
 ## Suggestion Engine
 
 - **결정론적 규칙으로 관계 후보를 생성한다.** AI를 쓰지 않으므로 "AI 자동 수정 금지" 원칙과 충돌하지 않는다.
-- 후보는 `.vault-ai/suggestions/` 에만 저장되며 승인 후 `.vault/links.jsonl` 로 이동한다.
+- 승인이 필요한 후보(R1·R3·R4)는 `.vault-ai/suggestions/` 에 저장되며 승인 후 `.vault/links.jsonl` 로 이동한다. R2·R6 는 문서에 명시적으로 쓰인 참조를 추출하는 것이므로 승인 없이 반영한다. MCP 경유 AI 제안은 재생성 불가라 `.vault/pending.jsonl` 로 간다.
 - **필터링하지 않고 랭킹한다.**
 
 > **근거**: 자동 정밀도 판정을 지역성과 산문 빈도 두 방식으로 시도했고 둘 다 실패했다. 지역성은 `docs/`와 `src/`가 분리된 표준 레이아웃에서 0.0%가 나왔고(정답이 교차 관계), 산문 빈도는 `ModelAdmin`(250회)과 `LoadBalancerSourceRanges`(8회) 같은 정답을 제거했다(좋은 문서는 API 이름을 산문에서도 반복한다).

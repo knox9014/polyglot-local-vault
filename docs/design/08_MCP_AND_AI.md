@@ -62,11 +62,11 @@ vault.link(action="propose"|"remove", from, to, rel, suggestion_id?)
   "range": {"start": 42, "end": 118},
   "preview": "class TeacherRouter:\n    \"\"\"라우팅 정책...\"\"\"",
   "confidence": "certain",
-  "neighbors_hint": {"imports": 3, "described_by": 1, "tested_by": 1}
+  "neighbors_hint": {"out": {"imports": 3}, "in": {"describes": 1, "tests": 1}}
 }
 ```
 
-`neighbors_hint` 는 **다음 호출의 가치를 미리 알려주는 필드**다. AI가 무의미한 탐색을 반복하지 않고 필요한 곳으로 바로 간다.
+`neighbors_hint` 는 **다음 호출의 가치를 미리 알려주는 필드**다. AI가 무의미한 탐색을 반복하지 않고 필요한 곳으로 바로 간다. `out`/`in` 으로 방향별로 중첩하고, 안쪽 키는 항상 저장된 정방향 rel 이름이다 — `vault.neighbors(uri, rel, direction)` 시그니처와 1:1 대응하며 실제 저장은 정방향뿐이다. (→ `18_DATA_FORMATS.md` §5.1)
 
 ## 사용 예
 
@@ -77,9 +77,9 @@ vault.link(action="propose"|"remove", from, to, rel, suggestion_id?)
 ```text
 1. vault.search("TeacherRouter", kind="symbol")
    → uri: vault://src/router.py#TeacherRouter
-     neighbors_hint: { configured_by: 1, described_by: 1 }
+     neighbors_hint: { "in": {"configures": 1, "describes": 1} }
 
-2. vault.neighbors("vault://src/router.py#TeacherRouter", rel=["configured_by"])
+2. vault.neighbors("vault://src/router.py#TeacherRouter", rel=["configures"], direction="in")
    → uri: vault://config/model.json#/router
 ```
 
@@ -90,15 +90,22 @@ vault.link(action="propose"|"remove", from, to, rel, suggestion_id?)
 AI가 관계를 만들고 싶다면:
 
 ```text
+승인 모드(기본)
 1. AI가 vault.link(action="propose", ...) 호출
-2. 서버가 불변 suggestion_id 발급, .vault-ai/suggestions/ 에 저장
+2. 서버가 불변 id 발급, .vault/pending.jsonl 에 저장
 3. 사용자가 UI에서 승인
 4. .vault/links.jsonl 에 origin=manual 로 기록
+
+즉시 반영 모드 (사용자가 명시적으로 켠 경우)
+1. AI가 vault.link(action="propose", ...) 호출
+2. .vault/links.jsonl 에 origin=ai 로 직접 기록
 ```
 
-**불변 ID가 필수다.** v0.1의 "제안 → 승인 → write" 흐름에는 제안과 승인 사이에 시간 차가 있는데, 그 사이 AI가 다른 제안을 밀어 넣으면 사용자가 무엇을 승인했는지 불명확해진다. 승인은 특정 `suggestion_id` 에 대해서만 수행된다.
+`.vault-ai/` 가 아니라 `.vault/` 인 이유: AI 제안은 결정론적 파서와 달리 재스캔으로 재생성되지 않는다. `.vault-ai/` 삭제는 "재인덱싱으로 완전 복구"가 정의인데, AI 제안이 거기 있으면 그 정의가 깨진다. (→ `18_DATA_FORMATS.md` §4.5)
 
-AI 제안은 결정론적 제안 엔진과 **같은 파이프라인**을 쓴다. 사용자 입장에서 흐름이 하나다. (→ `16_SUGGESTION_ENGINE.md`)
+**불변 ID가 필수다.** v0.1의 "제안 → 승인 → write" 흐름에는 제안과 승인 사이에 시간 차가 있는데, 그 사이 AI가 다른 제안을 밀어 넣으면 사용자가 무엇을 승인했는지 불명확해진다. 승인은 특정 id 에 대해서만 수행된다.
+
+AI 제안은 결정론적 제안 엔진과 **같은 승인 UX**를 쓴다 — 사용자 입장에서 흐름이 하나다. 다만 저장 위치는 다르다: 결정론적 제안(R1/R3/R4)은 재생성 가능하므로 `.vault-ai/suggestions/`, AI 제안은 재생성 불가하므로 `.vault/pending.jsonl` 이다. (→ `16_SUGGESTION_ENGINE.md`)
 
 ## MCP 보안
 

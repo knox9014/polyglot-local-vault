@@ -63,6 +63,8 @@ MyProject/
 │   ├── links.jsonl          manual edges (append-only)
 │   ├── aliases.jsonl        경로/심볼 이력 (rename/move 추적)
 │   ├── decisions.jsonl      제안 승인/거절 이력
+│   ├── sketches.jsonl       링크된 심볼의 유사도 스케치 (S4 재해석용, 재생성 불가)
+│   ├── pending.jsonl        MCP AI 미승인 제안 (승인 모드일 때)
 │   └── vault.toml           ignore 규칙, 설정
 │
 └── .vault-ai/               ← 순수 파생물. .gitignore 대상. 언제든 삭제 가능
@@ -82,10 +84,10 @@ MyProject/
 `links.jsonl` 한 줄:
 
 ```json
-{"from":"vault://docs/architecture.md#teacher-router","rel":"describes","to":"vault://src/router.py#TeacherRouter","origin":"manual","ts":"2026-08-16T09:00:00Z"}
+{"id":"l_01JBQZ8K3M","op":"add","from":"vault://docs/architecture.md#h:teacher-router","rel":"describes","to":"vault://src/router.py#TeacherRouter","origin":"manual","confidence":"certain","ts":"2026-08-16T09:00:00Z"}
 ```
 
-append-only이므로 삭제도 tombstone 레코드로 기록한다. Undo가 공짜로 따라온다.
+append-only이므로 삭제도 tombstone 레코드(`op:"del"`)로 기록한다. Undo가 공짜로 따라온다. 전체 필드 정의는 `18_DATA_FORMATS.md` §4.1 참조.
 
 ## 핵심 모듈
 
@@ -156,7 +158,7 @@ Edge는 `origin`과 `confidence`를 함께 가진다. (→ `04_VAULT_AND_DATA_MO
 ### Suggestion Engine
 
 결정론적 규칙으로 관계 후보를 생성한다. AI를 쓰지 않는다.
-후보는 `.vault-ai/suggestions/` 에만 저장되며, 사용자가 승인해야 `.vault/links.jsonl` 로 이동한다. (→ `16_SUGGESTION_ENGINE.md`)
+승인이 필요한 후보(R1·R3·R4)는 `.vault-ai/suggestions/` 에 저장되며, 사용자가 승인해야 `.vault/links.jsonl` 로 이동한다. R2·R6 는 승인 없이 반영된다 — 사람이 문서에 명시적으로 쓴 참조를 옮기는 것이라 추측이 아니다. MCP 경유 AI 제안은 이 경로가 아니다(→ `18_DATA_FORMATS.md` §4.5). (→ `16_SUGGESTION_ENGINE.md`)
 
 ### Desktop Workspace
 
