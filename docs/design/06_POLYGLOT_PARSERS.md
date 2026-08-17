@@ -47,6 +47,8 @@ v0.1은 "Python은 native AST 가능, 다중 언어 확대 시 Tree-sitter가 �
 
 `.rst` / `.txt` 를 넣는 이유는 측정에서 드러났다. django는 문서를 `.txt` 로, cpython과 scikit-learn은 `.rst` 로 쓴다. `.md` 만 지원하면 이들 프로젝트에서 문서↔코드 관계가 **0건**이 된다.
 
+R6(Sphinx role, → `16_SUGGESTION_ENGINE.md`) 측정이 이 판단을 다시 뒷받침한다. 생태계별 문서→코드 참조 밀도 측정 대상 중 밀도가 유의미했던 4개 저장소 — django(문서 675) · scikit-learn(190) · flask(76) · requests(16) — 가 전부 `.rst` / `.txt` 저장소다(→ `17_MEASUREMENT_BASIS.md` "생태계별 문서→코드 참조 밀도"). `.md` 만 지원했다면 이번에 확인된 참조가 통째로 0이 됐을 것이다.
+
 `.go` / `.ts` / `.rs` 는 심볼 링크 복구율 측정에서 이미 검증되었다(자동 복구 85.6~94.5%).
 
 ## 형식별 추출 대상
@@ -57,7 +59,8 @@ v0.1은 "Python은 native AST 가능, 다중 언어 확대 시 Tree-sitter가 �
 - 링크
 - 태그
 - 코드 블록 (인덱싱 대상이되 심볼 매칭에서는 제외)
-- 인라인 코드 토큰 (제안 엔진 입력)
+- 인라인 코드 토큰 (제안 엔진 R1 입력)
+- Sphinx role 참조 — `:class:` `:func:` `:meth:` `:attr:` `:mod:` `:exc:` `:data:` `:obj:` (제안 엔진 R6 입력, → `16_SUGGESTION_ENGINE.md`)
 - 리스트
 
 ### 코드 — 공통

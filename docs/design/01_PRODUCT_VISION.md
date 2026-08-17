@@ -112,30 +112,36 @@ AI를 쓰고 싶을 때는 MCP로 연결한다. 특정 모델이나 회사에 �
 
 따라서 v0.1의 메시지는 "polyglot vault"가 아니라 **"문서와 코드를 잇는다"** 여야 한다.
 
-### 그 가치를 즉시 증명하는 단일 기능
+### 그 가치를 즉시 증명하는 두 축 — R1과 R6
 
-제안 엔진의 R1 규칙 — 문서의 인라인 코드 토큰을 vault 내 심볼과 매칭 — 이 그것이다.
+제안 엔진의 R1과 R6 규칙(→ `16_SUGGESTION_ENGINE.md`)이 그것이다. 둘 다 "문서의 코드 참조 → vault 내 심볼"을 잇지만 성격이 다르다.
 
 ```text
-docs/ref/migration-operations.txt  `SeparateDatabaseAndState`
-    → django/db/migrations/operations/special.py
+R1  문서의 백틱 토큰을 심볼 이름과 대조 (추측) — 언어·문서 포맷을 가리지 않는 범용 폴백
+    docs/ref/migration-operations.txt  `SeparateDatabaseAndState`
+        → django/db/migrations/operations/special.py
 
-sklearn/datasets/descr/lfw.rst     `fetch_lfw_people`
-    → sklearn/datasets/_lfw.py
+    sklearn/datasets/descr/lfw.rst     `fetch_lfw_people`
+        → sklearn/datasets/_lfw.py
 
-src/services/formatting/README.md  `formatSpan`
-    → src/services/formatting/formatting.ts
+R6  사람이 이미 명시적으로 쓴 코드 참조 문법(Sphinx role)을 추출 (확정) — Python/Sphinx 생태계에서 사용자 노동 0
+    docs/ref/migrations.txt  :class:`~django.db.migrations.operations.SeparateDatabaseAndState`
+        → django/db/migrations/operations/special.py
 ```
 
-vault를 처음 열었을 때 이런 후보가 수백~수천 건 제시된다(측정: 저장소당 12~6,180건). 사용자는 1클릭으로 승인한다.
+Python/Sphinx 프로젝트(django, scikit-learn, flask, requests 등)에서는 R6가 더 직접적이다. 사람이 쓴 참조를 그대로 확인하는 것이라 승인 없이 자동 반영되며(→ `16_SUGGESTION_ENGINE.md` "승인 정책"), django 한 곳에서만 수천 건 규모가 확인됐다(→ `17_MEASUREMENT_BASIS.md`). Sphinx가 없는 생태계(Rust, TypeScript, Go 등)에서는 R6 문법이 사실상 없거나 밀도가 낮으므로(→ `17_MEASUREMENT_BASIS.md` "생태계별 문서→코드 참조 밀도") R1이 범용 폴백으로 작동한다.
 
-**이 하나만 잘 돌아가도 제품이 성립한다.** 기술 문서 없이 "무엇이든 연결하는 도구"로 포지셔닝하면 사용자는 무엇을 연결해야 할지 모른 채 빈 그래프를 보게 된다.
+vault를 처음 열었을 때 R1은 저장소당 12~6,180건이 제시되어 사용자가 1클릭으로 승인하고, R6는 문서가 있는 Python/Sphinx 저장소에서 승인 없이 즉시 Graph에 채워진다 — 틀리면 사후에 삭제한다.
+
+**이 두 축만 잘 돌아가도 제품이 성립한다.** 기술 문서 없이 "무엇이든 연결하는 도구"로 포지셔닝하면 사용자는 무엇을 연결해야 할지 모른 채 빈 그래프를 보게 된다.
 
 ## 아직 검증되지 않은 것
 
 기술 리스크는 측정으로 상당히 줄었으나 **제품 리스크는 그대로 남아 있다.**
 
-- 제안 후보를 사용자가 실제로 몇 % 승인하는지 측정하지 않았다. 승인율이 낮으면 후보가 많아도 콜드스타트는 풀리지 않는다.
+- 제안 후보를 사용자가 실제로 몇 % 승인하는지 측정하지 않았다(R1). 승인율이 낮으면 후보가 많아도 콜드스타트는 풀리지 않는다.
+- R6는 승인 자체가 없으므로 다른 리스크를 갖는다. 자동 반영된 링크를 사용자가 실제로 얼마나 삭제하는지(오탐률)를 측정하지 않았다(→ `16_SUGGESTION_ENGINE.md`).
+- **Sphinx를 쓰는 프로젝트는 이미 자체 문서 사이트에서 그 참조가 링크로 작동한다.** R6가 겨냥하는 django·scikit-learn류 프로젝트가 정확히 여기 해당한다. 우리가 더하는 값은 (1) 에디터에서 실제 소스 파일로 가는 것과 (2) 코드가 이동해도 유지되는 것 두 가지뿐이며, 이것이 사용자에게 충분한 값인지는 미검증이다.
 - 링크 복구율 93.7%는 사용자가 링크를 걸었다는 전제 위에 있다.
 - 위 포지셔닝("문서와 코드를 잇는다")이 실제 지불 의사로 이어지는지는 측정할 수 없다.
 
