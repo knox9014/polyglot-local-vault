@@ -468,7 +468,7 @@ git 관계.
 | `changed_in` | 파일/심볼 → 커밋 | certain |
 | `co_changed` | 파일 → 파일 | heuristic |
 
-**`defines` 를 쓰지 않는다.** `02_CORE_PRINCIPLES.md` 가 홀로 `defines` 를 쓰고 나머지 전 문서가 `defined_in` 을 쓴다. 방향이 심볼 → 파일이므로 `defined_in` 으로 통일한다.
+**`defines` 를 쓰지 않는다.** 방향이 심볼 → 파일이므로 `defined_in` 으로 통일한다. `02_CORE_PRINCIPLES.md` 가 홀로 `defines` 를 쓰고 있었으나 2026-08-17 에 정정됐다(B4).
 
 ### 5.3 확장
 

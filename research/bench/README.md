@@ -47,6 +47,22 @@
 - `m2b_precision.py`     지역성 필터 (실패)
 - `m2c_prose_filter.py`  산문 빈도 필터 (실패)
 - `m2d_dict_filter.py`   영어 사전 필터 (채택)  ※ pip install english-words
+
+### M2 와 M2d 의 R1 은 같은 것이 아니다
+
+`m2_suggestions.py` 의 R1 은 `.md` 만 훑는다. `m2d_dict_filter.py` 의 R1 은 `.md`/`.rst`/`.txt` 를
+훑고 영어 사전 필터를 적용한다. `.rst` 를 쓰는 저장소(cpython·django·flask)에서 두 값은
+자릿수가 다르다 — cpython 20 vs 6,180. **M2d 가 최종본이고 M2 의 R1 열은 폐기된 값이다.**
+M2 의 R2·R3·R4 는 유효하다. 코퍼스 구성도 다르다(M2 에 flask, M2d 에 scikit-learn).
+
+flask 규칙별 생성량(2026-08-17 추가 측정 → `raw_output/m2_flask.txt`)은 두 스크립트의
+`TARGETS` 한 줄만 바꿔 각각 돌린 뒤 합친 것이다. R1 만 M2d, 나머지는 M2 를 쓴다.
+
+    git clone https://github.com/pallets/flask.git      # --depth 금지 (R4 가 히스토리를 쓴다)
+
+**Windows 에서 돌릴 때 두 가지.** `rule2_configs` 에 넘기는 root 는 `os.path.normpath` 형식이어야
+한다 — `/` 구분자로 넘기면 `cand.startswith(root)` 가 항상 False 가 되어 R2 가 조용히 0 이 된다.
+콘솔 인코딩은 `PYTHONIOENCODING=utf-8` 로 둔다(cp949 에서 출력이 죽는다).
 - `m3_call_edges.py`     call edge 이름 해석 모호도
 - `m4_reconcile.py`      Watcher 정합성 스캔 비용
 - `m5_sweep.py`          유사도 파라미터 45조합 스윕

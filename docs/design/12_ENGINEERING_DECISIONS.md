@@ -20,6 +20,8 @@ v0.1에서 이 문서의 이름은 "12 Engineering Decisions **TODO**" 였고, 9
 | 구문 검색 | v0.1 제외 | 인덱스 5.5% → 21.8% |
 | Core language | Rust | 검색 커널로 실증 |
 
+근거 열의 수치는 조건을 생략한 요약이다. **정본은 `17_MEASUREMENT_BASIS.md` 하나다** — 아래 "벤치마크 회귀 테스트"의 게이트 값처럼 조건과 함께 인용해야 하는 자리에서는 `17`을 직접 참조한다.
+
 ## 미결 ① Desktop Framework
 
 후보:

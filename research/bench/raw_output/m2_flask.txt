@@ -1,0 +1,47 @@
+### M2-flask / M2d-flask — flask 규칙별 제안 생성량 (2026-08-17 추가 측정)
+
+대상: pallets/flask @ d318b683471101618febed18996405ad26462110 (2026-08-16), 전체 히스토리 클론
+환경: Windows 11 / Python 3.14. 원본 M2/M2d 스크립트에서 TARGETS 한 줄만 교체.
+주의: m2_suggestions.rule2_configs 는 root 를 os.path.normpath 형식으로 넘겨야 한다
+      (cand.startswith(root) 가 구분자 불일치로 항상 False 가 되어 R2=0 이 나온다)
+
+### M2 — 제안 엔진이 만드는 관계 후보 수 (결정론적 규칙만, AI 없음)
+
+repo                 심볼    R1 md↔심볼     R2 설정↔경로  R3 docstr     R4 동시변경        합계
+flask             1,082           0            9         83         346       438
+
+### 샘플 (규칙이 실제로 무엇을 찾는지)
+
+── flask
+   [R2 설정→경로]
+      ('pyproject.toml', 'README.md')
+      ('pyproject.toml', 'LICENSE.txt')
+   [R3 docstring→심볼]
+      ('tests\\test_cli.py', 'blueprint', 'src\\flask\\wrappers.py')
+      ('tests\\test_session_interface.py', 'match_request', 'src\\flask\\ctx.py')
+   [R4 동시변경]
+      (('CHANGES', 'flask/app.py'), 83)
+      (('requirements/dev.txt', 'requirements/tests.txt'), 61)
+
+### R1 필터 효과 (흔한 영단어 제거)
+repo                백틱 매칭 총계         식별자+유일 통과      통과율
+
+### M2d — 영어 사전 필터 (최종)
+
+사전 234,450단어. 복합 식별자는 무조건 통과, 단일 단어만 사전 검사.
+
+repo                 심볼      문서     필터 전     필터 후      제거      제거율
+flask             1,082       0      238      156      82    34.5%
+
+### 필터가 제거한 것 (영어 단어여야 함)
+── flask: `update`, `request`, `create`, `options`, `session`, `abort`, `flash`, `name`
+
+### 필터가 남긴 것 (무작위 표본)
+
+── flask (총 156)
+   • `url_value_preprocessor`  docs\patterns\urlprocessors.rst → src\flask\sansio\scaffold.py
+   • `open_instance_resource`  CHANGES.rst → src\flask\app.py
+   • `as_view`  docs\views.rst → src\flask\views.py
+
+### 종합
+  필터 전 238 → 필터 후 156 (65.5%), 저장소당 평균 156건
