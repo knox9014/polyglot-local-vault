@@ -41,7 +41,7 @@ v0.1은 "Python은 native AST 가능, 다중 언어 확대 시 Tree-sitter가 �
 ```text
 문서   .md  .rst  .txt
 코드   .py  .go  .ts  .rs
-데이터 .json  .yaml  .csv
+데이터 .json  .yaml  .toml  .csv
 노트북 .ipynb
 ```
 
@@ -50,6 +50,8 @@ v0.1은 "Python은 native AST 가능, 다중 언어 확대 시 Tree-sitter가 �
 R6(Sphinx role, → `16_SUGGESTION_ENGINE.md`) 측정이 이 판단을 다시 뒷받침한다. 생태계별 문서→코드 참조 밀도 측정 대상 중 밀도가 유의미했던 4개 저장소 — django(문서 675) · scikit-learn(190) · flask(76) · requests(16) — 가 전부 `.rst` / `.txt` 저장소다(→ `17_MEASUREMENT_BASIS.md` "생태계별 문서→코드 참조 밀도"). `.md` 만 지원했다면 이번에 확인된 참조가 통째로 0이 됐을 것이다.
 
 `.go` / `.ts` / `.rs` 는 심볼 링크 복구율 측정에서 이미 검증되었다(자동 복구 80.2~94.5%, → `17_MEASUREMENT_BASIS.md` 언어별 표).
+
+`.toml` 도 v0.1에 넣는다. R2(설정 값 ↔ 실존 경로, → `16_SUGGESTION_ENGINE.md`)가 JSON / YAML / TOML을 대상으로 하고 `pyproject.toml`을 예시로 쓰는데, `.toml`이 파싱 대상에 없으면 R2가 그 형식에서 동작하지 않는다. `.vault/vault.toml` 자체도 TOML이다.
 
 ## 형식별 추출 대상
 
@@ -110,6 +112,11 @@ v0.1은 `calls` 를 추출 대상에 넣으면서 동시에 "확실히 알 수 �
 
 - mapping / sequence / scalar / 계층 / 경로
 
+### TOML
+
+- table / array of tables / key-value / 계층 / 경로
+- 값이 vault 내 실존 경로인 경우 → 제안 엔진 R2 입력 (JSON/YAML과 동일 정책)
+
 ### CSV
 
 - header / schema / column / 행 수 / 추론 타입
@@ -159,7 +166,7 @@ vendored 경로 제외는 성능이 아니라 **정확도** 문제다. 측정에
 ## 향후 형식
 
 ```text
-.js  .tsx  .cpp  .h  .java  .sql  .toml  .xml
+.js  .tsx  .cpp  .h  .java  .sql  .xml
 ```
 
 장기: PDF / DOCX / PPTX / XLSX / Images / Audio / Video

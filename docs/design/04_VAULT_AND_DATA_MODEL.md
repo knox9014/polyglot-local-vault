@@ -218,7 +218,7 @@ I3   BROKEN
 
 `aliases.jsonl` 은 세 소스에서 축적된다.
 
-1. **Watcher rename 이벤트** — 신뢰도는 높지만 항상 도착하지 않는다
+1. **Watcher rename 이벤트** — 이벤트 자체의 신뢰도는 높지만(오탐 적음) delete+create로 쪼개져 유실되는 경우가 잦다(→ `03` File Watcher 절). git rename detection이 작동하는 커밋 이후 이전, 즉 **커밋 전 구간의 유일한 alias 소스**다
 2. **Git rename detection** (`--diff-filter=R -M`) — 유사도 기반 추적. 실질적 주력
 3. **사용자 확정 (`source=user`)** — S3/S4 후보를 사용자가 1클릭으로 확정한 결과. 이 소스가 없으면 같은 후보를 매번 다시 물어보게 된다. (→ `18_DATA_FORMATS.md` §4.2)
 

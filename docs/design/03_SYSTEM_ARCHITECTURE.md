@@ -103,7 +103,7 @@ append-only이므로 삭제도 tombstone 레코드(`op:"del"`)로 기록한다. 
 
 Watcher는 **저지연 힌트**로만 사용한다. 정합성은 별도로 보장한다.
 
-OS 이벤트는 유실된다. inotify 큐 오버플로, FSEvents의 디렉터리 단위 coalescing, `ReadDirectoryChangesW` 버퍼 오버플로, 그리고 `git checkout` / 패키지 설치 시의 이벤트 폭풍이 모두 실재한다. rename은 특히 신뢰할 수 없어서 delete + create로 도착하는 경우가 잦다.
+OS 이벤트는 유실된다. inotify 큐 오버플로, FSEvents의 디렉터리 단위 coalescing, `ReadDirectoryChangesW` 버퍼 오버플로, 그리고 `git checkout` / 패키지 설치 시의 이벤트 폭풍이 모두 실재한다. rename 이벤트 자체는 (도착했을 때는) 신뢰도가 높다 — OS가 실제 rename syscall을 감지해 보내므로 오탐이 적다. 문제는 **도착 여부**다: delete + create 두 이벤트로 쪼개져 오는 경우가 잦고, 그러면 watcher만으로는 rename인지 구분할 수 없다.
 
 ```text
 정상   watcher 이벤트 → 100~300ms debounce → 변경분 재파싱
@@ -126,6 +126,10 @@ Phase 0 구성요소다. 링크 복구율의 핵심 근거다.
 - 동시 변경 관계 (제안 엔진 입력)
 
 측정상 git alias 없이는 파일 링크 복구율이 95.7% → 88.2%로, 심볼 링크는 80.0% → 70.4%로 떨어진다. 대규모 구조 개편 시에는 격차가 훨씬 크다 — 전체 파일이 이동한 5개 사례에서 git alias만으로 64~98%가 복구되었다.
+
+**커밋 전 구간의 alias 소스.** git rename detection(`--diff-filter=R -M`)은 커밋된 이력에만 작동한다. 작업 중이지만 아직 커밋하지 않은 rename에는 이 소스가 없다. 정합성 스캔 키가 `(path, mtime_ns, size)`라 이 구간의 rename도 delete+create로만 보인다. 이 구간의 유일한 alias 소스는 watcher rename 이벤트(source=watcher, → `04` alias 테이블)뿐이며, 그 이벤트가 delete+create로 쪼개져 도착하면(위 참조) 커밋 전에는 alias를 얻을 방법이 없다. **이 구간의 복구는 보장하지 않는다** — 새 휴리스틱을 두지 않고, 커밋 후 git rename detection이 `aliases.jsonl`을 채우는 시점까지 F3/S5(BROKEN)로 남을 수 있다는 것을 그대로 밝힌다.
+
+**git 없는 vault(또는 위 커밋 전 구간 전체)의 복구율.** git alias(F2/S2)가 전혀 없으면 F1/S1 단계만으로 복구한다. 심볼은 **70.4%**(S1, 대상이 생존한 심볼 20,837건 기준 — → `17` 확정 수치 표에 동일 값 존재). 파일 F1 단독 수치(88.2%, 위 문단)는 `04`의 자체 측정 근거이지만 `17` 확정 수치 표에는 파일 단계별 breakdown이 없어 정본 대조가 되지 않는다 — 참고치로만 취급하고 `17`의 확정 수치로 인용하지 않는다.
 
 ### Parser Layer
 

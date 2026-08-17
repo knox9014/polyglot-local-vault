@@ -43,7 +43,7 @@ Experiment #37
 ## 추가 파일 형식
 
 ```text
-.js  .tsx  .cpp  .h  .java  .sql  .toml  .xml
+.js  .tsx  .cpp  .h  .java  .sql  .xml
 ```
 
 Tree-sitter 문법 파일 교체로 대응되므로 비용이 낮다. 다만 **형식 추가보다 파서 품질이 우선**이다.

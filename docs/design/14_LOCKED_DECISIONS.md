@@ -142,11 +142,11 @@ confidence  certain / probable / heuristic
 ```text
 문서   .md  .rst  .txt
 코드   .py  .go  .ts  .rs
-데이터 .json  .yaml  .csv
+데이터 .json  .yaml  .toml  .csv
 노트북 .ipynb
 ```
 
-> **근거**: `.rst`/`.txt` 추가 이유 — django는 문서를 `.txt`, cpython과 scikit-learn은 `.rst` 로 쓴다. `.md` 만 지원하면 이들에서 문서↔코드 관계가 0건이 된다.
+> **근거**: `.rst`/`.txt` 추가 이유 — django는 문서를 `.txt`, cpython과 scikit-learn은 `.rst` 로 쓴다. `.md` 만 지원하면 이들에서 문서↔코드 관계가 0건이 된다. `.toml` 추가 이유 — R2(설정 값 ↔ 실존 경로, → `16_SUGGESTION_ENGINE.md`)가 JSON/YAML/TOML을 대상으로 하며 `.vault/vault.toml` 자체도 TOML이다.
 > `.go`/`.ts`/`.rs` 추가 이유 — 심볼 링크 복구율이 이미 검증되었다(자동 80.2~94.5%, → `17` 언어별 표).
 
 ## 상호운용
