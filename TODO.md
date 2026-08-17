@@ -340,7 +340,50 @@ python research/bench/check_refs.py docs/design      # exit 0 이어야 한다
    - [x] 고정 저장소 13개 SHA 확정 (`research/bench/PINNED_COMMITS.txt`, 2026-08-17)
    - [x] 고정 SHA 기준 링크 복구율 기준선 재측정 (2026-08-17)
    - [ ] **게이트 대상 범위 확정** — 아래 신규 항목
-   - [ ] 구현 착수 (Rust 코어 뼈대 → 인덱스 · watcher · git reader · 주소 체계)
+   - [ ] 파일 링크의 저장소별 하한 산출 (실험2 가 이미 저장소별 행을 출력한다)
+   - [ ] 구현 착수 — 아래 계획
+
+### Phase 0 구현 계획 (2026-08-17 수립)
+
+**크레이트는 하나로 시작한다.** 소비자가 아직 하나뿐이다. 데스크톱·MCP 가 붙을 때 쪼개면 되고
+그때가 쪼갤 근거가 생기는 시점이다. `lib.rs` + `main.rs` 분리만으로 "코어가 UI 에 안 묶인다" 는
+요구는 충족된다. 창은 없다 — 검증은 테스트와 CLI 로 한다.
+
+```
+polyglot-vault/
+  src/lib.rs      코어 (나중에 데스크톱·MCP 가 공유)
+  src/main.rs     검증용 CLI
+  src/addr.rs     vault:// 주소 파싱·정규화       (18 §1~2)
+  src/scan.rs     파일 스캔 + ignore
+  src/reconcile.rs 정합성 스캔 (path, mtime_ns, size)
+  src/watch.rs    watcher + debounce 100~300ms
+  src/git.rs      rename 체인 → aliases.jsonl
+  src/store.rs    .vault/ JSONL 읽기·쓰기          (18 §4)
+  src/parser.rs   Parser Adapter 트레이트 (구현 없음. Phase 2 가 채운다)
+```
+
+| # | 작업 | 끝났다고 판단하는 기준 |
+|---|---|---|
+| 1 | 스캐폴드 + 파일 스캔 + ignore | flask 236개, vendored 제외 확인 |
+| 2 | `vault://` 주소 파싱·정규화 | slug 7단계 · NFC · 인코딩 단위 테스트 |
+| 3 | 인덱스 스키마 버전 + 다중 인스턴스 락 | 두 번째 프로세스가 거부됨 |
+| 4 | 정합성 스캔 | 규모에 선형적 (종료 조건 ①-로컬) |
+| 5 | Watcher + debounce | 유실 이벤트를 주기 스캔이 잡는 테스트 |
+| 6 | Git reader → `aliases.jsonl` | 종료 조건 ② |
+| 7 | `.vault/` ↔ `.vault-ai/` 분리 | 종료 조건 ③ — `.vault-ai/` 삭제 후 완전 복구 |
+| 8 | Parser Adapter 트레이트 | 컴파일만 |
+
+**4~7 은 순서대로 안 끝난다.** 넷 다 "파일이 바뀌었을 때 무엇을 기록하나" 를 공유해서
+실제로는 왔다 갔다 하게 된다. 표의 순서는 의존성이지 일정이 아니다.
+
+**경로 정규화를 1~2 에서 제대로 잡는다.** 미결 ⑤(플랫폼별 세부)가 "구현 중 부딪힐 항목" 이라고
+적어둔 것이 2026-08-17 측정 재현에서 이미 두 번 터졌다 — django 클론에 `core.longpaths` 가
+필요했고, 경로 구분자 불일치로 R2 가 조용히 0 이 됐다. 여기서 안 잡으면 이후 전부에 번진다.
+
+**개발은 Windows, 게이트는 Linux 2코어에서 돈다.** 로컬 수치가 게이트 통과를 뜻하지 않는다.
+
+**테스트 코퍼스 위치를 정해야 한다** — 현재 13개 저장소가 임시 폴더에 있어 세션이 끝나면 날아간다.
+저장소 밖 고정 경로로 옮기고 `bench/README` 에 규약을 적을 것.
 
 ---
 
