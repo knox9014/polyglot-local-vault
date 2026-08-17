@@ -49,7 +49,7 @@ v0.1은 "Python은 native AST 가능, 다중 언어 확대 시 Tree-sitter가 �
 
 R6(Sphinx role, → `16_SUGGESTION_ENGINE.md`) 측정이 이 판단을 다시 뒷받침한다. 생태계별 문서→코드 참조 밀도 측정 대상 중 밀도가 유의미했던 4개 저장소 — django(문서 675) · scikit-learn(190) · flask(76) · requests(16) — 가 전부 `.rst` / `.txt` 저장소다(→ `17_MEASUREMENT_BASIS.md` "생태계별 문서→코드 참조 밀도"). `.md` 만 지원했다면 이번에 확인된 참조가 통째로 0이 됐을 것이다.
 
-`.go` / `.ts` / `.rs` 는 심볼 링크 복구율 측정에서 이미 검증되었다(자동 복구 85.6~94.5%).
+`.go` / `.ts` / `.rs` 는 심볼 링크 복구율 측정에서 이미 검증되었다(자동 복구 80.2~94.5%, → `17_MEASUREMENT_BASIS.md` 언어별 표).
 
 ## 형식별 추출 대상
 
