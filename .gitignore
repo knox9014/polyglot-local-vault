@@ -1,0 +1,18 @@
+# 벤치마크 실행 산출물
+/research/bench/**/target/
+/research/bench/**/Cargo.lock
+/research/bench/corpus/
+/research/bench/*.txt.out
+
+# 구현 단계 (아직 없음)
+/target/
+node_modules/
+dist/
+build/
+
+# vault 파생물 (제품이 만들 것)
+.vault-ai/
+
+# OS
+.DS_Store
+Thumbs.db

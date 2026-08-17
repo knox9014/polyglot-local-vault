@@ -1,0 +1,68 @@
+### M2d — 영어 사전 필터 (최종)
+
+사전 234,450단어. 복합 식별자는 무조건 통과, 단일 단어만 사전 검사.
+
+repo                 심볼      문서     필터 전     필터 후      제거      제거율
+kubernetes       64,038       0      478      358     120    25.1%
+TypeScript       20,430       0       39       12      27    69.2%
+node              2,511       0      436      120     316    72.5%
+rust             98,983       0    1,058      870     188    17.8%
+cpython          56,153       0    7,674    6,180   1,494    19.5%
+django           29,022       0    5,709    4,721     988    17.3%
+scikit-learn      9,333       0    3,528    3,341     187     5.3%
+hugo              6,930       0      382      161     221    57.9%
+
+### 필터가 제거한 것 (영어 단어여야 함)
+── kubernetes: `join`, `phase`, `policy`, `Running`, `join`, `kind`, `Parallel`, `image`
+── TypeScript: `types`, `child`, `unknown`, `child`, `types`, `Iterable`, `Instant`, `global`
+── node: `buffer`, `join`, `error`, `pipe`, `module`, `buffer`, `warn`, `stream`
+── rust: `style`, `timings`, `Lookup`, `incremental`, `auto`, `auto`, `package`, `arch`
+── cpython: `Literal`, `called`, `platform`, `cycle`, `fork`, `slice`, `fork`, `signal`
+── django: `super`, `super`, `Case`, `tags`, `city`, `python`, `unique`, `Signer`
+── scikit-learn: `shuffle`, `Normalizer`, `Ridge`, `Ridge`, `Birch`, `Lasso`, `Birch`, `cache`
+── hugo: `Duration`, `Resource`, `prefix`, `Dither`, `content`, `Round`, `weight`, `data`
+
+### 필터가 남긴 것 (무작위 표본)
+
+── kubernetes (총 358)
+   • `ResolveBindAddress`  CHANGELOG/CHANGELOG-1.21.md → staging/src/k8s.io/apimachinery/pkg/util/net/interface.go
+   • `NewDiscoveryClientForConfigOrDie`  CHANGELOG/CHANGELOG-1.17.md → staging/src/k8s.io/client-go/discovery/discovery_client.go
+   • `NodePort`  CHANGELOG/CHANGELOG-1.29.md → pkg/proxy/serviceport.go
+
+── TypeScript (총 12)
+   • `oops`  tests/baselines/reference/neverNullishThroughParentheses.errors.txt → tests/cases/conformance/types/unknown/unknownType1.ts
+   • `processNode`  src/services/formatting/README.md → src/services/formatting/formatting.ts
+   • `Lowercase`  tests/baselines/reference/stringMappingOverPatternLiterals.errors.txt → src/lib/es5.d.ts
+
+── node (총 120)
+   • `LockManagerSnapshot`  doc/api/worker_threads.md → typings/internalBinding/locks.d.ts
+   • `HeapProfileHandle`  doc/api/worker_threads.md → typings/internalBinding/worker.d.ts
+   • `info`  doc/api/crypto.md → configure.py
+
+── rust (총 870)
+   • `cache_on_disk`  src/doc/rustc-dev-guide/src/queries/incremental-compilation-in-detail.md → compiler/rustc_middle/src/query/modifiers.rs
+   • `clone_on_ref_ptr`  src/tools/clippy/CHANGELOG.md → src/tools/clippy/tests/ui/clone_on_ref_ptr.rs
+   • `struct`  src/tools/clippy/book/src/development/type_checking.md → tests/ui/parser/issues/issue-99625-enum-struct-mutually-exclusive.rs
+
+── cpython (총 6,180)
+   • `assertEndsWith`  Doc/library/unittest.rst → Lib/unittest/case.py
+   • `Annotated`  Misc/NEWS.d/3.11.0a5.rst → Lib/typing.py
+   • `eval`  Doc/reference/executionmodel.rst → Lib/test/test_zipfile/_path/_test_params.py
+
+── django (총 4,721)
+   • `AddIndex`  docs/ref/contrib/postgres/operations.txt → django/db/migrations/operations/models.py
+   • `MultiPartParser`  docs/releases/2.2.21.txt → django/http/multipartparser.py
+   • `set_language`  docs/releases/1.11.txt → django/views/i18n.py
+
+── scikit-learn (총 3,341)
+   • `IsolationForest`  doc/whats_new/v1.4.rst → sklearn/ensemble/_iforest.py
+   • `fetch_20newsgroups_vectorized`  doc/whats_new/v1.4.rst → sklearn/datasets/_twenty_newsgroups.py
+   • `ExtraTreeClassifier`  doc/whats_new/v0.23.rst → sklearn/tree/_classes.py
+
+── hugo (총 161)
+   • `TrimLeft`  docs/content/en/functions/strings/TrimLeft.md → tpl/strings/strings.go
+   • `PageInner`  docs/content/en/render-hooks/images.md → markup/goldmark/internal/render/context.go
+   • `pageRef`  docs/content/en/_common/menu-entry-properties.md → hugolib/page__ref.go
+
+### 종합
+  필터 전 19,304 → 필터 후 15,763 (81.7%), 저장소당 평균 1,970건

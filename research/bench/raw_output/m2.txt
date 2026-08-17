@@ -1,0 +1,108 @@
+### M2 — 제안 엔진이 만드는 관계 후보 수 (결정론적 규칙만, AI 없음)
+
+repo                 심볼    R1 md↔심볼     R2 설정↔경로  R3 docstr     R4 동시변경        합계
+kubernetes       95,614         767           28          5           0       800
+rust             98,994         842          232         83           0     1,157
+node             13,020         768          494        409           0     1,671
+TypeScript       20,430           4        2,373          0           0     2,377
+cpython          56,172          20          123      4,424           0     4,567
+django           29,022           0            7      2,322         790     3,119
+flask             1,082           0            9         83         346       438
+hugo              6,949         261            6          0         630       897
+
+### 샘플 (규칙이 실제로 무엇을 찾는지)
+
+── kubernetes
+   [R1 md→심볼]
+      ('pkg/proxy/ipvs/README.md', 'LoadBalancerSourceRanges', 'pkg/proxy/serviceport.go')
+      ('pkg/proxy/nftables/README.md', 'LoadBalancerSourceRanges', 'pkg/proxy/serviceport.go')
+   [R2 설정→경로]
+      ('vendor/github.com/stretchr/objx/.codeclimate.yml', 'vendor/github.com/stretchr/objx/type_specific_codegen.go')
+      ('test/images/nautilus/html/data.json', 'test/images/nautilus/html/nautilus.jpg')
+   [R3 docstring→심볼]
+      ('staging/src/k8s.io/kubectl/pkg/util/i18n/translations/extract.py', 'repository', 'vendor/github.com/distribution/reference/reference.go')
+      ('staging/src/k8s.io/kubectl/pkg/util/i18n/translations/extract.py', 'Short', 'vendor/sigs.k8s.io/kustomize/api/provenance/provenance.go')
+
+── rust
+   [R1 md→심볼]
+      ('RELEASES.md', 'warnings', 'src/tools/clippy/lintcheck/src/recursive.rs')
+      ('RELEASES.md', 'link_section', 'tests/rustdoc-html/inline_cross/auxiliary/attributes.rs')
+   [R2 설정→경로]
+      ('REUSE.toml', 'AGENTS.md')
+      ('REUSE.toml', 'Cargo.lock')
+   [R3 docstring→심볼]
+      ('x.py', 'available', 'compiler/rustc_abi/src/lib.rs')
+      ('compiler/rustc_codegen_cranelift/scripts/jit-helpers.py', 'backtrace', 'library/std/src/error.rs')
+
+── node
+   [R1 md→심볼]
+      ('SECURITY.md', 'configure', 'deps/v8/third_party/abseil-cpp/conanfile.py')
+      ('BUILDING.md', 'configure', 'deps/v8/third_party/abseil-cpp/conanfile.py')
+   [R2 설정→경로]
+      ('pyproject.toml', 'tools/cpplint.py')
+      ('tsconfig.json', 'typings/globals.d.ts')
+   [R3 docstring→심볼]
+      ('deps/libffi/generate-configure-headers.py', 'configure', 'deps/v8/third_party/abseil-cpp/conanfile.py')
+      ('deps/libffi/testsuite/emscripten/test_libffi.py', 'Module', 'deps/crates/vendor/diplomat_core-v0_15/src/ast/modules.rs')
+
+── TypeScript
+   [R1 md→심볼]
+      ('src/services/formatting/README.md', 'formatSpan', 'src/services/formatting/formatting.ts')
+      ('src/services/formatting/README.md', 'processNode', 'src/services/formatting/formatting.ts')
+   [R2 설정→경로]
+      ('package.json', 'LICENSE.txt')
+      ('package.json', 'README.md')
+
+── cpython
+   [R1 md→심볼]
+      ('Platforms/Apple/iOS/README.md', 'platform', 'Lib/platform.py')
+      ('Platforms/emscripten/README.md', 'gethostbyname', 'Lib/test/mock_socket.py')
+   [R2 설정→경로]
+      ('Misc/sbom.spdx.json', 'Modules/expat/ascii.h')
+      ('Misc/sbom.spdx.json', 'Modules/expat/asciitab.h')
+   [R3 docstring→심볼]
+      ('Platforms/Apple/__main__.py', 'Format', 'Lib/annotationlib.py')
+      ('Platforms/Apple/__main__.py', 'arguments', 'Lib/test/test_ast/test_ast.py')
+
+── django
+   [R2 설정→경로]
+      ('pyproject.toml', 'README.rst')
+      ('pyproject.toml', 'LICENSE.python')
+   [R3 docstring→심볼]
+      ('docs/lint.py', 'EmailMessage', 'django/core/mail/message.py')
+      ('django/__init__.py', 'configure', 'django/conf/__init__.py')
+   [R4 동시변경]
+      (('django/db/models/expressions.py', 'tests/expressions/tests.py'), 52)
+      (('django/test/testcases.py', 'tests/test_utils/tests.py'), 39)
+
+── flask
+   [R2 설정→경로]
+      ('pyproject.toml', 'README.md')
+      ('pyproject.toml', 'LICENSE.txt')
+   [R3 docstring→심볼]
+      ('tests/test_cli.py', 'blueprint', 'src/flask/wrappers.py')
+      ('tests/test_testing.py', 'EnvironBuilder', 'src/flask/testing.py')
+   [R4 동시변경]
+      (('CHANGES', 'flask/app.py'), 83)
+      (('requirements/dev.txt', 'requirements/tests.txt'), 61)
+
+── hugo
+   [R1 md→심볼]
+      ('AGENTS.md', 'TestDisablePathToLower', 'common/paths/paths_integration_test.go')
+      ('docs/content/en/hugo-pipes/introduction.md', 'GetRemote', 'tpl/resources/resources.go')
+   [R2 설정→경로]
+      ('internal/warpc/js/package.json', 'internal/warpc/js/greet.js')
+      ('internal/warpc/deps/parson/package.json', 'internal/warpc/deps/parson/parson.c')
+   [R4 동시변경]
+      (('go.mod', 'go.sum'), 952)
+      (('common/hugo/version_current.go', 'snap/snapcraft.yaml'), 236)
+
+### R1 필터 효과 (흔한 영단어 제거)
+repo                백틱 매칭 총계         식별자+유일 통과      통과율
+kubernetes             5,698               767    13.5%
+rust                  11,131               842     7.6%
+node                  13,815               768     5.6%
+TypeScript                23                 4    17.4%
+cpython                  293                20     6.8%
+django                     1                 0     0.0%
+hugo                   2,395               261    10.9%

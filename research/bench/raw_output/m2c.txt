@@ -1,0 +1,118 @@
+### M2c — 산문 빈도 필터 (외부 사전 없이 vault 자체로 판정)
+
+필터: 백틱 토큰이 문서 산문에 3회 초과 등장하면 영단어로 보고 제외
+
+repo                 심볼      문서     필터 전     필터 후      제거      제거율
+kubernetes       64,038     338      398      255     143    35.9%
+TypeScript       20,430  10,092       15        7       8    53.3%
+node              2,511     310      155       31     124    80.0%
+rust             98,983   1,661      770      610     160    20.8%
+cpython          56,153   1,531    6,015    2,561   3,454    57.4%
+django           29,022     734    4,864    2,169   2,695    55.4%
+scikit-learn      9,333     267    3,408    2,019   1,389    40.8%
+hugo              6,930   1,098      261      179      82    31.4%
+
+### 필터가 제거한 것 (오탐이어야 함)
+
+── kubernetes
+   ✗ `LoadBalancerSourceRanges` (산문 8회)  pkg/proxy/ipvs/README.md → pkg/proxy/serviceport.go
+   ✗ `LoadBalancerSourceRanges` (산문 8회)  pkg/proxy/nftables/README.md → pkg/proxy/serviceport.go
+   ✗ `Local` (산문 86회)  pkg/proxy/nftables/README.md → staging/src/k8s.io/cli-runtime/pkg/resource/builder.go
+   ✗ `priority` (산문 242회)  pkg/proxy/nftables/README.md → pkg/kubelet/eviction/helpers.go
+
+── TypeScript
+   ✗ `Instant` (산문 33회)  tests/baselines/reference/temporal.errors.txt → src/lib/esnext.temporal.d.ts
+   ✗ `PlainDateTime` (산문 55회)  tests/baselines/reference/temporal.errors.txt → src/lib/esnext.temporal.d.ts
+   ✗ `Uppercase` (산문 96회)  tests/baselines/reference/stringMappingOverPatternLiterals.errors.txt → src/lib/es5.d.ts
+   ✗ `Lowercase` (산문 56회)  tests/baselines/reference/stringMappingOverPatternLiterals.errors.txt → src/lib/es5.d.ts
+
+── node
+   ✗ `Configuration` (산문 26회)  tools/gyp/docs/LanguageSpecification.md → tools/test.py
+   ✗ `Global` (산문 74회)  tools/gyp/docs/LanguageSpecification.md → typings/globals.d.ts
+   ✗ `Resource` (산문 28회)  tools/gyp/docs/UserDocumentation.md → typings/internalBinding/async_wrap.d.ts
+   ✗ `Worker` (산문 100회)  test/fixtures/wpt/workers/README.md → typings/internalBinding/worker.d.ts
+
+── rust
+   ✗ `warnings` (산문 105회)  RELEASES.md → src/tools/clippy/lintcheck/src/recursive.rs
+   ✗ `no_std` (산문 5회)  RELEASES.md → src/bootstrap/src/lib.rs
+   ✗ `HashSet` (산문 6회)  RELEASES.md → library/std/src/collections/hash/set.rs
+   ✗ `OsStr` (산문 10회)  RELEASES.md → library/std/src/ffi/os_str.rs
+
+── cpython
+   ✗ `lru_cache` (산문 37회)  Misc/NEWS.d/3.9.0b1.rst → Lib/functools.py
+   ✗ `literal_eval` (산문 10회)  Misc/NEWS.d/3.9.0b1.rst → Lib/ast.py
+   ✗ `win32_ver` (산문 6회)  Misc/NEWS.d/3.9.0b1.rst → Lib/platform.py
+   ✗ `find_longest_match` (산문 4회)  Misc/NEWS.d/3.9.0b1.rst → Lib/difflib.py
+
+── django
+   ✗ `is_active` (산문 26회)  docs/faq/admin.txt → django/views/debug.py
+   ✗ `is_staff` (산문 11회)  docs/faq/admin.txt → tests/auth_tests/models/custom_user.py
+   ✗ `ModelAdmin` (산문 250회)  docs/faq/admin.txt → django/contrib/admin/options.py
+   ✗ `ManyToManyField` (산문 53회)  docs/faq/admin.txt → django/db/models/fields/related.py
+
+── scikit-learn
+   ✗ `fetch_20newsgroups` (산문 8회)  sklearn/datasets/descr/twenty_newsgroups.rst → sklearn/datasets/_twenty_newsgroups.py
+   ✗ `Bunch` (산문 9회)  sklearn/datasets/descr/species_distributions.rst → sklearn/utils/_bunch.py
+   ✗ `HalvingGridSearchCV` (산문 9회)  doc/callbacks.rst → sklearn/model_selection/_search_successive_halving.py
+   ✗ `RandomizedSearchCV` (산문 4회)  doc/callbacks.rst → sklearn/model_selection/_search.py
+
+── hugo
+   ✗ `GetRemote` (산문 6회)  docs/content/en/hugo-pipes/introduction.md → tpl/resources/resources.go
+   ✗ `PostCSS` (산문 28회)  docs/content/en/hugo-pipes/postcss.md → tpl/css/css.go
+   ✗ `Script` (산문 4회)  docs/content/en/functions/js/Batch.md → internal/js/esbuild/batch.go
+   ✗ `SetOptions` (산문 4회)  docs/content/en/functions/js/Batch.md → internal/js/esbuild/batch.go
+
+### 필터가 남긴 것 (무작위 표본 — 정탐이어야 함)
+
+── kubernetes  (총 255건 중 무작위 4건)
+   • `ListWatch`  CHANGELOG/CHANGELOG-1.36.md → staging/src/k8s.io/client-go/tools/cache/listwatch.go
+   • `PollUntilContextTimeout`  CHANGELOG/CHANGELOG-1.27.md → staging/src/k8s.io/apimachinery/pkg/util/wait/poll.go
+   • `PlacementCycleState`  CHANGELOG/CHANGELOG-1.37.md → staging/src/k8s.io/kube-scheduler/framework/cycle_state.go
+   • `ConditionWithContextFunc`  CHANGELOG/CHANGELOG-1.27.md → staging/src/k8s.io/apimachinery/pkg/util/wait/wait.go
+
+── TypeScript  (총 7건 중 무작위 4건)
+   • `createRulesMap`  src/services/formatting/README.md → src/services/formatting/rulesMap.ts
+   • `formatSpan`  src/services/formatting/README.md → src/services/formatting/formatting.ts
+   • `processPair`  src/services/formatting/README.md → src/services/formatting/formatting.ts
+   • `Arrayish`  tests/baselines/reference/mappedTypeWithAny.errors.txt → tests/cases/conformance/types/mapped/mappedTypeWithAny.ts
+
+── node  (총 31건 중 무작위 4건)
+   • `NativeKeyObject`  doc/changelogs/CHANGELOG_V22.md → typings/internalBinding/crypto.d.ts
+   • `EndpointOptions`  doc/api/quic.md → typings/internalBinding/quic.d.ts
+   • `CryptoKeyPair`  doc/api/webcrypto.md → typings/internalBinding/crypto.d.ts
+   • `MessageChannel`  doc/api/buffer.md → typings/internalBinding/messaging.d.ts
+
+── rust  (총 610건 중 무작위 4건)
+   • `match_wild_err_arm`  src/tools/clippy/CHANGELOG.md → src/tools/clippy/tests/ui/match_wild_err_arm.rs
+   • `extra_checks`  src/tools/tidy/Readme.md → src/bootstrap/src/core/config/flags.rs
+   • `RemoveUnneededDrops`  src/doc/rustc-dev-guide/src/mir/passes.md → compiler/rustc_mir_transform/src/remove_unneeded_drops.rs
+   • `normalize_erasing_regions`  src/doc/rustc-dev-guide/src/normalization.md → compiler/rustc_middle/src/ty/normalize_erasing_regions.rs
+
+── cpython  (총 2,561건 중 무작위 4건)
+   • `NoDefaultRoot`  Misc/NEWS.d/3.10.0a4.rst → Lib/tkinter/__init__.py
+   • `getcomments`  Misc/NEWS.d/3.14.0a1.rst → Lib/inspect.py
+   • `type_repr`  Doc/library/annotationlib.rst → Lib/annotationlib.py
+   • `parse_qsl`  Misc/NEWS.d/3.14.0a2.rst → Lib/urllib/parse.py
+
+── django  (총 2,169건 중 무작위 4건)
+   • `StepValueValidator`  docs/releases/5.0.txt → django/core/validators.py
+   • `display_for_field`  docs/releases/5.2.17.txt → django/contrib/admin/utils.py
+   • `AddConstraint`  docs/ref/contrib/postgres/operations.txt → django/db/migrations/operations/models.py
+   • `SeparateDatabaseAndState`  docs/ref/migration-operations.txt → django/db/migrations/operations/special.py
+
+── scikit-learn  (총 2,019건 중 무작위 4건)
+   • `TweedieRegressor`  doc/modules/linear_model.rst → sklearn/linear_model/_glm/glm.py
+   • `LabelPropagation`  doc/whats_new/v1.8.rst → sklearn/semi_supervised/_label_propagation.py
+   • `IsotonicRegression`  doc/whats_new/v0.21.rst → sklearn/isotonic.py
+   • `AgglomerativeClustering`  doc/whats_new/v0.21.rst → sklearn/cluster/_agglomerative.py
+
+── hugo  (총 179건 중 무작위 4건)
+   • `SetInMap`  docs/content/en/functions/collections/NewScratch.md → common/hstore/scratch.go
+   • `PathUnescape`  docs/content/en/functions/urls/PathUnescape.md → tpl/urls/urls.go
+   • `IsImageResource`  docs/content/en/functions/reflect/IsImageResource.md → tpl/reflect/reflect.go
+   • `THead`  docs/content/en/render-hooks/tables.md → markup/goldmark/tables/tables.go
+
+### 종합
+  필터 전 제안 : 15,886
+  필터 후 제안 : 7,831  (49.3%)
+  저장소당 평균: 979건

@@ -1,0 +1,67 @@
+### M2b — vendor 제외 + 문서형식 확장(.md/.rst/.txt) + 지역성 지표
+
+지역성 = 문서와 대상 심볼이 같은 최상위 서브트리에 있는 비율
+        (트리를 가로지르는 매칭은 흔한 영단어 오탐일 가능성이 높다)
+
+repo               심볼(전체)     심볼(vendor제외)       문서제안(전체)       문서제안(제외)      지역성  docstr      지역성
+kubernetes         95,614           64,038            767            398    13.1%       5    80.0%
+TypeScript         20,430           20,430             15             15    53.3%       0     0.0%
+node               13,020            2,511            764            155     1.9%     127    98.4%
+rust               98,994           98,983            771            770    33.1%      83    34.9%
+cpython            56,153           56,153          6,015          6,015     0.3%   4,414    83.1%
+django             29,022           29,022          4,864          4,864     0.0%   2,322    44.2%
+scikit-learn        9,333            8,952          3,408          3,406     0.3%   1,929    81.6%
+hugo                6,949            6,930            261            261     0.0%       0     0.0%
+
+### vendor 제외 효과
+repo                     제안 변화          지역성 변화
+kubernetes       767 → 398      52.8% → 13.1%
+TypeScript        15 → 15       53.3% → 53.3%
+node             764 → 155      55.1% → 1.9%
+rust             771 → 770      33.1% → 33.1%
+cpython        6,015 → 6,015     0.3% → 0.3%
+django         4,864 → 4,864     0.0% → 0.0%
+scikit-learn   3,408 → 3,406     0.3% → 0.3%
+hugo             261 → 261       0.0% → 0.0%
+
+### 샘플 (vendor 제외 후)
+
+── kubernetes
+   ✓ pkg/proxy/ipvs/README.md  `LoadBalancerSourceRanges`  →  pkg/proxy/serviceport.go
+   ✓ pkg/proxy/nftables/README.md  `LoadBalancerSourceRanges`  →  pkg/proxy/serviceport.go
+   ? pkg/proxy/nftables/README.md  `Local`  →  staging/src/k8s.io/cli-runtime/pkg/resource/builder.go
+
+── TypeScript
+   ✓ tests/baselines/reference/mappedTypeWithAny.errors.txt  `IndirectArrayish`  →  tests/cases/conformance/types/mapped/mappedTypeWithAny.ts
+   ✓ tests/baselines/reference/mappedTypeWithAny.errors.txt  `Arrayish`  →  tests/cases/conformance/types/mapped/mappedTypeWithAny.ts
+   ? tests/baselines/reference/temporal.errors.txt  `Instant`  →  src/lib/esnext.temporal.d.ts
+
+── node
+   ✓ tools/gyp/CHANGELOG.md  `GetCompilerPredefines`  →  tools/gyp/pylib/gyp/common.py
+   ✓ tools/gyp/docs/LanguageSpecification.md  `Configuration`  →  tools/test.py
+   ? tools/gyp/docs/LanguageSpecification.md  `Global`  →  typings/globals.d.ts
+
+── rust
+   ? RELEASES.md  `warnings`  →  src/tools/clippy/lintcheck/src/recursive.rs
+   ? RELEASES.md  `link_section`  →  tests/rustdoc-html/inline_cross/auxiliary/attributes.rs
+   ? RELEASES.md  `c_int`  →  library/std/src/sys/thread_local/destructors/linux_like.rs
+
+── cpython
+   ? Misc/NEWS.d/3.9.0b1.rst  `isidentifier`  →  Lib/collections/__init__.py
+   ? Misc/NEWS.d/3.9.0b1.rst  `compile_command`  →  Lib/codeop.py
+   ? Misc/NEWS.d/3.9.0b1.rst  `get_source_segment`  →  Lib/ast.py
+
+── django
+   ? docs/faq/admin.txt  `is_active`  →  django/views/debug.py
+   ? docs/faq/admin.txt  `is_staff`  →  tests/auth_tests/models/custom_user.py
+   ? docs/faq/admin.txt  `ModelAdmin`  →  django/contrib/admin/options.py
+
+── scikit-learn
+   ✓ sklearn/datasets/descr/covtype.rst  `fetch_covtype`  →  sklearn/datasets/_covtype.py
+   ✓ sklearn/datasets/descr/lfw.rst  `fetch_lfw_people`  →  sklearn/datasets/_lfw.py
+   ✓ sklearn/datasets/descr/lfw.rst  `fetch_lfw_pairs`  →  sklearn/datasets/_lfw.py
+
+── hugo
+   ? AGENTS.md  `TestDisablePathToLower`  →  common/paths/paths_integration_test.go
+   ? docs/content/en/hugo-pipes/introduction.md  `GetRemote`  →  tpl/resources/resources.go
+   ? docs/content/en/hugo-pipes/postcss.md  `PostCSS`  →  tpl/css/css.go

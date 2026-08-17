@@ -1,0 +1,22 @@
+[package]
+name = "pathbench"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+memchr = "2"
+
+[[bin]]
+name = "pathbench"
+path = "src/main.rs"
+[[bin]]
+name = "bench2"
+path = "src/bin/bench2.rs"
+[[bin]]
+name = "bench3"
+path = "src/bin/bench3.rs"
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1

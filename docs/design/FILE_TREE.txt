@@ -1,0 +1,30 @@
+Polyglot_Local_Vault_Design_v0.2/
+├── 00_README.md                          문서 패키지 개요, v0.1→v0.2 변경 요약, 확정 수치
+├── 01_PRODUCT_VISION.md                  제품 정의, 핵심 가치 6, 차별점과 포지셔닝
+├── 02_CORE_PRINCIPLES.md                 최상위 설계 원칙 15
+├── 03_SYSTEM_ARCHITECTURE.md             전체 아키텍처, 저장소 2계층, 핵심 모듈
+├── 04_VAULT_AND_DATA_MODEL.md            객체/주소/Node/Edge, 계단식 해석, 유사도 인덱스
+├── 05_FAST_LOCAL_SEARCH.md               3층 검색 엔진, 매칭 알고리즘, 성능 목표
+├── 06_POLYGLOT_PARSERS.md                Tree-sitter, 형식별 추출, call edge 정책
+├── 07_SEMANTIC_WEB_GRAPH.md              origin/confidence, 관계 종류, Graph UI
+├── 08_MCP_AND_AI.md                      MCP 4툴, 주소 왕복성, write safety
+├── 09_DESKTOP_UX.md                      레이아웃, 검색 UX, 제안 검토, BROKEN 재지정
+├── 10_MVP_ROADMAP.md                     Phase 0~5, 수치 종료 조건
+├── 11_SECURITY_PRIVACY_RELIABILITY.md    보안/개인정보/신뢰성, 보장하지 않는 것
+├── 12_ENGINEERING_DECISIONS.md           아직 결정되지 않은 것 (미결 5건)
+├── 13_FUTURE_EXTENSIONS.md               장기 확장, 유예 항목과 재검토 조건
+├── 14_LOCKED_DECISIONS.md                확정 의사결정 + 측정 근거
+├── 15_REVIEW_HISTORY.md                  v0.1 20회 검토 + v0.2 실측 개정 이력
+├── 16_SUGGESTION_ENGINE.md               [신규] 콜드스타트 해법, 규칙 R1~R5
+├── 17_MEASUREMENT_BASIS.md               [신규] 확정 수치의 출처, 조건, 한계
+├── FILE_TREE.txt                         이 파일
+│
+└── measurement/                          v0.2의 근거가 된 실측 자료
+    ├── Polyglot_Vault_Design_Review.md   v0.1 설계 리뷰 (측정 이전 단계)
+    ├── Benchmark_Report.md               1차 — 검색 성능, 파일 링크 복구율
+    ├── Benchmark_Report_2.md             2차 — 심볼 링크 복구율, 파서 복원력
+    ├── Benchmark_Report_3.md             3차 — M1~M6 (언어별/제안/call edge/스캔/스윕/인덱스)
+    ├── measurements.json                 M1~M6 통합 데이터셋
+    ├── m1_symbol_recovery.csv            언어별 복구율 31행
+    ├── m5_similarity_sweep.csv           유사도 파라미터 45조합
+    └── vault-bench.zip                   재현 가능한 측정 코드 전체 (Rust 4 / Python 10)

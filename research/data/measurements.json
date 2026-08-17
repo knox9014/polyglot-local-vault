@@ -1,0 +1,2307 @@
+{
+ "meta": {
+  "cpu": "Intel Xeon @2.10GHz, 2 cores",
+  "date": "2026-08-16",
+  "corpus_paths": 232126,
+  "repos_shallow": 5,
+  "repos_full_history": 13
+ },
+ "m1_lang_symbols": [
+  {
+   "repo": "hugo",
+   "lang": "go",
+   "frac": 0.25,
+   "date": "2023-02-21",
+   "c": {
+    "S1": 4769,
+    "S5e": 48,
+    "S3a": 335,
+    "GONE": 1254,
+    "S3u": 223,
+    "S2": 275,
+    "S4": 25,
+    "n": 6929,
+    "head_n": 9446
+   },
+   "s4nk": 0,
+   "commits": 9887,
+   "auto": 88.88105726872246,
+   "plus": 93.2511013215859,
+   "live": 5675
+  },
+  {
+   "repo": "hugo",
+   "lang": "go",
+   "frac": 0.5,
+   "date": "2019-03-25",
+   "c": {
+    "S1": 2058,
+    "S5e": 37,
+    "GONE": 1279,
+    "S3a": 237,
+    "S3u": 168,
+    "S2": 134,
+    "S4": 12,
+    "n": 3925,
+    "head_n": 9446
+   },
+   "s4nk": 0,
+   "commits": 9887,
+   "auto": 82.84202569916856,
+   "plus": 89.64474678760394,
+   "live": 2646
+  },
+  {
+   "repo": "hugo",
+   "lang": "go",
+   "frac": 0.75,
+   "date": "2016-08-08",
+   "c": {
+    "S1": 143,
+    "S3a": 193,
+    "GONE": 769,
+    "S3u": 192,
+    "S2": 218,
+    "S5e": 23,
+    "S4": 8,
+    "n": 1546,
+    "head_n": 9446
+   },
+   "s4nk": 0,
+   "commits": 9887,
+   "auto": 46.46074646074646,
+   "plus": 72.2007722007722,
+   "live": 777
+  },
+  {
+   "repo": "cobra",
+   "lang": "go",
+   "frac": 0.25,
+   "date": "2021-07-01",
+   "c": {
+    "S1": 431,
+    "S5e": 8,
+    "S3u": 8,
+    "GONE": 30,
+    "S3a": 1,
+    "S4": 4,
+    "n": 482,
+    "head_n": 612
+   },
+   "s4nk": 0,
+   "commits": 1106,
+   "auto": 95.35398230088495,
+   "plus": 98.00884955752213,
+   "live": 452
+  },
+  {
+   "repo": "cobra",
+   "lang": "go",
+   "frac": 0.5,
+   "date": "2017-07-18",
+   "c": {
+    "S1": 179,
+    "S3a": 8,
+    "S3u": 25,
+    "GONE": 101,
+    "S5e": 2,
+    "n": 315,
+    "head_n": 612
+   },
+   "s4nk": 0,
+   "commits": 1106,
+   "auto": 83.64485981308411,
+   "plus": 95.32710280373831,
+   "live": 214
+  },
+  {
+   "repo": "cobra",
+   "lang": "go",
+   "frac": 0.75,
+   "date": "2015-11-08",
+   "c": {
+    "GONE": 86,
+    "S1": 91,
+    "S3a": 9,
+    "S3u": 25,
+    "S5e": 4,
+    "S4": 1,
+    "S2": 24,
+    "n": 240,
+    "head_n": 612
+   },
+   "s4nk": 0,
+   "commits": 1106,
+   "auto": 74.67532467532467,
+   "plus": 91.55844155844156,
+   "live": 154
+  },
+  {
+   "repo": "gin",
+   "lang": "go",
+   "frac": 0.25,
+   "date": "2021-10-22",
+   "c": {
+    "S1": 1060,
+    "S5e": 4,
+    "GONE": 13,
+    "S4": 3,
+    "S3u": 3,
+    "n": 1083,
+    "head_n": 1500
+   },
+   "s4nk": 0,
+   "commits": 2007,
+   "auto": 99.06542056074767,
+   "plus": 99.62616822429906,
+   "live": 1070
+  },
+  {
+   "repo": "gin",
+   "lang": "go",
+   "frac": 0.5,
+   "date": "2017-09-04",
+   "c": {
+    "S1": 610,
+    "GONE": 63,
+    "S5e": 7,
+    "S3u": 4,
+    "S2": 18,
+    "S3a": 2,
+    "S4": 1,
+    "n": 705,
+    "head_n": 1500
+   },
+   "s4nk": 0,
+   "commits": 2007,
+   "auto": 97.81931464174455,
+   "plus": 98.5981308411215,
+   "live": 642
+  },
+  {
+   "repo": "gin",
+   "lang": "go",
+   "frac": 0.75,
+   "date": "2015-05-26",
+   "c": {
+    "S1": 311,
+    "GONE": 55,
+    "S3u": 3,
+    "S5e": 4,
+    "S3a": 9,
+    "S4": 2,
+    "n": 384,
+    "head_n": 1500
+   },
+   "s4nk": 0,
+   "commits": 2007,
+   "auto": 94.52887537993921,
+   "plus": 96.04863221884499,
+   "live": 329
+  },
+  {
+   "repo": "vue-core",
+   "lang": "typescript",
+   "frac": 0.25,
+   "date": "2023-12-11",
+   "c": {
+    "S1": 1385,
+    "S4": 6,
+    "S3u": 24,
+    "GONE": 116,
+    "S5e": 2,
+    "S2": 27,
+    "S3a": 2,
+    "n": 1562,
+    "head_n": 1784
+   },
+   "s4nk": 1,
+   "commits": 7156,
+   "auto": 97.64868603042876,
+   "plus": 99.72337482710927,
+   "live": 1446
+  },
+  {
+   "repo": "vue-core",
+   "lang": "typescript",
+   "frac": 0.5,
+   "date": "2021-07-01",
+   "c": {
+    "S1": 985,
+    "S4": 6,
+    "S3u": 40,
+    "GONE": 116,
+    "S5e": 8,
+    "S2": 125,
+    "S3a": 2,
+    "n": 1282,
+    "head_n": 1784
+   },
+   "s4nk": 1,
+   "commits": 7156,
+   "auto": 95.19725557461408,
+   "plus": 99.14236706689536,
+   "live": 1166
+  },
+  {
+   "repo": "vue-core",
+   "lang": "typescript",
+   "frac": 0.75,
+   "date": "2020-04-08",
+   "c": {
+    "S1": 672,
+    "S4": 3,
+    "S3u": 41,
+    "GONE": 94,
+    "S2": 92,
+    "S3a": 1,
+    "S5e": 7,
+    "n": 910,
+    "head_n": 1784
+   },
+   "s4nk": 0,
+   "commits": 7156,
+   "auto": 93.62745098039215,
+   "plus": 99.01960784313727,
+   "live": 816
+  },
+  {
+   "repo": "prettier",
+   "lang": "typescript",
+   "frac": 0.25,
+   "date": "2023-10-08",
+   "c": {
+    "S1": 1119,
+    "GONE": 5,
+    "S3u": 12,
+    "S2": 104,
+    "S3a": 26,
+    "S5e": 4,
+    "S4": 2,
+    "n": 1272,
+    "head_n": 1954
+   },
+   "s4nk": 2,
+   "commits": 11732,
+   "auto": 96.52722967640095,
+   "plus": 97.63220205209156,
+   "live": 1267
+  },
+  {
+   "repo": "prettier",
+   "lang": "typescript",
+   "frac": 0.5,
+   "date": "2021-06-11",
+   "c": {
+    "GONE": 13,
+    "S1": 841,
+    "S3u": 17,
+    "S2": 114,
+    "S3a": 39,
+    "S5e": 5,
+    "S4": 3,
+    "n": 1032,
+    "head_n": 1954
+   },
+   "s4nk": 3,
+   "commits": 11732,
+   "auto": 93.71933267909715,
+   "plus": 95.6820412168793,
+   "live": 1019
+  },
+  {
+   "repo": "prettier",
+   "lang": "typescript",
+   "frac": 0.75,
+   "date": "2019-02-26",
+   "c": {
+    "S2": 546,
+    "S3a": 6,
+    "S4": 5,
+    "GONE": 2,
+    "S5e": 2,
+    "n": 561,
+    "head_n": 1954
+   },
+   "s4nk": 1,
+   "commits": 11732,
+   "auto": 97.67441860465115,
+   "plus": 98.56887298747765,
+   "live": 559
+  },
+  {
+   "repo": "date-fns",
+   "lang": "typescript",
+   "frac": 0.25,
+   "date": "2023-01-21",
+   "c": {
+    "GONE": 17,
+    "S2": 689,
+    "S3u": 26,
+    "S5e": 3,
+    "S4": 2,
+    "n": 737,
+    "head_n": 1039
+   },
+   "s4nk": 1,
+   "commits": 2589,
+   "auto": 95.69444444444444,
+   "plus": 99.58333333333333,
+   "live": 720
+  },
+  {
+   "repo": "tokio",
+   "lang": "rust",
+   "frac": 0.25,
+   "date": "2023-07-01",
+   "c": {
+    "S1": 7389,
+    "S5e": 45,
+    "S4": 47,
+    "S3u": 38,
+    "GONE": 136,
+    "S3a": 31,
+    "S2": 115,
+    "n": 7801,
+    "head_n": 10104
+   },
+   "s4nk": 34,
+   "commits": 4624,
+   "auto": 97.89954337899543,
+   "plus": 99.0084801043705,
+   "live": 7665
+  },
+  {
+   "repo": "tokio",
+   "lang": "rust",
+   "frac": 0.5,
+   "date": "2021-01-17",
+   "c": {
+    "S5e": 87,
+    "S3u": 123,
+    "S4": 79,
+    "S1": 3849,
+    "GONE": 417,
+    "S3a": 150,
+    "S2": 356,
+    "n": 5061,
+    "head_n": 10104
+   },
+   "s4nk": 54,
+   "commits": 4624,
+   "auto": 90.54694229112835,
+   "plus": 94.89664082687338,
+   "live": 4644
+  },
+  {
+   "repo": "tokio",
+   "lang": "rust",
+   "frac": 0.75,
+   "date": "2018-04-08",
+   "c": {
+    "S2": 5,
+    "S3a": 37,
+    "GONE": 40,
+    "S5e": 8,
+    "S3u": 4,
+    "S4": 4,
+    "n": 98,
+    "head_n": 10104
+   },
+   "s4nk": 4,
+   "commits": 4624,
+   "auto": 8.620689655172415,
+   "plus": 22.413793103448278,
+   "live": 58
+  },
+  {
+   "repo": "clap",
+   "lang": "rust",
+   "frac": 0.25,
+   "date": "2022-11-29",
+   "c": {
+    "GONE": 160,
+    "S3a": 56,
+    "S4": 45,
+    "S5e": 57,
+    "S2": 1660,
+    "S1": 1911,
+    "S3u": 67,
+    "n": 3956,
+    "head_n": 4753
+   },
+   "s4nk": 32,
+   "commits": 9073,
+   "auto": 94.072708113804,
+   "plus": 97.0231822971549,
+   "live": 3796
+  },
+  {
+   "repo": "clap",
+   "lang": "rust",
+   "frac": 0.5,
+   "date": "2021-12-07",
+   "c": {
+    "GONE": 835,
+    "S3a": 64,
+    "S4": 91,
+    "S5e": 137,
+    "S2": 390,
+    "S1": 1230,
+    "S3u": 52,
+    "n": 2799,
+    "head_n": 4753
+   },
+   "s4nk": 84,
+   "commits": 9073,
+   "auto": 82.4847250509165,
+   "plus": 89.76578411405295,
+   "live": 1964
+  },
+  {
+   "repo": "clap",
+   "lang": "rust",
+   "frac": 0.75,
+   "date": "2018-01-09",
+   "c": {
+    "GONE": 889,
+    "S3u": 39,
+    "S3a": 50,
+    "S5e": 34,
+    "S2": 398,
+    "S4": 6,
+    "n": 1416,
+    "head_n": 4753
+   },
+   "s4nk": 6,
+   "commits": 9073,
+   "auto": 75.52182163187857,
+   "plus": 84.0607210626186,
+   "live": 527
+  },
+  {
+   "repo": "serde",
+   "lang": "rust",
+   "frac": 0.25,
+   "date": "2022-01-01",
+   "c": {
+    "S1": 1426,
+    "S2": 620,
+    "S3a": 31,
+    "S4": 128,
+    "GONE": 179,
+    "S5e": 42,
+    "S3u": 51,
+    "n": 2477,
+    "head_n": 2906
+   },
+   "s4nk": 95,
+   "commits": 4363,
+   "auto": 89.03394255874673,
+   "plus": 96.82332463011313,
+   "live": 2298
+  },
+  {
+   "repo": "serde",
+   "lang": "rust",
+   "frac": 0.5,
+   "date": "2018-01-10",
+   "c": {
+    "GONE": 170,
+    "S2": 682,
+    "S5e": 37,
+    "S4": 63,
+    "S3a": 36,
+    "S1": 708,
+    "S3u": 28,
+    "n": 1724,
+    "head_n": 2906
+   },
+   "s4nk": 49,
+   "commits": 4363,
+   "auto": 89.44658944658944,
+   "plus": 95.3024453024453,
+   "live": 1554
+  },
+  {
+   "repo": "serde",
+   "lang": "rust",
+   "frac": 0.75,
+   "date": "2016-07-01",
+   "c": {
+    "S3a": 81,
+    "GONE": 823,
+    "S3u": 23,
+    "S2": 314,
+    "S5e": 55,
+    "S4": 11,
+    "n": 1307,
+    "head_n": 2906
+   },
+   "s4nk": 9,
+   "commits": 4363,
+   "auto": 64.87603305785123,
+   "plus": 71.900826446281,
+   "live": 484
+  },
+  {
+   "repo": "django",
+   "lang": "python",
+   "frac": 0.25,
+   "date": "2018-10-01",
+   "c": {
+    "S1": 28325,
+    "S3u": 221,
+    "S3a": 130,
+    "S5e": 400,
+    "GONE": 1372,
+    "S4": 495,
+    "S2": 200,
+    "n": 31143,
+    "head_n": 43573
+   },
+   "s4nk": 364,
+   "commits": 34874,
+   "auto": 95.8147190218669,
+   "plus": 98.21974404621947,
+   "live": 29771
+  },
+  {
+   "repo": "django",
+   "lang": "python",
+   "frac": 0.5,
+   "date": "2014-02-22",
+   "c": {
+    "S3u": 1119,
+    "S1": 12774,
+    "GONE": 3573,
+    "S3a": 275,
+    "S5e": 773,
+    "S4": 809,
+    "S2": 1185,
+    "n": 20508,
+    "head_n": 43573
+   },
+   "s4nk": 606,
+   "commits": 34874,
+   "auto": 82.42692648361381,
+   "plus": 93.81163271331562,
+   "live": 16935
+  },
+  {
+   "repo": "django",
+   "lang": "python",
+   "frac": 0.75,
+   "date": "2010-09-12",
+   "c": {
+    "S3u": 832,
+    "GONE": 3714,
+    "S1": 2746,
+    "S4": 353,
+    "S5e": 444,
+    "S3a": 236,
+    "S2": 2290,
+    "n": 10615,
+    "head_n": 43573
+   },
+   "s4nk": 222,
+   "commits": 34874,
+   "auto": 72.97493116939575,
+   "plus": 90.14635560063759,
+   "live": 6901
+  },
+  {
+   "repo": "scikit-learn",
+   "lang": "python",
+   "frac": 0.25,
+   "date": "2020-04-29",
+   "c": {
+    "GONE": 1506,
+    "S3a": 20,
+    "S3u": 162,
+    "S1": 6437,
+    "S4": 103,
+    "S5e": 153,
+    "S2": 48,
+    "n": 8429,
+    "head_n": 12490
+   },
+   "s4nk": 39,
+   "commits": 33925,
+   "auto": 93.67326303625596,
+   "plus": 97.5010833453705,
+   "live": 6923
+  },
+  {
+   "repo": "scikit-learn",
+   "lang": "python",
+   "frac": 0.5,
+   "date": "2014-08-04",
+   "c": {
+    "GONE": 1765,
+    "S3a": 48,
+    "S3u": 691,
+    "S1": 1358,
+    "S5e": 144,
+    "S4": 44,
+    "S2": 448,
+    "n": 4498,
+    "head_n": 12490
+   },
+   "s4nk": 22,
+   "commits": 33925,
+   "auto": 66.08122941822174,
+   "plus": 92.97475301866082,
+   "live": 2733
+  },
+  {
+   "repo": "scikit-learn",
+   "lang": "python",
+   "frac": 0.75,
+   "date": "2012-03-10",
+   "c": {
+    "GONE": 1129,
+    "S3u": 533,
+    "S3a": 51,
+    "S5e": 65,
+    "S4": 13,
+    "S2": 134,
+    "S1": 490,
+    "n": 2415,
+    "head_n": 12490
+   },
+   "s4nk": 7,
+   "commits": 33925,
+   "auto": 48.52255054432349,
+   "plus": 90.97978227060653,
+   "live": 1286
+  }
+ ],
+ "m2_suggestions": [
+  {
+   "repo": "kubernetes",
+   "symbols": 95614,
+   "code_files": 17866,
+   "r1": {
+    "files": 591,
+    "raw": 5698,
+    "suggestions": 767,
+    "samples": [
+     [
+      "pkg/proxy/ipvs/README.md",
+      "LoadBalancerSourceRanges",
+      "pkg/proxy/serviceport.go"
+     ],
+     [
+      "pkg/proxy/nftables/README.md",
+      "LoadBalancerSourceRanges",
+      "pkg/proxy/serviceport.go"
+     ],
+     [
+      "pkg/proxy/nftables/README.md",
+      "Local",
+      "staging/src/k8s.io/cli-runtime/pkg/resource/builder.go"
+     ],
+     [
+      "pkg/proxy/nftables/README.md",
+      "priority",
+      "pkg/kubelet/eviction/helpers.go"
+     ]
+    ]
+   },
+   "r2": {
+    "files": 7692,
+    "suggestions": 28,
+    "samples": [
+     [
+      "vendor/github.com/stretchr/objx/.codeclimate.yml",
+      "vendor/github.com/stretchr/objx/type_specific_codegen.go"
+     ],
+     [
+      "test/images/nautilus/html/data.json",
+      "test/images/nautilus/html/nautilus.jpg"
+     ],
+     [
+      "test/images/kitten/html/data.json",
+      "test/images/kitten/html/kitten.jpg"
+     ],
+     [
+      "hack/golangci.yaml",
+      "staging/src/k8s.io/api/authentication/v1/types.go"
+     ]
+    ]
+   },
+   "r3": {
+    "files": 7,
+    "suggestions": 5,
+    "samples": [
+     [
+      "staging/src/k8s.io/kubectl/pkg/util/i18n/translations/extract.py",
+      "repository",
+      "vendor/github.com/distribution/reference/reference.go"
+     ],
+     [
+      "staging/src/k8s.io/kubectl/pkg/util/i18n/translations/extract.py",
+      "Short",
+      "vendor/sigs.k8s.io/kustomize/api/provenance/provenance.go"
+     ],
+     [
+      "staging/src/k8s.io/kubectl/pkg/util/i18n/translations/extract.py",
+      "description",
+      "vendor/github.com/google/cel-go/common/types/pb/type.go"
+     ],
+     [
+      "staging/src/k8s.io/kubectl/pkg/util/i18n/translations/extract.py",
+      "matchers",
+      "vendor/github.com/onsi/gomega/matchers/consist_of.go"
+     ]
+    ]
+   },
+   "r4": {
+    "suggestions": 0,
+    "samples": [],
+    "dist": {}
+   },
+   "total": 800
+  },
+  {
+   "repo": "rust",
+   "symbols": 98994,
+   "code_files": 37354,
+   "r1": {
+    "files": 1467,
+    "raw": 11131,
+    "suggestions": 842,
+    "samples": [
+     [
+      "RELEASES.md",
+      "warnings",
+      "src/tools/clippy/lintcheck/src/recursive.rs"
+     ],
+     [
+      "RELEASES.md",
+      "link_section",
+      "tests/rustdoc-html/inline_cross/auxiliary/attributes.rs"
+     ],
+     [
+      "RELEASES.md",
+      "c_uint",
+      "tests/run-make-cargo/sanitizer-cfi-build-std-clang/vendor/cfi-types/src/lib.rs"
+     ],
+     [
+      "RELEASES.md",
+      "unused_must_use",
+      "src/tools/rust-analyzer/crates/ide-diagnostics/src/handlers/unused_must_use.rs"
+     ]
+    ]
+   },
+   "r2": {
+    "files": 759,
+    "suggestions": 232,
+    "samples": [
+     [
+      "REUSE.toml",
+      "AGENTS.md"
+     ],
+     [
+      "REUSE.toml",
+      "Cargo.lock"
+     ],
+     [
+      "REUSE.toml",
+      "Cargo.toml"
+     ],
+     [
+      "REUSE.toml",
+      "CLAUDE.md"
+     ]
+    ]
+   },
+   "r3": {
+    "files": 38,
+    "suggestions": 83,
+    "samples": [
+     [
+      "x.py",
+      "available",
+      "compiler/rustc_abi/src/lib.rs"
+     ],
+     [
+      "compiler/rustc_codegen_cranelift/scripts/jit-helpers.py",
+      "backtrace",
+      "library/std/src/error.rs"
+     ],
+     [
+      "compiler/rustc_codegen_gcc/tools/generate_intrinsics.py",
+      "map_arch_intrinsic",
+      "compiler/rustc_codegen_gcc/src/intrinsic/archs.rs"
+     ],
+     [
+      "compiler/rustc_codegen_gcc/tools/generate_intrinsics.py",
+      "full_name",
+      "src/tools/rust-analyzer/crates/rust-analyzer/src/cli/analysis_stats.rs"
+     ]
+    ]
+   },
+   "r4": {
+    "suggestions": 0,
+    "samples": [],
+    "dist": {}
+   },
+   "total": 1157
+  },
+  {
+   "repo": "node",
+   "symbols": 13020,
+   "code_files": 1684,
+   "r1": {
+    "files": 573,
+    "raw": 13815,
+    "suggestions": 768,
+    "samples": [
+     [
+      "SECURITY.md",
+      "configure",
+      "deps/v8/third_party/abseil-cpp/conanfile.py"
+     ],
+     [
+      "BUILDING.md",
+      "configure",
+      "deps/v8/third_party/abseil-cpp/conanfile.py"
+     ],
+     [
+      "deps/undici/src/README.md",
+      "ProxyAgent",
+      "deps/undici/src/types/proxy-agent.d.ts"
+     ],
+     [
+      "deps/undici/src/README.md",
+      "MockAgent",
+      "deps/undici/src/types/mock-agent.d.ts"
+     ]
+    ]
+   },
+   "r2": {
+    "files": 752,
+    "suggestions": 494,
+    "samples": [
+     [
+      "pyproject.toml",
+      "tools/cpplint.py"
+     ],
+     [
+      "tsconfig.json",
+      "typings/globals.d.ts"
+     ],
+     [
+      "tsconfig.json",
+      "typings/primordials.d.ts"
+     ],
+     [
+      "tsconfig.json",
+      "lib/_http_agent.js"
+     ]
+    ]
+   },
+   "r3": {
+    "files": 505,
+    "suggestions": 409,
+    "samples": [
+     [
+      "deps/libffi/generate-configure-headers.py",
+      "configure",
+      "deps/v8/third_party/abseil-cpp/conanfile.py"
+     ],
+     [
+      "deps/libffi/testsuite/emscripten/test_libffi.py",
+      "Module",
+      "deps/crates/vendor/diplomat_core-v0_15/src/ast/modules.rs"
+     ],
+     [
+      "deps/crates/cargo_build.py",
+      "variable",
+      "tools/gyp/pylib/gyp/ninja_syntax.py"
+     ],
+     [
+      "deps/crates/cargo_build.py",
+      "platform",
+      "tools/gyp/pylib/packaging/tags.py"
+     ]
+    ]
+   },
+   "r4": {
+    "suggestions": 0,
+    "samples": [],
+    "dist": {}
+   },
+   "total": 1671
+  },
+  {
+   "repo": "TypeScript",
+   "symbols": 20430,
+   "code_files": 20788,
+   "r1": {
+    "files": 109,
+    "raw": 23,
+    "suggestions": 4,
+    "samples": [
+     [
+      "src/services/formatting/README.md",
+      "formatSpan",
+      "src/services/formatting/formatting.ts"
+     ],
+     [
+      "src/services/formatting/README.md",
+      "processNode",
+      "src/services/formatting/formatting.ts"
+     ],
+     [
+      "src/services/formatting/README.md",
+      "processPair",
+      "src/services/formatting/formatting.ts"
+     ],
+     [
+      "src/services/formatting/README.md",
+      "createRulesMap",
+      "src/services/formatting/rulesMap.ts"
+     ]
+    ]
+   },
+   "r2": {
+    "files": 1495,
+    "suggestions": 2373,
+    "samples": [
+     [
+      "package.json",
+      "LICENSE.txt"
+     ],
+     [
+      "package.json",
+      "README.md"
+     ],
+     [
+      "package.json",
+      "SECURITY.md"
+     ],
+     [
+      "package.json",
+      "ThirdPartyNoticeText.txt"
+     ]
+    ]
+   },
+   "r3": {
+    "files": 0,
+    "suggestions": 0,
+    "samples": []
+   },
+   "r4": {
+    "suggestions": 0,
+    "samples": [],
+    "dist": {}
+   },
+   "total": 2377
+  },
+  {
+   "repo": "cpython",
+   "symbols": 56172,
+   "code_files": 2330,
+   "r1": {
+    "files": 41,
+    "raw": 293,
+    "suggestions": 20,
+    "samples": [
+     [
+      "Platforms/Apple/iOS/README.md",
+      "platform",
+      "Lib/platform.py"
+     ],
+     [
+      "Platforms/emscripten/README.md",
+      "gethostbyname",
+      "Lib/test/mock_socket.py"
+     ],
+     [
+      "InternalDocs/compiler.md",
+      "identifier",
+      "Lib/tkinter/ttk.py"
+     ],
+     [
+      "InternalDocs/compiler.md",
+      "arguments",
+      "Lib/test/test_ast/test_ast.py"
+     ]
+    ]
+   },
+   "r2": {
+    "files": 160,
+    "suggestions": 123,
+    "samples": [
+     [
+      "Misc/sbom.spdx.json",
+      "Modules/expat/ascii.h"
+     ],
+     [
+      "Misc/sbom.spdx.json",
+      "Modules/expat/asciitab.h"
+     ],
+     [
+      "Misc/sbom.spdx.json",
+      "Modules/expat/expat.h"
+     ],
+     [
+      "Misc/sbom.spdx.json",
+      "Modules/expat/expat_external.h"
+     ]
+    ]
+   },
+   "r3": {
+    "files": 2328,
+    "suggestions": 4424,
+    "samples": [
+     [
+      "Platforms/Apple/__main__.py",
+      "Format",
+      "Lib/annotationlib.py"
+     ],
+     [
+      "Platforms/Apple/__main__.py",
+      "arguments",
+      "Lib/test/test_ast/test_ast.py"
+     ],
+     [
+      "Platforms/Apple/__main__.py",
+      "platform",
+      "Lib/platform.py"
+     ],
+     [
+      "Platforms/Apple/__main__.py",
+      "identifier",
+      "Lib/tkinter/ttk.py"
+     ]
+    ]
+   },
+   "r4": {
+    "suggestions": 0,
+    "samples": [],
+    "dist": {}
+   },
+   "total": 4567
+  },
+  {
+   "repo": "django",
+   "symbols": 29022,
+   "code_files": 2928,
+   "r1": {
+    "files": 9,
+    "raw": 1,
+    "suggestions": 0,
+    "samples": []
+   },
+   "r2": {
+    "files": 82,
+    "suggestions": 7,
+    "samples": [
+     [
+      "pyproject.toml",
+      "README.rst"
+     ],
+     [
+      "pyproject.toml",
+      "LICENSE.python"
+     ],
+     [
+      "pyproject.toml",
+      "tests/test_runner_apps/tagged/tests_syntax_error.py"
+     ],
+     [
+      ".github/workflows/postgis.yml",
+      ".github/workflows/data/conda/geolibs-pg17-gil.yml"
+     ]
+    ]
+   },
+   "r3": {
+    "files": 2928,
+    "suggestions": 2322,
+    "samples": [
+     [
+      "docs/lint.py",
+      "EmailMessage",
+      "django/core/mail/message.py"
+     ],
+     [
+      "django/__init__.py",
+      "configure",
+      "django/conf/__init__.py"
+     ],
+     [
+      "django/shortcuts.py",
+      "HttpResponse",
+      "django/http/response.py"
+     ],
+     [
+      "django/shortcuts.py",
+      "template",
+      "tests/template_tests/test_logging.py"
+     ]
+    ]
+   },
+   "r4": {
+    "pairs_total": 21641,
+    "suggestions": 790,
+    "samples": [
+     [
+      [
+       "django/db/models/expressions.py",
+       "tests/expressions/tests.py"
+      ],
+      52
+     ],
+     [
+      [
+       "django/test/testcases.py",
+       "tests/test_utils/tests.py"
+      ],
+      39
+     ],
+     [
+      [
+       "django/db/models/sql/query.py",
+       "tests/aggregation/tests.py"
+      ],
+      30
+     ],
+     [
+      [
+       "django/db/migrations/autodetector.py",
+       "tests/migrations/test_autodetector.py"
+      ],
+      29
+     ]
+    ],
+    "dist": {
+     "5": 244,
+     "6": 153,
+     "7": 97,
+     "8": 58,
+     "9": 44,
+     "10": 45
+    }
+   },
+   "total": 3119
+  },
+  {
+   "repo": "flask",
+   "symbols": 1082,
+   "code_files": 83,
+   "r1": {
+    "files": 6,
+    "raw": 0,
+    "suggestions": 0,
+    "samples": []
+   },
+   "r2": {
+    "files": 15,
+    "suggestions": 9,
+    "samples": [
+     [
+      "pyproject.toml",
+      "README.md"
+     ],
+     [
+      "pyproject.toml",
+      "LICENSE.txt"
+     ],
+     [
+      "pyproject.toml",
+      "CHANGES.rst"
+     ],
+     [
+      ".devcontainer/devcontainer.json",
+      ".devcontainer/on-create-command.sh"
+     ]
+    ]
+   },
+   "r3": {
+    "files": 83,
+    "suggestions": 83,
+    "samples": [
+     [
+      "tests/test_cli.py",
+      "blueprint",
+      "src/flask/wrappers.py"
+     ],
+     [
+      "tests/test_testing.py",
+      "EnvironBuilder",
+      "src/flask/testing.py"
+     ],
+     [
+      "tests/test_testing.py",
+      "json_dumps",
+      "src/flask/testing.py"
+     ],
+     [
+      "tests/test_session_interface.py",
+      "match_request",
+      "src/flask/ctx.py"
+     ]
+    ]
+   },
+   "r4": {
+    "pairs_total": 4423,
+    "suggestions": 346,
+    "samples": [
+     [
+      [
+       "CHANGES",
+       "flask/app.py"
+      ],
+      83
+     ],
+     [
+      [
+       "requirements/dev.txt",
+       "requirements/tests.txt"
+      ],
+      61
+     ],
+     [
+      [
+       "requirements/dev.txt",
+       "requirements/docs.txt"
+      ],
+      60
+     ],
+     [
+      [
+       "CHANGES.rst",
+       "src/flask/__init__.py"
+      ],
+      55
+     ]
+    ],
+    "dist": {
+     "5": 87,
+     "6": 64,
+     "7": 32,
+     "8": 21,
+     "9": 15,
+     "10": 16
+    }
+   },
+   "total": 438
+  },
+  {
+   "repo": "hugo",
+   "symbols": 6949,
+   "code_files": 907,
+   "r1": {
+    "files": 1016,
+    "raw": 2395,
+    "suggestions": 261,
+    "samples": [
+     [
+      "AGENTS.md",
+      "TestDisablePathToLower",
+      "common/paths/paths_integration_test.go"
+     ],
+     [
+      "docs/content/en/hugo-pipes/introduction.md",
+      "GetRemote",
+      "tpl/resources/resources.go"
+     ],
+     [
+      "docs/content/en/hugo-pipes/postcss.md",
+      "PostCSS",
+      "tpl/css/css.go"
+     ],
+     [
+      "docs/content/en/functions/js/Batch.md",
+      "Batch",
+      "tpl/js/js.go"
+     ]
+    ]
+   },
+   "r2": {
+    "files": 33,
+    "suggestions": 6,
+    "samples": [
+     [
+      "internal/warpc/js/package.json",
+      "internal/warpc/js/greet.js"
+     ],
+     [
+      "internal/warpc/deps/parson/package.json",
+      "internal/warpc/deps/parson/parson.c"
+     ],
+     [
+      "internal/warpc/deps/parson/package.json",
+      "internal/warpc/deps/parson/parson.h"
+     ],
+     [
+      "docs/.markdownlint-cli2.yaml",
+      "docs/content/en/about/license.md"
+     ]
+    ]
+   },
+   "r3": {
+    "files": 0,
+    "suggestions": 0,
+    "samples": []
+   },
+   "r4": {
+    "pairs_total": 15185,
+    "suggestions": 630,
+    "samples": [
+     [
+      [
+       "go.mod",
+       "go.sum"
+      ],
+      952
+     ],
+     [
+      [
+       "common/hugo/version_current.go",
+       "snap/snapcraft.yaml"
+      ],
+      236
+     ],
+     [
+      [
+       "common/hugo/version_current.go",
+       "hugoreleaser.env"
+      ],
+      165
+     ],
+     [
+      [
+       "helpers/hugo.go",
+       "snapcraft.yaml"
+      ],
+      115
+     ]
+    ],
+    "dist": {
+     "5": 191,
+     "6": 128,
+     "7": 59,
+     "8": 51,
+     "9": 41,
+     "10": 24
+    }
+   },
+   "total": 897
+  }
+ ],
+ "m2b_locality": [
+  {
+   "repo": "kubernetes",
+   "sym_all": 95614,
+   "sym_clean": 64038,
+   "docs_all": 767,
+   "docs_clean": 398,
+   "loc_all": 52.803129074315514,
+   "loc_clean": 13.06532663316583,
+   "docstr": 5,
+   "loc_docstr": 80.0,
+   "samples": [
+    [
+     "pkg/proxy/ipvs/README.md",
+     "LoadBalancerSourceRanges",
+     "pkg/proxy/serviceport.go"
+    ],
+    [
+     "pkg/proxy/nftables/README.md",
+     "LoadBalancerSourceRanges",
+     "pkg/proxy/serviceport.go"
+    ],
+    [
+     "pkg/proxy/nftables/README.md",
+     "Local",
+     "staging/src/k8s.io/cli-runtime/pkg/resource/builder.go"
+    ],
+    [
+     "pkg/proxy/nftables/README.md",
+     "priority",
+     "pkg/kubelet/eviction/helpers.go"
+    ],
+    [
+     "pkg/kubelet/pluginmanager/pluginwatcher/README.md",
+     "RollingUpdate",
+     "staging/src/k8s.io/dynamic-resource-allocation/kubeletplugin/draplugin.go"
+    ]
+   ]
+  },
+  {
+   "repo": "TypeScript",
+   "sym_all": 20430,
+   "sym_clean": 20430,
+   "docs_all": 15,
+   "docs_clean": 15,
+   "loc_all": 53.333333333333336,
+   "loc_clean": 53.333333333333336,
+   "docstr": 0,
+   "loc_docstr": 0.0,
+   "samples": [
+    [
+     "tests/baselines/reference/mappedTypeWithAny.errors.txt",
+     "IndirectArrayish",
+     "tests/cases/conformance/types/mapped/mappedTypeWithAny.ts"
+    ],
+    [
+     "tests/baselines/reference/mappedTypeWithAny.errors.txt",
+     "Arrayish",
+     "tests/cases/conformance/types/mapped/mappedTypeWithAny.ts"
+    ],
+    [
+     "tests/baselines/reference/temporal.errors.txt",
+     "Instant",
+     "src/lib/esnext.temporal.d.ts"
+    ],
+    [
+     "tests/baselines/reference/temporal.errors.txt",
+     "PlainDateTime",
+     "src/lib/esnext.temporal.d.ts"
+    ],
+    [
+     "tests/baselines/reference/weakType.errors.txt",
+     "getDefaultSettings",
+     "tests/cases/compiler/weakType.ts"
+    ]
+   ]
+  },
+  {
+   "repo": "node",
+   "sym_all": 13020,
+   "sym_clean": 2511,
+   "docs_all": 764,
+   "docs_clean": 155,
+   "loc_all": 55.10471204188482,
+   "loc_clean": 1.935483870967742,
+   "docstr": 127,
+   "loc_docstr": 98.4251968503937,
+   "samples": [
+    [
+     "tools/gyp/CHANGELOG.md",
+     "GetCompilerPredefines",
+     "tools/gyp/pylib/gyp/common.py"
+    ],
+    [
+     "tools/gyp/docs/LanguageSpecification.md",
+     "Configuration",
+     "tools/test.py"
+    ],
+    [
+     "tools/gyp/docs/LanguageSpecification.md",
+     "Global",
+     "typings/globals.d.ts"
+    ],
+    [
+     "tools/gyp/docs/Testing.md",
+     "run_gyp",
+     "tools/gyp_node.py"
+    ],
+    [
+     "tools/gyp/docs/UserDocumentation.md",
+     "Resource",
+     "typings/internalBinding/async_wrap.d.ts"
+    ]
+   ]
+  },
+  {
+   "repo": "rust",
+   "sym_all": 98994,
+   "sym_clean": 98983,
+   "docs_all": 771,
+   "docs_clean": 770,
+   "loc_all": 33.07392996108949,
+   "loc_clean": 33.116883116883116,
+   "docstr": 83,
+   "loc_docstr": 34.93975903614458,
+   "samples": [
+    [
+     "RELEASES.md",
+     "warnings",
+     "src/tools/clippy/lintcheck/src/recursive.rs"
+    ],
+    [
+     "RELEASES.md",
+     "link_section",
+     "tests/rustdoc-html/inline_cross/auxiliary/attributes.rs"
+    ],
+    [
+     "RELEASES.md",
+     "c_int",
+     "library/std/src/sys/thread_local/destructors/linux_like.rs"
+    ],
+    [
+     "RELEASES.md",
+     "unused_must_use",
+     "src/tools/rust-analyzer/crates/ide-diagnostics/src/handlers/unused_must_use.rs"
+    ],
+    [
+     "RELEASES.md",
+     "TrustedLen",
+     "library/core/src/iter/traits/marker.rs"
+    ]
+   ]
+  },
+  {
+   "repo": "cpython",
+   "sym_all": 56153,
+   "sym_clean": 56153,
+   "docs_all": 6015,
+   "docs_clean": 6015,
+   "loc_all": 0.3491271820448878,
+   "loc_clean": 0.3491271820448878,
+   "docstr": 4414,
+   "loc_docstr": 83.0992297236067,
+   "samples": [
+    [
+     "Misc/NEWS.d/3.9.0b1.rst",
+     "isidentifier",
+     "Lib/collections/__init__.py"
+    ],
+    [
+     "Misc/NEWS.d/3.9.0b1.rst",
+     "compile_command",
+     "Lib/codeop.py"
+    ],
+    [
+     "Misc/NEWS.d/3.9.0b1.rst",
+     "get_source_segment",
+     "Lib/ast.py"
+    ],
+    [
+     "Misc/NEWS.d/3.9.0b1.rst",
+     "available_timezones",
+     "Lib/zoneinfo/_tzpath.py"
+    ],
+    [
+     "Misc/NEWS.d/3.9.0b1.rst",
+     "lru_cache",
+     "Lib/functools.py"
+    ]
+   ]
+  },
+  {
+   "repo": "django",
+   "sym_all": 29022,
+   "sym_clean": 29022,
+   "docs_all": 4864,
+   "docs_clean": 4864,
+   "loc_all": 0.0,
+   "loc_clean": 0.0,
+   "docstr": 2322,
+   "loc_docstr": 44.18604651162791,
+   "samples": [
+    [
+     "docs/faq/admin.txt",
+     "is_active",
+     "django/views/debug.py"
+    ],
+    [
+     "docs/faq/admin.txt",
+     "is_staff",
+     "tests/auth_tests/models/custom_user.py"
+    ],
+    [
+     "docs/faq/admin.txt",
+     "ModelAdmin",
+     "django/contrib/admin/options.py"
+    ],
+    [
+     "docs/faq/admin.txt",
+     "ManyToManyField",
+     "django/db/models/fields/related.py"
+    ],
+    [
+     "docs/faq/admin.txt",
+     "ForeignKey",
+     "django/db/models/fields/related.py"
+    ]
+   ]
+  },
+  {
+   "repo": "scikit-learn",
+   "sym_all": 9333,
+   "sym_clean": 8952,
+   "docs_all": 3408,
+   "docs_clean": 3406,
+   "loc_all": 0.3227699530516432,
+   "loc_clean": 0.32295948326482676,
+   "docstr": 1929,
+   "loc_docstr": 81.5966822187662,
+   "samples": [
+    [
+     "sklearn/datasets/descr/covtype.rst",
+     "fetch_covtype",
+     "sklearn/datasets/_covtype.py"
+    ],
+    [
+     "sklearn/datasets/descr/lfw.rst",
+     "fetch_lfw_people",
+     "sklearn/datasets/_lfw.py"
+    ],
+    [
+     "sklearn/datasets/descr/lfw.rst",
+     "fetch_lfw_pairs",
+     "sklearn/datasets/_lfw.py"
+    ],
+    [
+     "sklearn/datasets/descr/twenty_newsgroups.rst",
+     "fetch_20newsgroups",
+     "sklearn/datasets/_twenty_newsgroups.py"
+    ],
+    [
+     "sklearn/datasets/descr/twenty_newsgroups.rst",
+     "fetch_20newsgroups_vectorized",
+     "sklearn/datasets/_twenty_newsgroups.py"
+    ]
+   ]
+  },
+  {
+   "repo": "hugo",
+   "sym_all": 6949,
+   "sym_clean": 6930,
+   "docs_all": 261,
+   "docs_clean": 261,
+   "loc_all": 0.0,
+   "loc_clean": 0.0,
+   "docstr": 0,
+   "loc_docstr": 0.0,
+   "samples": [
+    [
+     "AGENTS.md",
+     "TestDisablePathToLower",
+     "common/paths/paths_integration_test.go"
+    ],
+    [
+     "docs/content/en/hugo-pipes/introduction.md",
+     "GetRemote",
+     "tpl/resources/resources.go"
+    ],
+    [
+     "docs/content/en/hugo-pipes/postcss.md",
+     "PostCSS",
+     "tpl/css/css.go"
+    ],
+    [
+     "docs/content/en/functions/js/Batch.md",
+     "Batch",
+     "tpl/js/js.go"
+    ],
+    [
+     "docs/content/en/functions/js/Batch.md",
+     "Script",
+     "internal/js/esbuild/batch.go"
+    ]
+   ]
+  }
+ ],
+ "m2c_prose": [
+  {
+   "name": "kubernetes",
+   "symbols": 64038,
+   "docs": 338,
+   "raw": 398,
+   "kept": 255,
+   "dropped": 143
+  },
+  {
+   "name": "TypeScript",
+   "symbols": 20430,
+   "docs": 10092,
+   "raw": 15,
+   "kept": 7,
+   "dropped": 8
+  },
+  {
+   "name": "node",
+   "symbols": 2511,
+   "docs": 310,
+   "raw": 155,
+   "kept": 31,
+   "dropped": 124
+  },
+  {
+   "name": "rust",
+   "symbols": 98983,
+   "docs": 1661,
+   "raw": 770,
+   "kept": 610,
+   "dropped": 160
+  },
+  {
+   "name": "cpython",
+   "symbols": 56153,
+   "docs": 1531,
+   "raw": 6015,
+   "kept": 2561,
+   "dropped": 3454
+  },
+  {
+   "name": "django",
+   "symbols": 29022,
+   "docs": 734,
+   "raw": 4864,
+   "kept": 2169,
+   "dropped": 2695
+  },
+  {
+   "name": "scikit-learn",
+   "symbols": 9333,
+   "docs": 267,
+   "raw": 3408,
+   "kept": 2019,
+   "dropped": 1389
+  },
+  {
+   "name": "hugo",
+   "symbols": 6930,
+   "docs": 1098,
+   "raw": 261,
+   "kept": 179,
+   "dropped": 82
+  }
+ ],
+ "m2d_dict": [
+  {
+   "name": "kubernetes",
+   "raw": 478,
+   "kept": 358,
+   "drop": 120
+  },
+  {
+   "name": "TypeScript",
+   "raw": 39,
+   "kept": 12,
+   "drop": 27
+  },
+  {
+   "name": "node",
+   "raw": 436,
+   "kept": 120,
+   "drop": 316
+  },
+  {
+   "name": "rust",
+   "raw": 1058,
+   "kept": 870,
+   "drop": 188
+  },
+  {
+   "name": "cpython",
+   "raw": 7674,
+   "kept": 6180,
+   "drop": 1494
+  },
+  {
+   "name": "django",
+   "raw": 5709,
+   "kept": 4721,
+   "drop": 988
+  },
+  {
+   "name": "scikit-learn",
+   "raw": 3528,
+   "kept": 3341,
+   "drop": 187
+  },
+  {
+   "name": "hugo",
+   "raw": 382,
+   "kept": 161,
+   "drop": 221
+  }
+ ],
+ "m3_call_edges": {
+  "per_repo": [
+   {
+    "repo": "django",
+    "lang": "python",
+    "defs": 29022,
+    "calls": 187887,
+    "AMBIG": 71126,
+    "UNIQUE": 59045,
+    "EXTERN": 57716
+   },
+   {
+    "repo": "scikit-learn",
+    "lang": "python",
+    "defs": 9151,
+    "calls": 109537,
+    "UNIQUE": 35068,
+    "EXTERN": 47872,
+    "AMBIG": 26597
+   },
+   {
+    "repo": "flask",
+    "lang": "python",
+    "defs": 1082,
+    "calls": 3906,
+    "EXTERN": 1532,
+    "UNIQUE": 1262,
+    "AMBIG": 1112
+   },
+   {
+    "repo": "hugo",
+    "lang": "go",
+    "defs": 5695,
+    "calls": 50388,
+    "UNIQUE": 14268,
+    "AMBIG": 18229,
+    "EXTERN": 17891
+   },
+   {
+    "repo": "gin",
+    "lang": "go",
+    "defs": 1127,
+    "calls": 9175,
+    "UNIQUE": 2704,
+    "AMBIG": 2107,
+    "EXTERN": 4364
+   }
+  ],
+  "agg": {
+   "AMBIG": 119171,
+   "UNIQUE": 112347,
+   "EXTERN": 129375,
+   "defs": 46077
+  },
+  "by_kind": {
+   "attr": {
+    "AMBIG": 93307,
+    "UNIQUE": 40567,
+    "EXTERN": 52134
+   },
+   "bare": {
+    "UNIQUE": 56613,
+    "AMBIG": 20895,
+    "EXTERN": 44139
+   },
+   "self": {
+    "UNIQUE": 15167,
+    "AMBIG": 4969,
+    "EXTERN": 33102
+   }
+  }
+ },
+ "m4_reconcile": {
+  "files": 229062,
+  "dirs": 17733,
+  "t_cold_ms": 752.5854620000132,
+  "t_warm_ms": 643.6043570000152,
+  "t_noignore_ms": 616.0973510000076,
+  "t_diff_ms": 123.14002199997276,
+  "index_mb": 31.473685264587402
+ },
+ "m5_sweep": [
+  {
+   "k": 3,
+   "sketch": 32,
+   "thr": 0.4,
+   "recovered": 1515,
+   "precision": 92.90322580645162,
+   "oracle_fire": 69.25826630920466,
+   "index": 946094
+  },
+  {
+   "k": 3,
+   "sketch": 32,
+   "thr": 0.5,
+   "recovered": 1253,
+   "precision": 93.55783308931186,
+   "oracle_fire": 61.036639857015196,
+   "index": 946094
+  },
+  {
+   "k": 3,
+   "sketch": 32,
+   "thr": 0.6,
+   "recovered": 954,
+   "precision": 93.41637010676158,
+   "oracle_fire": 50.22341376228776,
+   "index": 946094
+  },
+  {
+   "k": 3,
+   "sketch": 32,
+   "thr": 0.7,
+   "recovered": 723,
+   "precision": 93.05555555555556,
+   "oracle_fire": 38.605898123324394,
+   "index": 946094
+  },
+  {
+   "k": 3,
+   "sketch": 32,
+   "thr": 0.8,
+   "recovered": 557,
+   "precision": 92.5,
+   "oracle_fire": 32.171581769437,
+   "index": 946094
+  },
+  {
+   "k": 3,
+   "sketch": 96,
+   "thr": 0.4,
+   "recovered": 1512,
+   "precision": 92.90322580645162,
+   "oracle_fire": 69.25826630920466,
+   "index": 1525270
+  },
+  {
+   "k": 3,
+   "sketch": 96,
+   "thr": 0.5,
+   "recovered": 1253,
+   "precision": 93.55783308931186,
+   "oracle_fire": 61.036639857015196,
+   "index": 1525270
+  },
+  {
+   "k": 3,
+   "sketch": 96,
+   "thr": 0.6,
+   "recovered": 954,
+   "precision": 93.41637010676158,
+   "oracle_fire": 50.22341376228776,
+   "index": 1525270
+  },
+  {
+   "k": 3,
+   "sketch": 96,
+   "thr": 0.7,
+   "recovered": 723,
+   "precision": 93.05555555555556,
+   "oracle_fire": 38.605898123324394,
+   "index": 1525270
+  },
+  {
+   "k": 3,
+   "sketch": 96,
+   "thr": 0.8,
+   "recovered": 557,
+   "precision": 92.5,
+   "oracle_fire": 32.171581769437,
+   "index": 1525270
+  },
+  {
+   "k": 3,
+   "sketch": 256,
+   "thr": 0.4,
+   "recovered": 1512,
+   "precision": 92.90322580645162,
+   "oracle_fire": 69.25826630920466,
+   "index": 1903426
+  },
+  {
+   "k": 3,
+   "sketch": 256,
+   "thr": 0.5,
+   "recovered": 1253,
+   "precision": 93.55783308931186,
+   "oracle_fire": 61.036639857015196,
+   "index": 1903426
+  },
+  {
+   "k": 3,
+   "sketch": 256,
+   "thr": 0.6,
+   "recovered": 954,
+   "precision": 93.41637010676158,
+   "oracle_fire": 50.22341376228776,
+   "index": 1903426
+  },
+  {
+   "k": 3,
+   "sketch": 256,
+   "thr": 0.7,
+   "recovered": 723,
+   "precision": 93.05555555555556,
+   "oracle_fire": 38.605898123324394,
+   "index": 1903426
+  },
+  {
+   "k": 3,
+   "sketch": 256,
+   "thr": 0.8,
+   "recovered": 557,
+   "precision": 92.5,
+   "oracle_fire": 32.171581769437,
+   "index": 1903426
+  },
+  {
+   "k": 4,
+   "sketch": 32,
+   "thr": 0.4,
+   "recovered": 1323,
+   "precision": 92.87790697674419,
+   "oracle_fire": 61.48346738159071,
+   "index": 925624
+  },
+  {
+   "k": 4,
+   "sketch": 32,
+   "thr": 0.5,
+   "recovered": 1049,
+   "precision": 92.69565217391305,
+   "oracle_fire": 51.385165326184094,
+   "index": 925624
+  },
+  {
+   "k": 4,
+   "sketch": 32,
+   "thr": 0.6,
+   "recovered": 809,
+   "precision": 92.25806451612904,
+   "oracle_fire": 41.55495978552279,
+   "index": 925624
+  },
+  {
+   "k": 4,
+   "sketch": 32,
+   "thr": 0.7,
+   "recovered": 646,
+   "precision": 92.74611398963731,
+   "oracle_fire": 34.495084897229674,
+   "index": 925624
+  },
+  {
+   "k": 4,
+   "sketch": 32,
+   "thr": 0.8,
+   "recovered": 510,
+   "precision": 92.03539823008849,
+   "oracle_fire": 30.29490616621984,
+   "index": 925624
+  },
+  {
+   "k": 4,
+   "sketch": 96,
+   "thr": 0.4,
+   "recovered": 1323,
+   "precision": 92.87790697674419,
+   "oracle_fire": 61.48346738159071,
+   "index": 1518274
+  },
+  {
+   "k": 4,
+   "sketch": 96,
+   "thr": 0.5,
+   "recovered": 1049,
+   "precision": 92.69565217391305,
+   "oracle_fire": 51.385165326184094,
+   "index": 1518274
+  },
+  {
+   "k": 4,
+   "sketch": 96,
+   "thr": 0.6,
+   "recovered": 809,
+   "precision": 92.25806451612904,
+   "oracle_fire": 41.55495978552279,
+   "index": 1518274
+  },
+  {
+   "k": 4,
+   "sketch": 96,
+   "thr": 0.7,
+   "recovered": 646,
+   "precision": 92.74611398963731,
+   "oracle_fire": 34.495084897229674,
+   "index": 1518274
+  },
+  {
+   "k": 4,
+   "sketch": 96,
+   "thr": 0.8,
+   "recovered": 510,
+   "precision": 92.03539823008849,
+   "oracle_fire": 30.29490616621984,
+   "index": 1518274
+  },
+  {
+   "k": 4,
+   "sketch": 256,
+   "thr": 0.4,
+   "recovered": 1322,
+   "precision": 93.00291545189503,
+   "oracle_fire": 61.304736371760505,
+   "index": 1926876
+  },
+  {
+   "k": 4,
+   "sketch": 256,
+   "thr": 0.5,
+   "recovered": 1048,
+   "precision": 92.84467713787086,
+   "oracle_fire": 51.206434316353885,
+   "index": 1926876
+  },
+  {
+   "k": 4,
+   "sketch": 256,
+   "thr": 0.6,
+   "recovered": 808,
+   "precision": 92.44060475161987,
+   "oracle_fire": 41.37622877569258,
+   "index": 1926876
+  },
+  {
+   "k": 4,
+   "sketch": 256,
+   "thr": 0.7,
+   "recovered": 645,
+   "precision": 92.96875,
+   "oracle_fire": 34.316353887399465,
+   "index": 1926876
+  },
+  {
+   "k": 4,
+   "sketch": 256,
+   "thr": 0.8,
+   "recovered": 509,
+   "precision": 92.28486646884274,
+   "oracle_fire": 30.116175156389634,
+   "index": 1926876
+  },
+  {
+   "k": 5,
+   "sketch": 32,
+   "thr": 0.4,
+   "recovered": 1144,
+   "precision": 92.64214046822742,
+   "oracle_fire": 53.440571939231454,
+   "index": 903181
+  },
+  {
+   "k": 5,
+   "sketch": 32,
+   "thr": 0.5,
+   "recovered": 906,
+   "precision": 92.32283464566929,
+   "oracle_fire": 45.39767649687221,
+   "index": 903181
+  },
+  {
+   "k": 5,
+   "sketch": 32,
+   "thr": 0.6,
+   "recovered": 731,
+   "precision": 91.60671462829735,
+   "oracle_fire": 37.26541554959786,
+   "index": 903181
+  },
+  {
+   "k": 5,
+   "sketch": 32,
+   "thr": 0.7,
+   "recovered": 598,
+   "precision": 92.34972677595628,
+   "oracle_fire": 32.707774798927616,
+   "index": 903181
+  },
+  {
+   "k": 5,
+   "sketch": 32,
+   "thr": 0.8,
+   "recovered": 494,
+   "precision": 91.8918918918919,
+   "oracle_fire": 29.75871313672922,
+   "index": 903181
+  },
+  {
+   "k": 5,
+   "sketch": 96,
+   "thr": 0.4,
+   "recovered": 1144,
+   "precision": 92.64214046822742,
+   "oracle_fire": 53.440571939231454,
+   "index": 1498237
+  },
+  {
+   "k": 5,
+   "sketch": 96,
+   "thr": 0.5,
+   "recovered": 906,
+   "precision": 92.32283464566929,
+   "oracle_fire": 45.39767649687221,
+   "index": 1498237
+  },
+  {
+   "k": 5,
+   "sketch": 96,
+   "thr": 0.6,
+   "recovered": 731,
+   "precision": 91.60671462829735,
+   "oracle_fire": 37.26541554959786,
+   "index": 1498237
+  },
+  {
+   "k": 5,
+   "sketch": 96,
+   "thr": 0.7,
+   "recovered": 598,
+   "precision": 92.34972677595628,
+   "oracle_fire": 32.707774798927616,
+   "index": 1498237
+  },
+  {
+   "k": 5,
+   "sketch": 96,
+   "thr": 0.8,
+   "recovered": 494,
+   "precision": 91.8918918918919,
+   "oracle_fire": 29.75871313672922,
+   "index": 1498237
+  },
+  {
+   "k": 5,
+   "sketch": 256,
+   "thr": 0.4,
+   "recovered": 1144,
+   "precision": 92.64214046822742,
+   "oracle_fire": 53.440571939231454,
+   "index": 1924160
+  },
+  {
+   "k": 5,
+   "sketch": 256,
+   "thr": 0.5,
+   "recovered": 906,
+   "precision": 92.32283464566929,
+   "oracle_fire": 45.39767649687221,
+   "index": 1924160
+  },
+  {
+   "k": 5,
+   "sketch": 256,
+   "thr": 0.6,
+   "recovered": 731,
+   "precision": 91.60671462829735,
+   "oracle_fire": 37.26541554959786,
+   "index": 1924160
+  },
+  {
+   "k": 5,
+   "sketch": 256,
+   "thr": 0.7,
+   "recovered": 598,
+   "precision": 92.34972677595628,
+   "oracle_fire": 32.707774798927616,
+   "index": 1924160
+  },
+  {
+   "k": 5,
+   "sketch": 256,
+   "thr": 0.8,
+   "recovered": 494,
+   "precision": 91.8918918918919,
+   "oracle_fire": 29.75871313672922,
+   "index": 1924160
+  }
+ ]
+}
