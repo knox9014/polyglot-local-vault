@@ -4,8 +4,9 @@
 /research/bench/corpus/
 /research/bench/*.txt.out
 
-# 구현 단계 (아직 없음)
-/target/
+# Rust 빌드 산출물 (Cargo.lock 은 커밋 — 바이너리 크레이트라 재현성 목적)
+**/target/
+
 node_modules/
 dist/
 build/
