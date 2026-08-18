@@ -157,6 +157,28 @@ confidence  certain / probable / heuristic
 - 제안에 불변 ID를 발급한다.
 - 특정 AI 모델에 종속되지 않는다.
 
+## Desktop Framework
+
+- **Tauri.** (2026-08-18 확정, `12_ENGINEERING_DECISIONS.md`의 "미결 ① Desktop Framework"에서 이동)
+
+> **근거**: keystroke(입력 → 검색 → 결과 리스트를 화면에 반영) 왕복 지연을 합성 데이터 10만 건, 같은 검색 로직, 같은 타이핑 시퀀스로 통제해 Tauri와 Qt(PySide6)를 직접 재봤다.
+>
+> | | p50 | p95 | p99 |
+> |---|---:|---:|---:|
+> | Tauri (Windows, release 빌드) | 2.3ms | **8.4ms** | 9.2ms |
+> | Qt/PySide6 (Windows) | 3.3ms | 14.7ms | 16.2ms |
+> | Tauri (Linux, WSLg — 최악 조건, 소프트웨어 렌더링) | 6ms | 13~16ms | 15~18ms |
+>
+> Windows에서는 Tauri가 p50~p99 전 구간에서 Qt(PySide6)보다 낫다. Linux는 WSLg(가상 GUI 레이어, GPU 가속 없이 소프트웨어 렌더링)로만 쟀다는 한계가 있어 실제 베어메탈 성능의 상한도 하한도 아니다 — 그래도 이 페널티 낀 조건에서조차 Qt(Windows, 네이티브)와 비등했다.
+>
+> **재는 과정에서 걸린 방법론 함정 둘, 기록해둘 가치가 있다.**
+> 1. 처음엔 Tauri debug 빌드로 쟀다가 p95 67.5ms가 나와 Qt(31.9ms)에 크게 졌다 — release 빌드로 바꾸니 8.4ms로 8배 좋아졌다. **debug 빌드로 프레임워크를 비교하면 안 된다.**
+> 2. 처음엔 Tauri 쪽이 결과를 화면에 렌더링하지 않고 invoke() 왕복만 쟀다 — Qt는 `QListWidget`에 실제로 채워 넣었으니 불공평했다. DOM에 결과 리스트를 실제로 그리는 것까지 포함시킨 뒤에야 공정한 비교가 됐다.
+>
+> 남은 한계: Qt 쪽은 프로덕션 후보인 Rust 바인딩(cxx-qt)이 아니라 PySide6(Python)로 쟀다 — 이 머신에 cmake가 없어 cxx-qt가 안 빌드됐다. Python 인터프리터 오버헤드가 Qt 수치에 섞여 있다는 뜻이나, 이미 Tauri가 이겼으므로 결론을 뒤집을 방향은 아니다.
+>
+> 재현 코드: `research/bench/ui_latency/`(Tauri 프로토타입 + `qt_proto.py`).
+
 ## 성능 목표 (검증 가능한 형태)
 
 목표는 하드웨어 조건과 함께 명시한다.

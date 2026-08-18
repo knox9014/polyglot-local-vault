@@ -19,26 +19,9 @@ v0.1에서 이 문서의 이름은 "12 Engineering Decisions **TODO**" 였고, 9
 | call edge 범위 | bare/self만 생성, attr 제외 | 유일률 73.0/75.3% vs 30.3% |
 | 구문 검색 | v0.1 제외 | 인덱스 5.5% → 21.8% |
 | Core language | Rust | 검색 커널로 실증 |
+| Desktop Framework | Tauri | Windows release 빌드 keystroke p95 8.4ms vs Qt(PySide6) 14.7ms. Linux(WSLg, 최악 조건)도 13~16ms로 게이트 근접 유지 (→ `14_LOCKED_DECISIONS.md` "Desktop Framework") |
 
 근거 열의 수치는 조건을 생략한 요약이다. **정본은 `17_MEASUREMENT_BASIS.md` 하나다** — 아래 "벤치마크 회귀 테스트"의 게이트 값처럼 조건과 함께 인용해야 하는 자리에서는 `17`을 직접 참조한다.
-
-## 미결 ① Desktop Framework
-
-후보:
-
-- Tauri
-- Qt
-- 기타 native framework
-
-평가 기준:
-
-- 에디터 컴포넌트 품질 (구문 강조, 대용량 파일)
-- Graph 시각화 라이브러리 접근성
-- 배포 크기 / 자동 업데이트
-- Rust 코어와의 FFI 비용
-- 플랫폼별 파일 다이얼로그 / 권한
-
-**결정 시점**: Phase 1 시작 전. Phase 1이 최소 UI를 포함하므로 더 미룰 수 없다.
 
 ## 미결 ② Search Ranking 가중치
 

@@ -26,7 +26,9 @@ m1 · m3    완료 (2026-08-17) — **미해결 항목이 전부 닫혔다**
 
 **blocker 7 · major 7 · minor 3 · N1 이 전부 닫혔다.**
 
-**Phase 0 이 완전히 끝났다** (2026-08-18) — 측정 4개(SHA 고정·기준선 재측정·게이트 모집단 정의·저장소별 하한 산출) + 구현 8개(스캔·주소·락·정합성스캔·watcher·git reader·저장소분리·Parser Adapter) 전부. `10_MVP_ROADMAP.md`의 P0 종료 조건("고정 SHA 코퍼스에서 링크 복구율 기준선이 측정되고 게이트 값·대상 범위가 확정됨")이 충족됐다. **다음은 Phase 1(Fast Search + 최소 UI)** — 데스크톱 프레임워크(Tauri/Qt) 결정이 그 전제조건.
+**Phase 0 이 완전히 끝났다** (2026-08-18) — 측정 4개(SHA 고정·기준선 재측정·게이트 모집단 정의·저장소별 하한 산출) + 구현 8개(스캔·주소·락·정합성스캔·watcher·git reader·저장소분리·Parser Adapter) 전부. `10_MVP_ROADMAP.md`의 P0 종료 조건("고정 SHA 코퍼스에서 링크 복구율 기준선이 측정되고 게이트 값·대상 범위가 확정됨")이 충족됐다.
+
+**데스크톱 프레임워크는 Tauri로 확정했다** (2026-08-18, → `14_LOCKED_DECISIONS.md` "Desktop Framework"). Windows release 빌드 keystroke p95 8.4ms로 Qt(PySide6) 14.7ms를 이겼고, Linux(WSLg, 최악 조건)도 게이트 근처를 유지했다. **다음은 Phase 1(Fast Search + 최소 UI) 착수.**
 
 ## 게이트는 합산과 저장소별 두 가지다 (2026-08-17 확정, 2026-08-18 파일 쪽 완결)
 

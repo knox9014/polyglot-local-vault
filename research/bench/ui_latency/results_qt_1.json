@@ -1,0 +1,10 @@
+{
+  "framework": "qt (pyside6 widgets, in-process \u2014 no IPC boundary)",
+  "dataset_size": 100000,
+  "samples": 1500,
+  "p50_ms": 3.078300040215254,
+  "p95_ms": 13.326600019354373,
+  "p99_ms": 14.575399982277304,
+  "max_ms": 19.25920002395287,
+  "min_ms": 1.6109999851323664
+}

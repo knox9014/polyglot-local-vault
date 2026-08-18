@@ -95,3 +95,23 @@ flask 규칙별 생성량(2026-08-17 추가 측정 → `raw_output/m2_flask.txt`
 추가 의존성:
     pip install tree_sitter tree_sitter_python tree_sitter_go \
                 tree_sitter_typescript tree_sitter_rust english-words
+
+## ui_latency/ — Desktop Framework 결정 (Tauri vs Qt)
+
+키 입력 → 검색 → 결과 리스트를 화면에 반영하는 왕복 지연을 통제 비교했다. 결정은
+`14_LOCKED_DECISIONS.md` "Desktop Framework" 참조.
+
+- `tauri-latency-proto/`   Tauri 프로토타입. `npm install` 후 `npx tauri build --no-bundle`,
+                           `BENCH_RUN=<n> ./src-tauri/target/release/tauri-latency-proto` 로 실행
+                           (release 빌드로 재야 한다 — debug 빌드는 8배 느리게 나온다)
+- `qt_proto.py`            Qt(PySide6) 프로토타입. `pip install PySide6` 후 `python qt_proto.py <n>`
+- `results_qt_*.json`      Qt 3회 반복 결과 (Windows)
+
+둘 다 합성 파일 10만 건, 같은 검색 로직(파일명 substring, 결과 50건 캡), 같은 타이핑 시퀀스로
+맞췄다. 결과를 화면 리스트에 실제로 반영하는 것까지 측정 범위에 포함— 안 그러면 Tauri 쪽이
+불공평하게 유리해진다.
+
+Qt 는 cxx-qt(Rust 바인딩)가 아니라 PySide6(Python)로 쟀다 — 이 프로젝트 개발 머신에 cmake 가
+없어 cxx-qt 빌드가 안 된다. Linux 재현은 WSL2 + WSLg 로 했고 GPU 가속 없이 소프트웨어
+렌더링으로 돌았다(빌드 로그의 `ZINK: failed to choose pdev` 경고) — 베어메탈 Linux 성능의
+상한도 하한도 아니다.
