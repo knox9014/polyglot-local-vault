@@ -1,5 +1,23 @@
 # vault-bench — Polyglot Local Vault 설계 가정 실측 코드
 
+## 코퍼스 위치 (고정)
+
+측정 대상 저장소는 **리포 밖 고정 경로**에 둔다. 리포 안에 두면 저장소 안의 저장소가 되고
+수 GB 짜리 남의 코드가 딸려 들어갈 위험이 있다.
+
+```
+C:\Users\seong\vault-corpus\        (이 머신 기준. 다른 머신이면 아래 표대로 다시 받는다)
+```
+
+| 저장소 | 상태 | 용도 |
+|---|---|---|
+| django · scikit-learn · flask · requests | **받아둠** (전체 히스토리, PINNED SHA 체크아웃) | 실험2·실험3, v0.1 CI 게이트 |
+| hugo · cobra · gin · vue core · prettier · date-fns · tokio · clap · serde | 미보유 | M1 언어별. Phase 2 에서 필요 |
+| cpython · kubernetes · rust · node · TypeScript | 미보유 | 검색 성능(232K 파일). Phase 1 에서 필요 |
+
+받는 방법과 SHA 는 `PINNED_COMMITS.txt` 참조. **`--depth` 금지** — 링크 복구 측정이 rename
+체인을 따라간다. Windows 에서는 `git config core.longpaths true` 가 필요하다(django 체크아웃 실패).
+
 ## search/ — 실험 1 (검색 속도)
 - `bench1_baseline.rs`              최초 구현. 비트마스크 프리필터 + DP 스코어링
 - `bench2_incremental_greedy.rs`    기각된 두 가설(incremental 축소 / greedy 스코어) 검증
