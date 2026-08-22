@@ -2,6 +2,15 @@
 
 # Polyglot Local Vault
 
+[![Rust](https://img.shields.io/badge/rust-000000?logo=rust&logoColor=white)](https://github.com/knox9014/polyglot-local-vault)
+[![Tauri](https://img.shields.io/badge/tauri-24C8DB?logo=tauri&logoColor=white)](https://github.com/knox9014/polyglot-local-vault)
+[![Desktop App](https://img.shields.io/badge/desktop--app-blue)](https://github.com/knox9014/polyglot-local-vault)
+[![Local First](https://img.shields.io/badge/local--first-green)](https://github.com/knox9014/polyglot-local-vault)
+[![File Search](https://img.shields.io/badge/file--search-orange)](https://github.com/knox9014/polyglot-local-vault)
+[![Knowledge Management](https://img.shields.io/badge/knowledge--management-purple)](https://github.com/knox9014/polyglot-local-vault)
+[![MCP](https://img.shields.io/badge/MCP-model--context--protocol-lightgrey)](https://github.com/knox9014/polyglot-local-vault)
+[![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial-lightgrey)](https://github.com/knox9014/polyglot-local-vault/blob/main/LICENSE)
+
 A local desktop workspace that indexes the many kinds of files on your machine into a single Vault —
 searching them instantly, and treating what is *inside* each file (functions, headings, config keys)
 as addressable objects with their own `vault://` addresses.
