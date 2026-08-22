@@ -178,6 +178,13 @@
   .screenshot-card img { width: 100%; }
   .screenshot-caption { padding: 14px 20px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); }
 
+  .codeblock {
+    background: #0e120d; border: 1px solid var(--line); border-radius: 10px;
+    padding: 18px 20px; font-size: 13px; line-height: 1.7; color: var(--fg2);
+    overflow-x: auto; white-space: pre;
+  }
+  .codeblock .k { color: var(--accent); }
+
   .footer-row {
     display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-end; justify-content: space-between;
   }
@@ -333,6 +340,31 @@
       <p data-i18n="en">AI attaches on top of that over MCP, as an option. Take it away and the app still works.</p>
       <p data-i18n="ko">AI는 그 위에 MCP로 붙는 선택 사항이다. 빼도 앱은 그대로 동작한다.</p>
     </div>
+  </div>
+</div>
+
+<div class="wrap section" id="mcp">
+  <div class="grid2">
+    <div>
+      <h2 class="h2" data-i18n="en">Connect it to Claude, Codex, or any MCP client</h2>
+      <h2 class="h2" data-i18n="ko">Claude·Codex 등 MCP 클라이언트에 연결하기</h2>
+      <p style="font-size:16px; line-height:1.7; color:var(--fg2); margin-top:16px" data-i18n="en">A separate stdio binary — no desktop app required. It exposes four tools: <code>search</code>, <code>read</code>, <code>neighbors</code>, <code>link</code>. Download it and point your MCP client's config at it.</p>
+      <p style="font-size:16px; line-height:1.7; color:var(--fg2); margin-top:16px" data-i18n="ko">데스크톱 앱과 별개인 stdio 바이너리다. <code>search</code>·<code>read</code>·<code>neighbors</code>·<code>link</code> 네 개 툴을 제공한다. 다운로드해서 MCP 클라이언트 설정에 경로만 넣으면 된다.</p>
+      <div class="ctarow" style="padding-top:16px; margin-top:0">
+        <a class="cta" href="https://github.com/knox9014/polyglot-local-vault/releases/download/v0.1.0/vault-mcp-windows-x64.exe">
+          <span data-i18n="en">Download MCP server (Windows)</span><span data-i18n="ko">MCP 서버 다운로드 (Windows)</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg>
+        </a>
+      </div>
+    </div>
+    <div class="codeblock mono">{
+  <span class="k">"mcpServers"</span>: {
+    <span class="k">"polyglot-vault"</span>: {
+      <span class="k">"command"</span>: <span class="k">"C:\\path\\to\\vault-mcp-windows-x64.exe"</span>,
+      <span class="k">"args"</span>: [<span class="k">"C:\\path\\to\\your\\vault"</span>]
+    }
+  }
+}</div>
   </div>
 </div>
 
