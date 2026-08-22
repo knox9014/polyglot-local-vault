@@ -695,7 +695,6 @@ function saveGraphSettings() {
 
 gs.toggle.addEventListener("click", () => {
   gs.panel.classList.toggle("hidden");
-  gs.toggle.classList.toggle("hidden", !gs.panel.classList.contains("hidden"));
 });
 gs.reset.addEventListener("click", () => {
   graphSettings = { ...DEFAULT_GRAPH };
@@ -1370,5 +1369,19 @@ async function applyLiveChange(changedPaths) {
     }
   }
 }
+
+function initUpdateToast() {
+  const toast = document.getElementById("update-toast");
+  const applyBtn = document.getElementById("update-toast-apply");
+  const dismissBtn = document.getElementById("update-toast-dismiss");
+  listen("update-available", () => toast.classList.remove("hidden"));
+  dismissBtn.addEventListener("click", () => toast.classList.add("hidden"));
+  applyBtn.addEventListener("click", () => {
+    applyBtn.textContent = "업데이트 중...";
+    applyBtn.disabled = true;
+    invoke("apply_update"); // backend exits the app once the rebuild script is spawned
+  });
+}
+initUpdateToast();
 
 init();

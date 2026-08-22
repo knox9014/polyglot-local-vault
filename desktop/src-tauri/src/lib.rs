@@ -681,6 +681,64 @@ async fn show_launcher(app: tauri::AppHandle) -> Result<(), String> {
     Ok(())
 }
 
+// Baked in at build time (build.rs) from `git rev-parse HEAD` — compared
+// against GitHub's latest master commit on startup so the in-app popup can
+// tell the user a newer build exists.
+const BUILD_GIT_SHA: &str = env!("BUILD_GIT_SHA");
+const UPDATE_REPO: &str = "knox9014/polyglot-local-vault";
+// This machine's checkout only — the app isn't distributed elsewhere yet,
+// so there's no install-time way to discover this path generically.
+const UPDATE_REPO_DIR: &str = r"C:\Users\seong\Desktop\claude_code_project\polyglot-local-vault";
+
+#[derive(Serialize, Clone)]
+struct UpdateInfo {
+    available: bool,
+}
+
+/// Shells out to `gh` (already authenticated on this machine) rather than
+/// calling the GitHub REST API directly, since the repo is private and this
+/// reuses the user's existing `gh auth login` instead of embedding a token.
+#[tauri::command]
+fn check_for_update() -> UpdateInfo {
+    let remote_sha = std::process::Command::new("gh")
+        .args([
+            "api",
+            &format!("repos/{UPDATE_REPO}/commits/master"),
+            "--jq",
+            ".sha",
+        ])
+        .output()
+        .ok()
+        .filter(|o| o.status.success())
+        .and_then(|o| String::from_utf8(o.stdout).ok())
+        .map(|s| s.trim().to_string())
+        .unwrap_or_default();
+
+    UpdateInfo {
+        available: !remote_sha.is_empty() && remote_sha != BUILD_GIT_SHA,
+    }
+}
+
+/// Spawns the update script detached, then exits — the running exe has to
+/// release its file lock before the script can overwrite it, so this
+/// process cannot wait around for the rebuild to finish.
+#[tauri::command]
+fn apply_update(app: tauri::AppHandle) -> Result<(), String> {
+    std::process::Command::new("powershell")
+        .args([
+            "-NoProfile",
+            "-WindowStyle",
+            "Hidden",
+            "-File",
+            &format!(r"{UPDATE_REPO_DIR}\desktop\check-and-update.ps1"),
+        ])
+        .current_dir(UPDATE_REPO_DIR)
+        .spawn()
+        .map_err(|e| e.to_string())?;
+    app.exit(0);
+    Ok(())
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
@@ -706,8 +764,22 @@ pub fn run() {
             get_vault_config,
             save_vault_config,
             open_vault_window,
-            show_launcher
+            show_launcher,
+            check_for_update,
+            apply_update
         ])
+        .setup(|app| {
+            // Fire-and-forget: a stale/offline `gh` call just means no popup,
+            // never a startup delay or failure.
+            let handle = app.handle().clone();
+            std::thread::spawn(move || {
+                let info = check_for_update();
+                if info.available {
+                    let _ = handle.emit("update-available", ());
+                }
+            });
+            Ok(())
+        })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
