@@ -50,11 +50,26 @@ npm run tauri dev                   # 데스크톱 앱 개발 실행
 npm run tauri build                 # 릴리스 빌드
 ```
 
-MCP 서버는 별도 stdio 바이너리다.
+MCP 서버는 데스크톱 앱과 별개인 stdio 바이너리다. 직접 빌드하거나:
 
 ```bash
 cd polyglot-vault && cargo run --bin vault-mcp
 ```
+
+**[미리 빌드된 Windows 바이너리 다운로드](https://github.com/knox9014/polyglot-local-vault/releases/download/v0.1.0/vault-mcp-windows-x64.exe)** 후 MCP 클라이언트(Claude Desktop, Claude Code, Codex 등)에 경로를 등록해도 된다:
+
+```json
+{
+  "mcpServers": {
+    "polyglot-vault": {
+      "command": "C:\\path\\to\\vault-mcp-windows-x64.exe",
+      "args": ["C:\\path\\to\\your\\vault"]
+    }
+  }
+}
+```
+
+`search`·`read`·`neighbors`·`link` 네 개 툴을 제공한다.
 
 ## 구조
 

@@ -57,11 +57,26 @@ npm run tauri dev                   # run the desktop app in dev mode
 npm run tauri build                 # release build
 ```
 
-The MCP server is a separate stdio binary.
+The MCP server is a separate stdio binary — no desktop app required. Build it yourself:
 
 ```bash
 cd polyglot-vault && cargo run --bin vault-mcp
 ```
+
+or **[download the prebuilt Windows binary](https://github.com/knox9014/polyglot-local-vault/releases/download/v0.1.0/vault-mcp-windows-x64.exe)** and point your MCP client at it (Claude Desktop, Claude Code, Codex, or any MCP-compatible client):
+
+```json
+{
+  "mcpServers": {
+    "polyglot-vault": {
+      "command": "C:\\path\\to\\vault-mcp-windows-x64.exe",
+      "args": ["C:\\path\\to\\your\\vault"]
+    }
+  }
+}
+```
+
+It exposes four tools: `search`, `read`, `neighbors`, `link`.
 
 ## Layout
 
