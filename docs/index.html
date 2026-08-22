@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Polyglot Local Vault</title>
+<meta name="description" content="A local desktop workspace that indexes your files into a single Vault, searches them instantly, and links what's inside them.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --bg: #0a0d0a;
+    --line: #1e261c;
+    --muted: #8c9789;
+    --surface: #10150f;
+    --accent: #b6f24a;
+    --fg: #e6ece5;
+    --fg2: #b9c4b6;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: "IBM Plex Sans KR", "Malgun Gothic", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: #d6ff8c; }
+  h1, h2, h3 { margin: 0; font-weight: 600; letter-spacing: -0.02em; }
+  p { margin: 0; }
+  code, .mono { font-family: "JetBrains Mono", ui-monospace, monospace; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 32px; }
+  .section { padding: 88px 0; border-bottom: 1px solid var(--line); }
+  .section:last-of-type { border-bottom: none; }
+  img { max-width: 100%; display: block; }
+
+  [data-i18n] { display: none; }
+  html[data-lang="ko"] [data-i18n="ko"] { display: revert; }
+  html[data-lang="en"] [data-i18n="en"] { display: revert; }
+  html[data-lang="ko"] span[data-i18n="ko"] { display: inline; }
+  html[data-lang="en"] span[data-i18n="en"] { display: inline; }
+
+  .hero-bg {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(182,242,74,0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(182,242,74,0.045) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(120% 80% at 20% 0%, #000 0%, transparent 70%);
+    mask-image: radial-gradient(120% 80% at 20% 0%, #000 0%, transparent 70%);
+  }
+  .hero-inner { position: relative; padding: 28px 0 104px; }
+
+  .navbar { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-bottom: 96px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; letter-spacing: -0.01em; }
+  .navmeta { display: flex; align-items: center; gap: 24px; font-size: 14px; color: var(--muted); }
+  .navmeta .dev { color: var(--accent); }
+  .navmeta .meta-item { display: none; }
+  @media (min-width: 560px) { .navmeta .meta-item { display: inline; } }
+  .navbar { flex-wrap: wrap; row-gap: 12px; }
+
+  .langtoggle {
+    display: flex; align-items: center; gap: 4px; padding: 3px;
+    border: 1px solid var(--line); border-radius: 999px;
+  }
+  .langtoggle button {
+    font: inherit; font-size: 13px; padding: 5px 11px; border-radius: 999px;
+    border: none; background: transparent; color: var(--muted); cursor: pointer;
+  }
+  .langtoggle button.active { background: var(--accent); color: #0a0d0a; font-weight: 600; }
+
+  .hero-content { display: flex; flex-direction: column; gap: 28px; max-width: 780px; }
+  .badge {
+    display: inline-flex; align-self: flex-start; align-items: center; gap: 8px;
+    padding: 6px 12px; border: 1px solid var(--line); border-radius: 999px;
+    font-size: 13px; color: var(--muted);
+  }
+  .badge .dot { width: 6px; height: 6px; border-radius: 999px; background: var(--accent); }
+  h1.headline { font-size: 40px; line-height: 1.15; font-weight: 700; }
+  @media (min-width: 560px) { h1.headline { font-size: 60px; line-height: 1.08; } }
+  h1.headline .accent { color: var(--accent); }
+  .lede { font-size: 20px; line-height: 1.65; color: var(--fg2); max-width: 660px; }
+
+  .ctarow { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding-top: 8px; }
+  .cta {
+    display: inline-flex; align-items: center; gap: 8px; padding: 14px 22px;
+    border-radius: 8px; background: var(--accent); color: #0a0d0a;
+    font-size: 15px; font-weight: 600;
+  }
+  .cta:hover { color: #0a0d0a; background: #d6ff8c; }
+  .cta-ghost {
+    padding: 14px 20px; border: 1px solid var(--line); border-radius: 8px;
+    font-size: 15px; color: var(--muted);
+  }
+
+  h2.h2 { font-size: 32px; line-height: 1.25; }
+  .grid2 { display: grid; grid-template-columns: 1fr; gap: 24px; }
+  @media (min-width: 760px) { .grid2 { grid-template-columns: repeat(2, minmax(0,1fr)); gap: 56px; } }
+  .card {
+    display: flex; flex-direction: column; gap: 12px; padding: 24px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  }
+  .addr-list { display: flex; flex-direction: column; gap: 10px; font-size: 14px; }
+  .addr-list span { color: var(--accent); word-break: break-all; }
+
+  .feat-grid { display: grid; grid-template-columns: 1fr; gap: 20px; padding-top: 40px; }
+  @media (min-width: 760px) { .feat-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+  .feat {
+    display: flex; flex-direction: column; gap: 14px; padding: 28px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  }
+  .feat h3 { font-size: 19px; }
+  .feat p { font-size: 15px; line-height: 1.7; color: var(--fg2); }
+  .icon { color: var(--accent); }
+
+  .stats-grid {
+    display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--line);
+    border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
+  }
+  @media (min-width: 640px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 900px) { .stats-grid { grid-template-columns: repeat(3, 1fr); } }
+  .stat { display: flex; flex-direction: column; gap: 6px; padding: 26px; background: var(--surface); }
+  .stat .num { font-size: 32px; font-weight: 600; color: var(--accent); }
+  .stat .num small { font-size: 16px; color: var(--muted); font-weight: 400; }
+  .stat .label { font-size: 14px; color: var(--fg2); }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    padding: 7px 13px; border: 1px solid var(--line); border-radius: 6px;
+    font-size: 13px; color: var(--fg2);
+  }
+
+  .quote-card {
+    display: flex; flex-direction: column; gap: 18px; padding: 32px;
+    background: var(--surface); border: 1px solid var(--line); border-left: 2px solid var(--accent);
+    border-radius: 12px;
+  }
+  .quote-card h3 { font-size: 22px; line-height: 1.35; }
+  .quote-card p { font-size: 16px; line-height: 1.75; color: var(--fg2); }
+
+  .phase-row {
+    display: grid; grid-template-columns: 96px 1fr; gap: 16px; align-items: start;
+    padding: 20px 0; border-top: 1px solid var(--line);
+  }
+  @media (min-width: 640px) { .phase-row { grid-template-columns: 110px 1fr 90px; } }
+  .phase-row .id { font-size: 14px; font-weight: 600; color: var(--accent); }
+  .phase-row .title { font-size: 16px; font-weight: 500; }
+  .phase-row .desc { font-size: 14px; line-height: 1.65; color: var(--muted); margin-top: 6px; }
+  .phase-row .state { font-size: 13px; color: var(--muted); }
+  @media (min-width: 640px) { .phase-row .state { text-align: right; } }
+
+  .screenshot-card {
+    border: 1px solid var(--line); border-radius: 12px; overflow: hidden;
+    background: var(--surface); margin-top: 40px;
+  }
+  .screenshot-card img { width: 100%; }
+  .screenshot-caption { padding: 14px 20px; font-size: 13px; color: var(--muted); border-top: 1px solid var(--line); }
+
+  .footer-row {
+    display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-end; justify-content: space-between;
+  }
+  .footer-note { font-size: 15px; line-height: 1.7; color: var(--muted); max-width: 520px; }
+  .footer-meta { display: flex; flex-direction: column; gap: 8px; font-size: 14px; color: var(--muted); text-align: right; }
+</style>
+</head>
+<body>
+
+<div class="hero-bg">
+  <div class="wrap hero-inner">
+    <div class="navbar">
+      <div class="brand">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 20.5 7v10L12 21.5 3.5 17V7z"></path><path d="M12 12v9.5"></path><path d="m3.5 7 8.5 5 8.5-5"></path></svg>
+        <span>Polyglot Local Vault</span>
+      </div>
+      <div class="navmeta">
+        <span class="meta-item">
+          <span data-i18n="en">Local only</span><span data-i18n="ko">로컬 전용</span>
+        </span>
+        <span class="meta-item">Rust + Tauri</span>
+        <span class="meta-item dev">
+          <span data-i18n="en">In development</span><span data-i18n="ko">개발 중</span>
+        </span>
+        <div class="langtoggle">
+          <button id="btn-ko" onclick="setLang('ko')">한국어</button>
+          <button id="btn-en" onclick="setLang('en')">English</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-content">
+      <span class="badge">
+        <span class="dot"></span>
+        <span data-i18n="en">No cloud · no account · everything stays on your machine</span>
+        <span data-i18n="ko">클라우드 없음 · 계정 없음 · 전부 내 컴퓨터 안에서</span>
+      </span>
+      <h1 class="headline">
+        <span data-i18n="en">You found the file.<br>Not what's <span class="accent">inside</span> it.</span>
+        <span data-i18n="ko">파일은 찾았는데,<br><span class="accent">그 안</span>은 못 찾는다.</span>
+      </h1>
+      <p class="lede" data-i18n="en">Polyglot Local Vault indexes the files on your machine into a single local Vault, searches them instantly, and gives the things inside them — functions, headings, config keys — their own addresses. Move a file or rewrite the code, and those connections survive.</p>
+      <p class="lede" data-i18n="ko">Polyglot Local Vault는 내 컴퓨터의 파일을 하나의 로컬 Vault로 묶어 초고속으로 검색하고, 파일 안의 함수·문단·설정 키까지 고유 주소로 연결하는 데스크톱 앱이다. 파일을 옮기거나 코드를 고쳐도 그 연결은 살아남는다.</p>
+      <div class="ctarow">
+        <a class="cta" href="https://github.com/knox9014/polyglot-local-vault">
+          <span data-i18n="en">View on GitHub</span><span data-i18n="ko">GitHub에서 보기</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"></path><path d="m12 5 7 7-7 7"></path></svg>
+        </a>
+        <span class="cta-ghost" data-i18n="en">Public release build coming</span>
+        <span class="cta-ghost" data-i18n="ko">공개 배포 빌드 준비 중</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap section">
+  <div class="grid2">
+    <div>
+      <h2 class="h2" data-i18n="en">Search stops at the filename</h2>
+      <h2 class="h2" data-i18n="ko">검색은 파일 이름에서 멈춘다</h2>
+      <p style="font-size:17px; line-height:1.75; color:var(--fg2); margin-top:20px" data-i18n="en">Which document explained that setting. Which file and line holds that function. What this code is tied to. Right now a person has to remember all of it — and the moment a folder changes, that memory breaks.</p>
+      <p style="font-size:17px; line-height:1.75; color:var(--fg2); margin-top:20px" data-i18n="ko">어느 문서에서 그 설정을 설명했는지, 그 함수가 어느 파일 몇 번째 줄인지, 이 코드가 어느 문서와 이어져 있는지 — 지금은 전부 사람이 기억하고 있어야 한다. 폴더가 바뀌는 순간 그 기억은 끊긴다.</p>
+    </div>
+    <div class="card">
+      <span style="font-size:13px; color:var(--muted)" data-i18n="en">The unit the Vault works with</span>
+      <span style="font-size:13px; color:var(--muted)" data-i18n="ko">Vault가 다루는 최소 단위</span>
+      <div class="addr-list mono">
+        <span>vault://src/parser.rs#fn:parse_symbols</span>
+        <span data-i18n="en">vault://docs/design/18.md#h:data-formats</span>
+        <span data-i18n="ko">vault://docs/design/18.md#h:데이터-형식</span>
+        <span>vault://config/app.toml#/server/port</span>
+      </div>
+      <p style="font-size:14px; line-height:1.7; color:var(--muted); padding-top:4px" data-i18n="en">Addresses point at things inside files, not at files. Link through one and the link follows the target when it moves.</p>
+      <p style="font-size:14px; line-height:1.7; color:var(--muted); padding-top:4px" data-i18n="ko">파일이 아니라 파일 안의 것에 주소가 붙는다. 이 주소로 연결하면 파일이 이동해도 링크가 따라온다.</p>
+    </div>
+  </div>
+</div>
+
+<div class="wrap section">
+  <h2 class="h2" data-i18n="en">Four things it does</h2>
+  <h2 class="h2" data-i18n="ko">네 가지를 한다</h2>
+  <div class="feat-grid">
+    <div class="feat">
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+      <h3 data-i18n="en">Search with no wait</h3><h3 data-i18n="ko">기다림이 없는 검색</h3>
+      <p data-i18n="en">Filename search across 100,000 files at a p95 of 7.4 ms — results land before you finish typing. The full-text index takes 5.5% of what the source does.</p>
+      <p data-i18n="ko">10만 개 파일에서 이름 검색이 p95 7.4밀리초. 타이핑이 끝나기 전에 결과가 나온다. 내용 전문 검색 인덱스는 원본 대비 5.5%만 차지한다.</p>
+    </div>
+    <div class="feat">
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13.5a4.5 4.5 0 0 0 6.6.6l2.6-2.6a4.5 4.5 0 0 0-6.4-6.4l-1.5 1.5"></path><path d="M14 10.5a4.5 4.5 0 0 0-6.6-.6l-2.6 2.6a4.5 4.5 0 0 0 6.4 6.4l1.5-1.5"></path></svg>
+      <h3 data-i18n="en">Links that don't break</h3><h3 data-i18n="ko">깨지지 않는 링크</h3>
+      <p data-i18n="en">Move or rename a file and the connection repairs itself — 95.7% of file links and 80.0% of symbol links survive with no human involved, 93.6% counting one click.</p>
+      <p data-i18n="ko">파일을 옮기거나 이름을 바꿔도 연결이 자동 복구된다 — 파일 링크 95.7%, 함수·제목 같은 내부 심볼 링크 80.0%가 사람 손 없이 살아남고, 한 번 클릭까지 포함하면 93.6%다.</p>
+    </div>
+    <div class="feat">
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"></circle><circle cx="18" cy="10" r="2.5"></circle><circle cx="9" cy="18" r="2.5"></circle><path d="M8.2 7.1 15.8 9"></path><path d="M16.7 12.2 10.4 16"></path></svg>
+      <h3 data-i18n="en">Connections it proposes</h3><h3 data-i18n="ko">알아서 제안하는 연결</h3>
+      <p data-i18n="en">It reads code names mentioned in docs, paths written in config, and imports in source to find candidates. Proposals only land once you approve them.</p>
+      <p data-i18n="ko">문서에 적힌 코드 이름, 설정에 적힌 경로, 소스의 import를 읽어 관계 후보를 찾아낸다. 제안은 승인해야 반영된다.</p>
+    </div>
+    <div class="feat">
+      <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3v5"></path><path d="M15 3v5"></path><rect x="6" y="8" width="12" height="7" rx="2"></rect><path d="M12 15v6"></path></svg>
+      <h3 data-i18n="en">AI, only when you want it</h3><h3 data-i18n="ko">원할 때만 붙는 AI</h3>
+      <p data-i18n="en">An external AI can read this structure over MCP. Measured on 20 natural-language questions: 1.05 calls on average, 20/20 correct, 17.6× fewer tokens than grep.</p>
+      <p data-i18n="ko">MCP로 외부 AI가 이 지식 구조를 읽을 수 있다. 자연어 질문 20건 실측에서 평균 1.05회 호출로 정답 20/20, grep 방식 대비 토큰 17.6배 절감.</p>
+    </div>
+  </div>
+</div>
+
+<div class="wrap section">
+  <h2 class="h2" data-i18n="en">Every number here was measured</h2>
+  <h2 class="h2" data-i18n="ko">전부 실제로 재본 값이다</h2>
+  <p style="font-size:16px; color:var(--muted); max-width:640px; margin-top:10px" data-i18n="en">Taken from 18 real public repositories — 130K commits, 230K files. No synthetic data.</p>
+  <p style="font-size:16px; color:var(--muted); max-width:640px; margin-top:10px" data-i18n="ko">공개 저장소 18개 · 커밋 13만 · 파일 23만에서 측정했다. 합성 데이터는 쓰지 않았다.</p>
+  <div class="stats-grid" style="margin-top:40px">
+    <div class="stat"><span class="num mono">7.4<small>ms</small></span><span class="label" data-i18n="en">Filename search p95 @ 100K files</span><span class="label" data-i18n="ko">파일명 검색 p95 @ 10만 파일</span></div>
+    <div class="stat"><span class="num mono">18.5<small>s</small></span><span class="label" data-i18n="en">First full index build</span><span class="label" data-i18n="ko">최초 전체 인덱싱</span></div>
+    <div class="stat"><span class="num mono">5.5<small>%</small></span><span class="label" data-i18n="en">Index size / source size</span><span class="label" data-i18n="ko">인덱스 크기 / 원본 크기</span></div>
+    <div class="stat"><span class="num mono">95.7<small>%</small></span><span class="label" data-i18n="en">File links recovered automatically</span><span class="label" data-i18n="ko">파일 링크 자동 복구율</span></div>
+    <div class="stat"><span class="num mono">96.9<small>%</small></span><span class="label" data-i18n="en">Symbols kept while editing (16.7% the old way)</span><span class="label" data-i18n="ko">편집 중 심볼 보존 (기존 방식 16.7%)</span></div>
+    <div class="stat"><span class="num mono">281<small>ms</small></span><span class="label" data-i18n="en">Full integrity scan @ 100K files</span><span class="label" data-i18n="ko">전체 정합성 스캔 @ 10만 파일</span></div>
+  </div>
+
+  <div class="screenshot-card">
+    <img src="screenshots/graph-view.png" alt="Relationship graph of this repository's own 203 files, opened as a Vault" loading="lazy">
+    <div class="screenshot-caption">
+      <span data-i18n="en">The relationship graph — this repository's own 203 files, opened as a Vault. Color is language, dotted lines are doc↔code links.</span>
+      <span data-i18n="ko">관계 그래프 — 이 저장소 자체의 파일 203개를 Vault로 열었다. 색은 언어, 점선은 문서↔코드 링크다.</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap section">
+  <div class="grid2">
+    <div>
+      <h2 class="h2" data-i18n="en">It reads inside 12 formats</h2>
+      <h2 class="h2" data-i18n="ko">12가지 형식의 속을 읽는다</h2>
+      <p style="font-size:16px; line-height:1.7; color:var(--fg2); margin-top:16px" data-i18n="en">Code is split by function and class, documents by heading, config and tables by key and column — and each piece gets its own address.</p>
+      <p style="font-size:16px; line-height:1.7; color:var(--fg2); margin-top:16px" data-i18n="ko">코드는 함수·클래스 단위로, 문서는 제목 단위로, 설정과 표는 키와 컬럼 단위로 쪼개 각각에 주소를 붙인다.</p>
+      <div class="chips" style="margin-top:16px">
+        <span class="chip mono">.py</span><span class="chip mono">.rs</span><span class="chip mono">.go</span><span class="chip mono">.ts</span>
+        <span class="chip mono">.md</span><span class="chip mono">.rst</span><span class="chip mono">.txt</span>
+        <span class="chip mono">.json</span><span class="chip mono">.yaml</span><span class="chip mono">.toml</span>
+        <span class="chip mono">.csv</span><span class="chip mono">.ipynb</span>
+      </div>
+    </div>
+    <div class="quote-card">
+      <h3 data-i18n="en">This is not an app that runs on AI</h3>
+      <h3 data-i18n="ko">AI가 굴러가는 앱이 아니다</h3>
+      <p data-i18n="en">Search, structure extraction, and relationship inference are all deterministic algorithms. The same input always gives the same result, it works with the network off, and every connection can be explained.</p>
+      <p data-i18n="ko">검색·구조 추출·관계 계산은 전부 결정론적 알고리즘이 한다. 같은 입력이면 언제나 같은 결과가 나오고, 인터넷이 끊겨도 돌아가고, 왜 그렇게 연결됐는지 설명할 수 있다.</p>
+      <p data-i18n="en">AI attaches on top of that over MCP, as an option. Take it away and the app still works.</p>
+      <p data-i18n="ko">AI는 그 위에 MCP로 붙는 선택 사항이다. 빼도 앱은 그대로 동작한다.</p>
+    </div>
+  </div>
+</div>
+
+<div class="wrap section" id="status">
+  <h2 class="h2" data-i18n="en">Where it stands</h2>
+  <h2 class="h2" data-i18n="ko">지금 어디까지 왔나</h2>
+  <p style="font-size:16px; color:var(--muted); margin-top:10px" data-i18n="en">19 design documents were settled before implementation began. Today: 6,850 lines of core, 1,146 lines of desktop, 163 tests passing.</p>
+  <p style="font-size:16px; color:var(--muted); margin-top:10px" data-i18n="ko">설계 문서 19개를 먼저 확정하고 구현에 들어갔다. 현재 코어 6,850줄 + 데스크톱 1,146줄, 테스트 163개 통과.</p>
+
+  <div style="margin-top:20px">
+    <div class="phase-row">
+      <span class="id mono">Phase 0</span>
+      <div>
+        <div class="title" data-i18n="en">Foundations — scan, address, watch</div>
+        <div class="title" data-i18n="ko">기반 — 스캔 · 주소 · 감시</div>
+        <div class="desc" data-i18n="en">File scanning, the vault:// address scheme, change watcher, git reader, parser adapter</div>
+        <div class="desc" data-i18n="ko">파일 스캔, vault:// 주소 체계, 파일 변경 감시, git 읽기, 파서 어댑터</div>
+      </div>
+      <span class="state" data-i18n="en">Done</span><span class="state" data-i18n="ko">완료</span>
+    </div>
+    <div class="phase-row">
+      <span class="id mono">Phase 1</span>
+      <div>
+        <div class="title" data-i18n="en">Fast search + minimal UI</div>
+        <div class="title" data-i18n="ko">초고속 검색 + 최소 UI</div>
+        <div class="desc" data-i18n="en">Inverted index, incremental indexing, search box and viewer. Edit a file and the view refreshes itself</div>
+        <div class="desc" data-i18n="ko">역인덱스, 증분 인덱싱, 검색창과 뷰어. 파일이 바뀌면 화면이 자동 갱신된다</div>
+      </div>
+      <span class="state" data-i18n="en">Done</span><span class="state" data-i18n="ko">완료</span>
+    </div>
+    <div class="phase-row">
+      <span class="id mono">Phase 2</span>
+      <div>
+        <div class="title" data-i18n="en">Parsers + symbol search</div>
+        <div class="title" data-i18n="ko">파서 + 심볼 검색</div>
+        <div class="desc" data-i18n="en">Tree-sitter for code symbols, plus headings and config keys, across 12 formats</div>
+        <div class="desc" data-i18n="ko">Tree-sitter로 코드 심볼, 문서 제목, 설정 키까지 12개 형식에서 추출</div>
+      </div>
+      <span class="state" data-i18n="en">Done</span><span class="state" data-i18n="ko">완료</span>
+    </div>
+    <div class="phase-row">
+      <span class="id mono">Phase 3</span>
+      <div>
+        <div class="title" data-i18n="en">Workspace, graph, suggestions</div>
+        <div class="title" data-i18n="ko">워크스페이스 · 그래프 · 제안</div>
+        <div class="desc" data-i18n="en">Relationship proposals with an approval UI, file editing, media viewers, a D3 relationship graph</div>
+        <div class="desc" data-i18n="ko">관계 제안과 승인 UI, 파일 편집, 미디어 뷰어, D3 관계 그래프</div>
+      </div>
+      <span class="state" data-i18n="en">Done</span><span class="state" data-i18n="ko">완료</span>
+    </div>
+    <div class="phase-row">
+      <span class="id mono">Phase 4</span>
+      <div>
+        <div class="title" data-i18n="en">MCP — connecting external AI</div>
+        <div class="title" data-i18n="ko">MCP — 외부 AI 연결</div>
+        <div class="desc" data-i18n="en">Four tools — search, read, neighbors, link — served over stdio</div>
+        <div class="desc" data-i18n="ko">search · read · neighbors · link 네 개 툴을 stdio 서버로 제공</div>
+      </div>
+      <span class="state" data-i18n="en">Done</span><span class="state" data-i18n="ko">완료</span>
+    </div>
+    <div class="phase-row">
+      <span class="id mono" data-i18n="en">Next</span><span class="id mono" data-i18n="ko">다음</span>
+      <div>
+        <div class="title" data-i18n="en">Real use and release prep</div>
+        <div class="title" data-i18n="ko">실사용 검증과 배포 준비</div>
+        <div class="desc" data-i18n="en">Fix what daily use turns up, measure the suggestion approval rate, prepare a public release</div>
+        <div class="desc" data-i18n="ko">실제로 쓰면서 버그를 잡고, 제안 승인율을 측정하고, 공개 배포를 준비한다</div>
+      </div>
+      <span class="state" data-i18n="en">Planned</span><span class="state" data-i18n="ko">진행 예정</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap section" style="padding-bottom:88px">
+  <div class="footer-row">
+    <div>
+      <h2 style="font-size:26px; line-height:1.3" data-i18n="en">Your files stay on your machine</h2>
+      <h2 style="font-size:26px; line-height:1.3" data-i18n="ko">내 파일은 내 컴퓨터에만 있는다</h2>
+      <p class="footer-note" style="margin-top:12px" data-i18n="en">Nothing is uploaded. There is no login and no subscription. The index and the links live as text in a <code>.vault/</code> folder inside your project, versioned along with it.</p>
+      <p class="footer-note" style="margin-top:12px" data-i18n="ko">업로드도, 로그인도, 구독도 없다. 인덱스와 링크는 전부 프로젝트 폴더 안 <code>.vault/</code> 에 텍스트로 남아 그대로 버전 관리된다.</p>
+    </div>
+    <div class="footer-meta">
+      <span>Polyglot Local Vault</span>
+      <a href="https://github.com/knox9014/polyglot-local-vault">github.com/knox9014/polyglot-local-vault</a>
+      <a href="https://github.com/knox9014/polyglot-local-vault/blob/master/LICENSE">PolyForm Noncommercial 1.0.0</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  function setLang(lang) {
+    document.documentElement.setAttribute('data-lang', lang);
+    document.documentElement.setAttribute('lang', lang);
+    document.getElementById('btn-ko').classList.toggle('active', lang === 'ko');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    try { localStorage.setItem('plv-lang', lang); } catch (e) {}
+  }
+  (function () {
+    var saved = null;
+    try { saved = localStorage.getItem('plv-lang'); } catch (e) {}
+    var lang = saved || (navigator.language && navigator.language.startsWith('ko') ? 'ko' : 'en');
+    setLang(lang);
+  })();
+</script>
+</body>
+</html>
