@@ -9,6 +9,8 @@ as addressable objects with their own `vault://` addresses.
 Indexing, search, structure extraction, and relationship inference are all done by **deterministic
 algorithms**. AI is an optional add-on that attaches over MCP.
 
+![Relationship graph over this repository's own 203 files — colored by language, with import and doc-to-code links](docs/screenshots/graph-view.png)
+
 **Status (2026-08-21): Phase 0–4 complete.** Work has passed the MVP boundary (P0–P3) through P4 (MCP).
 Core `polyglot-vault/` is 6,850 lines, desktop `desktop/src-tauri/` is 1,146 lines; 142 + 21 tests pass.
 There is no public release yet.
