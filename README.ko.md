@@ -11,6 +11,8 @@
 코어 `polyglot-vault/` 6,850줄 + 데스크톱 `desktop/src-tauri/` 1,146줄, 테스트 142 + 21개 통과.
 공개 배포는 아직 하지 않았다.
 
+**[소개 페이지 보기 →](https://claude.ai/code/artifact/6908e7d8-a0ac-4273-88cd-92c73bf968a0)**
+
 ## 진행 상황
 
 | Phase | 내용 | 상태 |
