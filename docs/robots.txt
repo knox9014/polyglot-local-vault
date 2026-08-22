@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://knox9014.github.io/polyglot-local-vault/sitemap.xml
