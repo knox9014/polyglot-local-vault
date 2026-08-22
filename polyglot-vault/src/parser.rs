@@ -48,12 +48,48 @@ pub struct ParseOutput {
     /// True when a syntax error left the file only partially parsed — the
     /// indexer must merge, not replace, this file's existing symbols (06).
     pub partial: bool,
+    /// Raw import/use specifiers exactly as written (`"./utils"`,
+    /// `"os.path"`, `"crate::config"`, ...) — unresolved on purpose. Turning
+    /// one into an edge to a real vault file needs vault-wide context (is
+    /// there actually a file at that path? which of several same-named
+    /// packages did this one mean?) that a single-file parser doesn't have;
+    /// that's `imports.rs`'s job, the same split R1 has between "extract
+    /// the token" (here) and "resolve it against the vault" (the engine).
+    pub imports: Vec<String>,
 }
 
 pub trait ParserAdapter {
     /// File extensions this adapter handles, e.g. `["py"]`.
     fn extensions(&self) -> &[&str];
     fn parse(&self, input: ParseInput<'_>) -> ParseOutput;
+}
+
+/// Bottom-32 min-hash sketch over token 3-gram shingles, crc32-based (06
+/// "Shingle Sketch", parameters fixed by measurement in `17`: k=3, 32
+/// entries). Tokens are `\w+` runs — good enough for identifiers/keywords
+/// across every language backend, punctuation is noise for similarity here.
+/// Shared by every `ParserAdapter` so the sketch stays comparable across
+/// languages (S4 similarity matching doesn't care what language a symbol
+/// used to be written in — only its old vs. new body).
+pub fn shingle_sketch(source: &str) -> ShingleSketch {
+    let tokens: Vec<&str> = source
+        .split(|c: char| !(c.is_alphanumeric() || c == '_'))
+        .filter(|t| !t.is_empty())
+        .collect();
+
+    let mut hashes: Vec<u32> = if tokens.len() < 3 {
+        vec![crc32fast::hash(source.as_bytes())]
+    } else {
+        tokens.windows(3).map(|w| crc32fast::hash(w.join(" ").as_bytes())).collect()
+    };
+    hashes.sort_unstable();
+    hashes.dedup();
+
+    let mut sketch = [u32::MAX; 32];
+    for (slot, h) in sketch.iter_mut().zip(hashes.into_iter()) {
+        *slot = h;
+    }
+    sketch
 }
 
 #[cfg(test)]

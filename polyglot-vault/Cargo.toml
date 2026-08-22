@@ -5,7 +5,19 @@ edition = "2024"
 
 [dependencies]
 ignore = "0.4"
+memchr = "2.8.3"
 notify-debouncer-mini = "0.7.0"
 serde = { version = "1.0.229", features = ["derive"] }
 serde_json = "1.0.151"
+toml = "1.1.4"
 unicode-normalization = "0.1"
+tree-sitter = "0.25"
+tree-sitter-python = "0.23"
+tree-sitter-go = "0.25"
+tree-sitter-typescript = "0.23"
+tree-sitter-rust = "0.24"
+crc32fast = "1.4"
+serde_yaml = "0.9"
+sha2 = "0.10"
+time = { version = "0.3", features = ["formatting"] }
+ulid = "1"

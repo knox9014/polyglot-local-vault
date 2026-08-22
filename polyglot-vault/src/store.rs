@@ -65,6 +65,12 @@ impl VaultLayout {
     pub fn suggestions_dir(&self) -> PathBuf {
         self.vault_ai_dir().join("suggestions")
     }
+    /// Derived-origin links (18 §4.6: `extracted`/`parser`/`git` — R2/R6 and
+    /// future static-analysis edges). Distinct from `links_path()`, which is
+    /// `.vault/` and holds only `manual`/`ai`-origin links (irreproducible).
+    pub fn derived_links_path(&self) -> PathBuf {
+        self.vault_ai_dir().join("links.jsonl")
+    }
     pub fn state_dir(&self) -> PathBuf {
         self.vault_ai_dir().join("state")
     }

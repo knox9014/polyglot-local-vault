@@ -19,6 +19,22 @@ pub struct Watcher {
     // watching and is how a caller intentionally simulates total event loss.
     _debouncer: Debouncer<notify::RecommendedWatcher>,
     events: Receiver<notify_debouncer_mini::DebounceEventResult>,
+    root: PathBuf,
+}
+
+/// `.vault/` and `.vault-ai/` are never real vault content (`scan.rs`
+/// excludes them from every scan for the same reason) — but the raw OS
+/// watch has no notion of that, so without filtering here, the app's own
+/// writes to its bookkeeping files (R1/R2 refreshing their `.vault-ai/`
+/// output, a decision landing in `.vault/decisions.jsonl`) get reported as
+/// "the vault changed". A caller that reacts to that by writing to
+/// `.vault-ai/` again (R1/R2's live refresh does exactly this) turns it into
+/// a self-sustaining loop: write → watch event → re-run → write → ...
+fn is_own_storage(root: &Path, path: &Path) -> bool {
+    path.strip_prefix(root)
+        .ok()
+        .and_then(|rel| rel.components().next())
+        .is_some_and(|first| matches!(first.as_os_str().to_str(), Some(".vault") | Some(".vault-ai")))
 }
 
 impl Watcher {
@@ -28,15 +44,23 @@ impl Watcher {
         let (tx, rx) = std::sync::mpsc::channel();
         let mut debouncer = new_debouncer(debounce, tx)?;
         debouncer.watcher().watch(root, RecursiveMode::Recursive)?;
-        Ok(Self { _debouncer: debouncer, events: rx })
+        Ok(Self { _debouncer: debouncer, events: rx, root: root.to_path_buf() })
     }
 
-    /// Waits up to `timeout` for the next debounced batch of changed paths.
-    /// `None` covers timeout, a backend error, and a disconnected channel
-    /// alike — callers must not treat any of those as "nothing changed".
+    /// Waits up to `timeout` for the next debounced batch of changed paths,
+    /// with the vault's own `.vault`/`.vault-ai` bookkeeping filtered out.
+    /// `None` covers timeout, a backend error, a disconnected channel, and
+    /// a batch that turned out to be *entirely* our own writes alike —
+    /// callers must not treat any of those as "nothing changed" vs. "nothing
+    /// worth reacting to", which is exactly why this is folded into one type
+    /// rather than exposed as a separate "was it real" flag.
     pub fn next_batch(&self, timeout: Duration) -> Option<Vec<PathBuf>> {
         match self.events.recv_timeout(timeout) {
-            Ok(Ok(events)) => Some(events.into_iter().map(|e| e.path).collect()),
+            Ok(Ok(events)) => {
+                let paths: Vec<PathBuf> =
+                    events.into_iter().map(|e| e.path).filter(|p| !is_own_storage(&self.root, p)).collect();
+                if paths.is_empty() { None } else { Some(paths) }
+            }
             Ok(Err(_)) | Err(RecvTimeoutError::Timeout) | Err(RecvTimeoutError::Disconnected) => None,
         }
     }
@@ -104,6 +128,37 @@ mod tests {
         assert!(
             batch.unwrap().iter().any(|p| p.ends_with("a.txt")),
             "expected the changed file to be named in the batch"
+        );
+
+        fs::remove_dir_all(&dir).unwrap();
+    }
+
+    #[test]
+    fn is_own_storage_matches_vault_dirs_but_not_user_content() {
+        let root = Path::new("/vault");
+        assert!(is_own_storage(root, &root.join(".vault/links.jsonl")));
+        assert!(is_own_storage(root, &root.join(".vault-ai/suggestions/r1.jsonl")));
+        assert!(!is_own_storage(root, &root.join("notes/vault-planning.md")), "a real file merely named like the dirs must not match");
+        assert!(!is_own_storage(root, &root.join("docs/README.md")));
+    }
+
+    /// The regression this exists for: R1/R2 write to `.vault-ai/` on their
+    /// own live-refresh pass. Before filtering, the OS watcher reported that
+    /// write as a real vault change, which a caller reacting to it (e.g. a
+    /// visible graph re-rendering) would see as an endless reset loop — the
+    /// write is itself a reaction to a "vault changed" signal.
+    #[test]
+    fn a_write_to_dot_vault_ai_is_not_reported_as_a_change() {
+        let dir = temp_dir("own-storage-filtered");
+        fs::create_dir_all(dir.join(".vault-ai/suggestions")).unwrap();
+
+        let watcher = Watcher::new(&dir, Duration::from_millis(100)).unwrap();
+        std::thread::sleep(Duration::from_millis(200)); // let the watch registration settle
+        fs::write(dir.join(".vault-ai/suggestions/r1.jsonl"), "{}").unwrap();
+
+        assert!(
+            watcher.next_batch(Duration::from_millis(500)).is_none(),
+            "a write under .vault-ai/ must not surface as a change"
         );
 
         fs::remove_dir_all(&dir).unwrap();
