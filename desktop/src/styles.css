@@ -372,7 +372,7 @@ main { flex: 1; position: relative; overflow: hidden; }
   position: absolute;
   top: 0.8rem;
   right: 0.8rem;
-  z-index: 5;
+  z-index: 6;
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   color: var(--text-dim);
@@ -385,12 +385,15 @@ main { flex: 1; position: relative; overflow: hidden; }
 #graph-settings-toggle:hover { color: var(--text); background: #333; }
 
 #graph-settings {
+  /* drops down from the toggle button (top 0.8rem + 2rem tall + a small
+     gap) instead of sharing its corner, so the button that closes it stays
+     reachable while it's open */
   position: absolute;
-  top: 0.8rem;
+  top: 3.2rem;
   right: 0.8rem;
   bottom: 0.8rem;
   width: 16rem;
-  z-index: 6;
+  z-index: 5;
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: 8px;
