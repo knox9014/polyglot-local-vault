@@ -1,3 +1,5 @@
+**한국어** | [English](README.en.md)
+
 # Polyglot Local Vault
 
 컴퓨터의 다양한 파일을 하나의 로컬 Vault에서 초고속으로 검색·탐색·연결하고,
