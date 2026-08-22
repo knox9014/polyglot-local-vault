@@ -104,4 +104,4 @@ The one-click figure is a product goal, not a gate.
 
 [PolyForm Noncommercial 1.0.0](LICENSE) — free to use, modify, and redistribute for any
 noncommercial purpose. Commercial use (selling, offering as a paid service, redistributing
-for revenue) requires the copyright holder's permission — reach out via a GitHub issue.
+for revenue) requires the copyright holder's permission — reach out at knox9014@gmail.com.
