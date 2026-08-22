@@ -11,7 +11,7 @@
 
 **현재 상태 (2026-08-21): Phase 0~4 완료.** MVP 경계였던 P0~P3을 넘어 P4(MCP)까지 끝났다.
 코어 `polyglot-vault/` 6,850줄 + 데스크톱 `desktop/src-tauri/` 1,146줄, 테스트 142 + 21개 통과.
-공개 배포는 아직 하지 않았다.
+**[Windows용 v0.1.0 다운로드 →](https://github.com/knox9014/polyglot-local-vault/releases/tag/v0.1.0)**
 
 **[소개 페이지 보기 →](https://knox9014.github.io/polyglot-local-vault/)**
 

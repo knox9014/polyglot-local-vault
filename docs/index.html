@@ -98,9 +98,11 @@
   }
   .cta:hover { color: #0a0d0a; background: #d6ff8c; }
   .cta-ghost {
+    display: inline-flex; align-items: center;
     padding: 14px 20px; border: 1px solid var(--line); border-radius: 8px;
     font-size: 15px; color: var(--muted);
   }
+  .cta-ghost:hover { color: var(--fg); border-color: var(--muted); }
 
   h2.h2 { font-size: 32px; line-height: 1.25; }
   .grid2 { display: grid; grid-template-columns: 1fr; gap: 24px; }
@@ -209,12 +211,13 @@
       <p class="lede" data-i18n="en">Polyglot Local Vault indexes the files on your machine into a single local Vault, searches them instantly, and gives the things inside them — functions, headings, config keys — their own addresses. Move a file or rewrite the code, and those connections survive.</p>
       <p class="lede" data-i18n="ko">Polyglot Local Vault는 내 컴퓨터의 파일을 하나의 로컬 Vault로 묶어 초고속으로 검색하고, 파일 안의 함수·문단·설정 키까지 고유 주소로 연결하는 데스크톱 앱이다. 파일을 옮기거나 코드를 고쳐도 그 연결은 살아남는다.</p>
       <div class="ctarow">
-        <a class="cta" href="https://github.com/knox9014/polyglot-local-vault">
-          <span data-i18n="en">View on GitHub</span><span data-i18n="ko">GitHub에서 보기</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"></path><path d="m12 5 7 7-7 7"></path></svg>
+        <a class="cta" href="https://github.com/knox9014/polyglot-local-vault/releases/tag/v0.1.0">
+          <span data-i18n="en">Download for Windows</span><span data-i18n="ko">Windows용 다운로드</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"></path><path d="m7 10 5 5 5-5"></path><path d="M5 21h14"></path></svg>
         </a>
-        <span class="cta-ghost" data-i18n="en">Public release build coming</span>
-        <span class="cta-ghost" data-i18n="ko">공개 배포 빌드 준비 중</span>
+        <a class="cta-ghost" href="https://github.com/knox9014/polyglot-local-vault">
+          <span data-i18n="en">View on GitHub</span><span data-i18n="ko">GitHub에서 보기</span>
+        </a>
       </div>
     </div>
   </div>

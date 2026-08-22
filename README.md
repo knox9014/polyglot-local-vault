@@ -13,7 +13,7 @@ algorithms**. AI is an optional add-on that attaches over MCP.
 
 **Status (2026-08-21): Phase 0–4 complete.** Work has passed the MVP boundary (P0–P3) through P4 (MCP).
 Core `polyglot-vault/` is 6,850 lines, desktop `desktop/src-tauri/` is 1,146 lines; 142 + 21 tests pass.
-There is no public release yet.
+**[Download v0.1.0 for Windows →](https://github.com/knox9014/polyglot-local-vault/releases/tag/v0.1.0)**
 
 **[View the intro page →](https://knox9014.github.io/polyglot-local-vault/)**
 
