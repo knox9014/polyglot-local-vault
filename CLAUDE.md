@@ -96,12 +96,19 @@ python research/bench/check_refs.py docs/design      # exit 0 이어야 한다
 ## 저장소 구조
 
 ```
-docs/design/          v0.2 설계 문서 18개 ← 작업의 중심
+polyglot-vault/       Rust 코어 6,850줄 — 인덱스·파서·제안 엔진·MCP
+  src/mcp.rs            MCP 4툴 (search / read / neighbors / link)
+  src/bin/vault-mcp.rs  stdio 서버 바이너리
+desktop/              Tauri 데스크톱 앱
+  src-tauri/            Rust 1,146줄 (watcher 연결은 lib.rs의 spawn_watcher)
+  src/                  프런트 (검색·뷰어·편집·그래프 UI)
+docs/design/          v0.2 설계 문서 19개 ← 설계 판단의 중심
 docs/design_v0.1/     원본 v0.1 (참고용. 수정하지 말 것)
 research/reports/     설계 리뷰 + 벤치마크 보고서 3종 + v0.2 검토 결과
+                      + P4 MCP 호출 효율 실측 (p4_mcp_call_efficiency_2026-08-21.md)
 research/data/        측정 원시 데이터 (measurements.json, CSV 2종)
 research/bench/       재현 가능한 측정 코드 (Rust 4 / Python 10)
-TODO.md               미해결 항목 체크리스트
+TODO.md               검토 항목 체크리스트 — 전부 닫혔다. 이력으로만 남아 있다
 ```
 
 ## 완료 — B7 (제안 검토 UI 규모, `16` + `09`)
