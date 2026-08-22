@@ -1,0 +1,24 @@
+{
+  "name": "polygon",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "tauri": "tauri"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2",
+    "vite": "^8.2.1"
+  },
+  "dependencies": {
+    "@tauri-apps/plugin-dialog": "^2.7.2",
+    "d3-drag": "^3.0.0",
+    "d3-force": "^3.0.0",
+    "d3-selection": "^3.0.0",
+    "d3-zoom": "^3.0.0",
+    "marked": "^18.0.10",
+    "shiki": "^4.4.3"
+  }
+}

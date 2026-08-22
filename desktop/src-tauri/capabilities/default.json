@@ -1,0 +1,17 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Capability for the launcher and main windows",
+  "windows": ["main", "launcher"],
+  "permissions": [
+    "core:default",
+    "opener:default",
+    "dialog:default",
+    "core:window:allow-create",
+    "core:window:allow-close",
+    "core:window:allow-show",
+    "core:window:allow-hide",
+    "core:window:allow-set-focus",
+    "core:webview:allow-create-webview-window"
+  ]
+}

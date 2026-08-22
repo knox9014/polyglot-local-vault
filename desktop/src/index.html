@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>폴리곤</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script type="module" src="/main.js" defer></script>
+  </head>
+  <body>
+    <div id="app">
+      <header id="toolbar">
+        <button id="search-bar-btn">🔍 검색... <kbd>Ctrl+O</kbd></button>
+        <button id="graph-toggle">그래프 뷰</button>
+        <button id="suggestions-toggle">제안 검토 <span id="suggestions-count" class="badge hidden">0</span></button>
+        <button id="settings-btn" title="설정 (Ctrl+,)">⚙</button>
+      </header>
+
+      <div id="body">
+        <nav id="sidebar">
+          <div id="vault-switcher">
+            <button id="vault-switcher-btn">
+              <span id="vault-name">Vault</span>
+              <span class="chevron">⌄</span>
+            </button>
+            <div id="vault-menu" class="hidden">
+              <div id="recent-vaults"></div>
+              <button id="open-another-vault-btn">다른 Vault 열기...</button>
+            </div>
+          </div>
+          <div id="file-tree"></div>
+          <div id="tag-section">
+            <h3>태그</h3>
+            <ul id="tag-list"></ul>
+          </div>
+        </nav>
+
+        <main>
+          <section id="viewer-pane">
+            <div id="viewer-empty">
+              <p>파일을 선택하거나 <kbd>Ctrl+O</kbd>로 검색하세요.</p>
+            </div>
+            <div id="viewer-loaded" class="hidden">
+              <div id="viewer-header">
+                <div id="viewer-path"></div>
+                <div id="viewer-header-actions">
+                  <span id="viewer-save-status"></span>
+                  <button id="viewer-edit-toggle">편집</button>
+                </div>
+              </div>
+              <table id="viewer-frontmatter" class="hidden"></table>
+              <div id="viewer-rendered" class="hidden"></div>
+              <pre id="viewer-content"></pre>
+              <div id="viewer-editor" class="hidden">
+                <textarea id="viewer-editor-text" spellcheck="false"></textarea>
+                <div id="viewer-editor-preview" class="markdown-body hidden"></div>
+              </div>
+              <div id="viewer-media" class="hidden">
+                <img id="viewer-image" alt="" />
+                <audio id="viewer-audio" controls></audio>
+              </div>
+            </div>
+          </section>
+
+          <section id="graph-pane" class="hidden">
+            <svg id="graph-svg"></svg>
+            <button id="graph-settings-toggle" title="그래프 설정">⚙</button>
+            <aside id="graph-settings" class="hidden">
+              <div class="gs-section">
+                <div class="gs-head">
+                  <span>필터</span>
+                  <button id="graph-reset" title="기본값으로">↺</button>
+                </div>
+                <input id="gs-filter-text" placeholder="파일 검색..." />
+                <label class="gs-toggle">
+                  <span>폴더 표시</span>
+                  <input type="checkbox" id="gs-show-folders" checked />
+                </label>
+                <label class="gs-toggle">
+                  <span>고립된 파일</span>
+                  <input type="checkbox" id="gs-show-orphans" checked />
+                </label>
+                <label class="gs-toggle">
+                  <span>노드 수 제한</span>
+                  <input type="checkbox" id="gs-limit-nodes" />
+                </label>
+                <label class="gs-slider">최대 노드 수 <output id="gs-maxnodes-out">1500</output>
+                  <input type="range" id="gs-max-nodes" min="200" max="10000" step="100" value="1500" disabled />
+                </label>
+                <p id="graph-truncated" class="gs-note hidden"></p>
+              </div>
+
+              <div class="gs-section">
+                <div class="gs-head"><span>표시</span></div>
+                <label class="gs-slider">이름 표시 <output id="gs-label-out">0.6</output>
+                  <input type="range" id="gs-label-threshold" min="0" max="1" step="0.05" value="0.6" />
+                </label>
+                <label class="gs-slider">노드 크기 <output id="gs-node-out">1.0</output>
+                  <input type="range" id="gs-node-size" min="0.2" max="3" step="0.1" value="1" />
+                </label>
+                <label class="gs-slider">링크 두께 <output id="gs-link-out">1.0</output>
+                  <input type="range" id="gs-link-width" min="0.2" max="4" step="0.1" value="1" />
+                </label>
+                <label class="gs-toggle">
+                  <span>언어별 색</span>
+                  <input type="checkbox" id="gs-lang-colors" checked />
+                </label>
+                <label class="gs-color-row"><span>폴더 색</span><input type="color" id="gs-folder-color" /></label>
+                <label class="gs-color-row"><span>단색(언어별 색 끔)</span><input type="color" id="gs-otherfile-color" /></label>
+              </div>
+
+              <div class="gs-section">
+                <div class="gs-head"><span>장력</span></div>
+                <label class="gs-slider">중심 장력 <output id="gs-center-out">0.5</output>
+                  <input type="range" id="gs-center" min="0" max="1" step="0.05" value="0.5" />
+                </label>
+                <label class="gs-slider">반발력 <output id="gs-charge-out">30</output>
+                  <input type="range" id="gs-charge" min="5" max="300" step="5" value="30" />
+                </label>
+                <label class="gs-slider">링크 장력 <output id="gs-linkstr-out">0.7</output>
+                  <input type="range" id="gs-link-strength" min="0" max="1" step="0.05" value="0.7" />
+                </label>
+                <label class="gs-slider">링크 거리 <output id="gs-linkdist-out">20</output>
+                  <input type="range" id="gs-link-distance" min="5" max="150" step="5" value="20" />
+                </label>
+              </div>
+
+              <div class="gs-section">
+                <div class="gs-head"><span>타임라인</span></div>
+                <button id="gs-animate">▶ 애니메이션 재생</button>
+                <div id="gs-anim-date"></div>
+              </div>
+
+              <div class="gs-section">
+                <div class="gs-head"><span>연결 종류</span></div>
+                <div id="gs-rel-legend">
+                  <label class="gs-color-row">
+                    <input type="color" id="gs-rel-contains" class="legend-swatch" />
+                    <span>폴더 구조</span>
+                    <select id="gs-rel-style-contains" class="gs-line-style">
+                      <option value="solid">실선</option>
+                      <option value="dashed">파선</option>
+                      <option value="dotted">점선</option>
+                      <option value="dashdot">1점쇄선</option>
+                    </select>
+                  </label>
+                  <label class="gs-color-row">
+                    <input type="color" id="gs-rel-references" class="legend-swatch" />
+                    <span>설정값→경로 (R2, 자동)</span>
+                    <select id="gs-rel-style-references" class="gs-line-style">
+                      <option value="solid">실선</option>
+                      <option value="dashed">파선</option>
+                      <option value="dotted">점선</option>
+                      <option value="dashdot">1점쇄선</option>
+                    </select>
+                  </label>
+                  <label class="gs-color-row">
+                    <input type="color" id="gs-rel-describes" class="legend-swatch" />
+                    <span>문서→코드 (R1, 승인됨)</span>
+                    <select id="gs-rel-style-describes" class="gs-line-style">
+                      <option value="solid">실선</option>
+                      <option value="dashed">파선</option>
+                      <option value="dotted">점선</option>
+                      <option value="dashdot">1점쇄선</option>
+                    </select>
+                  </label>
+                  <label class="gs-color-row">
+                    <input type="color" id="gs-rel-imports" class="legend-swatch" />
+                    <span>코드→코드 import (자동)</span>
+                    <select id="gs-rel-style-imports" class="gs-line-style">
+                      <option value="solid">실선</option>
+                      <option value="dashed">파선</option>
+                      <option value="dotted">점선</option>
+                      <option value="dashdot">1점쇄선</option>
+                    </select>
+                  </label>
+                </div>
+              </div>
+
+              <div class="gs-section" id="gs-legend-section">
+                <div class="gs-head"><span>언어 <span class="gs-hint">(클릭해서 색 바꾸기)</span></span></div>
+                <div id="gs-legend"></div>
+              </div>
+            </aside>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div id="search-modal" class="hidden">
+      <div id="search-box">
+        <input id="search-input" placeholder="파일명 또는 내용 검색..." autocomplete="off" />
+        <div id="search-results">
+          <div class="result-group">
+            <h3>파일명</h3>
+            <ul id="filename-results"></ul>
+          </div>
+          <div class="result-group">
+            <h3>심볼</h3>
+            <ul id="symbol-results"></ul>
+          </div>
+          <div class="result-group">
+            <h3>본문</h3>
+            <ul id="content-results"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="settings-modal" class="hidden">
+      <div id="settings-box">
+        <nav id="settings-nav">
+          <button class="settings-tab active" data-tab="appearance">모양</button>
+          <button class="settings-tab" data-tab="search">검색</button>
+          <button class="settings-tab" data-tab="indexing">인덱싱</button>
+          <button class="settings-tab" data-tab="about">정보</button>
+        </nav>
+        <div id="settings-content">
+          <section class="settings-panel" data-panel="appearance">
+            <h2>모양</h2>
+            <div class="setting-row">
+              <div><div class="setting-name">액센트 색</div><div class="setting-desc">버튼·선택 항목 강조 색</div></div>
+              <input type="color" id="set-accent" />
+            </div>
+            <div class="setting-row">
+              <div><div class="setting-name">글자 크기</div><div class="setting-desc">앱 전체 기준 크기 (px)</div></div>
+              <input type="range" id="set-font-size" min="12" max="20" step="1" />
+            </div>
+            <div class="setting-row">
+              <div><div class="setting-name">뷰어 글꼴</div><div class="setting-desc">코드·본문에 쓰는 고정폭 글꼴</div></div>
+              <select id="set-mono-font">
+                <option value='"Cascadia Code", Consolas, monospace'>Cascadia Code</option>
+                <option value="Consolas, monospace">Consolas</option>
+                <option value='"D2Coding", Consolas, monospace'>D2Coding</option>
+                <option value="monospace">시스템 기본</option>
+              </select>
+            </div>
+          </section>
+
+          <section class="settings-panel hidden" data-panel="search">
+            <h2>검색</h2>
+            <div class="setting-row">
+              <div><div class="setting-name">결과 개수</div><div class="setting-desc">검색 모달에 표시할 최대 항목 수</div></div>
+              <input type="number" id="set-result-limit" min="5" max="100" step="5" />
+            </div>
+          </section>
+
+          <section class="settings-panel hidden" data-panel="indexing">
+            <h2>인덱싱</h2>
+            <p class="settings-note">이 설정은 <code>.vault/vault.toml</code>에 저장됩니다 — vault와 함께 git에 커밋되어 팀이 공유합니다.</p>
+            <div class="setting-row">
+              <div><div class="setting-name">.gitignore 사용</div><div class="setting-desc">git이 무시하는 파일을 인덱싱에서 제외</div></div>
+              <input type="checkbox" id="set-use-gitignore" />
+            </div>
+            <div class="setting-row column">
+              <div><div class="setting-name">추가 제외 패턴</div><div class="setting-desc">한 줄에 하나씩 (gitignore 문법). vendored 코드 제외는 정확도 문제입니다.</div></div>
+              <textarea id="set-ignore-patterns" rows="5" placeholder="vendor/&#10;node_modules/&#10;third_party/"></textarea>
+            </div>
+            <div class="setting-row">
+              <div><div class="setting-name">본문 인덱싱 상한</div><div class="setting-desc">이보다 큰 파일은 내용 검색에서 제외 (KB)</div></div>
+              <input type="number" id="set-content-kb" min="16" max="102400" step="16" />
+            </div>
+            <div class="settings-actions">
+              <span id="settings-save-status"></span>
+              <button id="settings-save" class="primary">저장하고 다시 인덱싱</button>
+            </div>
+          </section>
+
+          <section class="settings-panel hidden" data-panel="about">
+            <h2>정보</h2>
+            <table id="about-table"></table>
+          </section>
+        </div>
+        <button id="settings-close" title="닫기">×</button>
+      </div>
+    </div>
+
+    <div id="suggestions-modal" class="hidden">
+      <div id="suggestions-box">
+        <header>
+          <h2>제안 검토</h2>
+          <button id="suggestions-close" title="닫기">×</button>
+        </header>
+        <p class="settings-note">
+          문서의 백틱 코드가 vault 안의 심볼과 이름이 유일하게 겹칠 때 생기는 연결 제안입니다(R1). 승인하면 그래프에 실제
+          링크로 남고, 거절하면 다시 뜨지 않습니다.
+        </p>
+        <ul id="suggestions-list"></ul>
+        <p id="suggestions-empty" class="hidden">검토할 제안이 없습니다.</p>
+      </div>
+    </div>
+  </body>
+</html>
