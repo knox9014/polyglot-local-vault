@@ -15,7 +15,7 @@ algorithms**. AI is an optional add-on that attaches over MCP.
 Core `polyglot-vault/` is 6,850 lines, desktop `desktop/src-tauri/` is 1,146 lines; 142 + 21 tests pass.
 There is no public release yet.
 
-**[View the intro page →](https://claude.ai/code/artifact/6908e7d8-a0ac-4273-88cd-92c73bf968a0)**
+**[View the intro page →](https://knox9014.github.io/polyglot-local-vault/)**
 
 ## Progress
 
