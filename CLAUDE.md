@@ -21,14 +21,29 @@ R6 반영     완료 (2026-08-17, `17`/`16`/`06`/`01` — Sphinx role 추출 규
 계획 검토   완료 (2026-08-17 — 결점 3건 해소 + flask 재측정, `10`·`16`·`17` 수정)
 m1 · m3    완료 (2026-08-17) — **미해결 항목이 전부 닫혔다**
 정합성      완료 (2026-08-17 — 참조 195건 결함 0, 폐기 표현 3건 제거)
-구현 코드   polyglot-vault/ 972줄, 테스트 23개 통과 (2026-08-18, 커밋 `bdd271a`)
+구현 코드   polyglot-vault/ 6,850줄 + desktop/src-tauri/ 1,146줄, 테스트 142+21개 통과 (2026-08-21, 커밋 완료)
 ```
 
 **blocker 7 · major 7 · minor 3 · N1 이 전부 닫혔다.**
 
 **Phase 0 이 완전히 끝났다** (2026-08-18) — 측정 4개(SHA 고정·기준선 재측정·게이트 모집단 정의·저장소별 하한 산출) + 구현 8개(스캔·주소·락·정합성스캔·watcher·git reader·저장소분리·Parser Adapter) 전부. `10_MVP_ROADMAP.md`의 P0 종료 조건("고정 SHA 코퍼스에서 링크 복구율 기준선이 측정되고 게이트 값·대상 범위가 확정됨")이 충족됐다.
 
-**데스크톱 프레임워크는 Tauri로 확정했다** (2026-08-18, → `14_LOCKED_DECISIONS.md` "Desktop Framework"). Windows release 빌드 keystroke p95 8.4ms로 Qt(PySide6) 14.7ms를 이겼고, Linux(WSLg, 최악 조건)도 게이트 근처를 유지했다. **다음은 Phase 1(Fast Search + 최소 UI) 착수.**
+**데스크톱 프레임워크는 Tauri로 확정했다** (2026-08-18, → `14_LOCKED_DECISIONS.md` "Desktop Framework"). Windows release 빌드 keystroke p95 8.4ms로 Qt(PySide6) 14.7ms를 이겼고, Linux(WSLg, 최악 조건)도 게이트 근처를 유지했다.
+
+**Phase 1(Fast Search + 최소 UI)이 끝났다** (2026-08-19) — path table·역인덱스·incremental indexing·검색창+뷰어 전부. 데스크톱 앱에 watcher를 실제로 연결해 파일이 바뀌면 사이드바·검색·뷰어가 자동 갱신된다(`desktop/src-tauri/src/lib.rs`의 `spawn_watcher`). 성능 종료 조건 3개는 이미 `17`에서 측정 완료(7.4ms / 18.5s / 5.5%).
+
+**Phase 2(Parsers + Symbol Search)가 끝났다** (2026-08-19) — Tree-sitter 백엔드로 `.py`/`.go`/`.rs`/`.ts` 심볼(class/struct/trait/interface/function/method)을, 문서 파서로 `.md`/`.rst`/`.txt` heading을, 데이터 파서로 `.json`/`.yaml`/`.toml`(중첩 키 → JSON Pointer)과 `.csv`(헤더 컬럼)를, `.ipynb`는 코드 셀을 Python 파서로 재분석해 12개 형식 전부에서 심볼이 추출된다. 종료 조건 둘 다 검증됨:
+```
+문법 오류 주입 시 심볼 보존       4개 언어(py/go/rs/ts) 전부 partial=true + 이전 완전 심볼 유지 테스트로 확인
+12종 전부 심볼 추출 + vault:// 주소로 나옴   파서 11개 전부 "실제 주소 왕복" 테스트로 확인 (구조 검증)
+```
+call edge(`foo()`)와 문서→코드 링크(Sphinx role, R1/R6)는 **의도적으로 아직 안 만들었다** — vault 전체를 훑는 주소 해석(S1~S4)이 있어야 하고 그건 Phase 3(제안 엔진)의 일이라, 지금 만들면 Phase 3가 아직 정하지 않은 모양을 추측해서 짓는 셈이 된다. **`.vault/sketches.jsonl` 영속화도 아직이다** — `18` §4.4가 "링크가 걸린 심볼만, 링크 생성 시·S1/S2 해석 성공 시" 기록하라고 못박아뒀는데 링크 생성 기능 자체가 없어서, 지금 억지로 쓰면 정책을 어기게 된다. 파서는 스케치를 계산까지만 한다(`ParseOutput.sketches`) — 실제 쓰기는 Phase 3/4의 링크 생성 흐름에 자연히 들어갈 일.
+
+**Phase 3(Workspace + Graph + Suggestions)가 끝났다** (2026-08-21) — R1(문서↔코드 백틱 토큰, 승인 필요)·R2(설정↔경로, 자동 반영)에 더해 import/use 정적 해석(py/rs/ts, `imports.rs`)까지 링크로 잡는다. 데스크톱 앱에 제안 승인 UI, 파일 편집(마크다운 미리보기 포함), 이미지/오디오 뷰어, D3 그래프(언어/관계별 색상·선 스타일 커스터마이징, 노드 상한은 opt-in)가 붙었다.
+
+**Phase 4(MCP)도 끝나고 실측까지 마쳤다** (2026-08-21) — `08_MCP_AND_AI.md`가 정한 4툴(`search`/`read`/`neighbors`/`link`)을 `polyglot-vault/src/mcp.rs` + stdio 바이너리(`src/bin/vault-mcp.rs`)로 구현했다. **MVP 경계(P0~P3)를 이미 넘어 P4까지 완료된 상태다.** M6("3회 호출 이내")가 "모델 하네스 없이는 측정 불가"로 종료 조건에서 빠져 있었는데, 자연어 출발 질의 20건으로 직접 재봤다(`research/reports/p4_mcp_call_efficiency_2026-08-21.md`): 평균 1.05회, 정답률 20/20, grep 대비 실측 토큰 17.6배 절감. 측정 준비 과정에서 정밀도 버그 5건(기본 ignore 패턴 부재, git 없이 .gitignore 무시, R2의 파일시스템 직접 확인, Rust 인라인 mod 미해석, 마크다운 heading range 미해석)을 찾아 고쳤다 — 최초 표본의 94.5%가 잘못된 링크였다.
+
+**다음은 미정 — 후보: 실사용 중 발견되는 버그 계속 잡기, 승인율 게이트(P3 종료 조건, 아직 실사용으로 미검증) 측정, 또는 배포 준비.**
 
 ## 게이트는 합산과 저장소별 두 가지다 (2026-08-17 확정, 2026-08-18 파일 쪽 완결)
 
