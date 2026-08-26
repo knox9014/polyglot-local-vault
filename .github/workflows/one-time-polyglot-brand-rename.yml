@@ -1,0 +1,172 @@
+name: One-time Polyglot brand rename
+
+on:
+  push:
+    branches:
+      - chore/polyglot-brand-rename
+
+permissions:
+  contents: write
+
+jobs:
+  rename-and-verify:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout rename branch
+        uses: actions/checkout@v4
+        with:
+          ref: chore/polyglot-brand-rename
+          fetch-depth: 0
+
+      - name: Apply reviewed brand rename
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          def replace_exact(path, old, new, expected=1):
+              p = Path(path)
+              text = p.read_text(encoding="utf-8")
+              count = text.count(old)
+              if count != expected:
+                  raise SystemExit(f"{path}: expected {expected} occurrences of {old!r}, found {count}")
+              p.write_text(text.replace(old, new), encoding="utf-8")
+
+          # npm metadata: old internal brand only; dependencies are unchanged.
+          replace_exact("desktop/package.json", '"name": "polygon"', '"name": "polyglot"')
+          replace_exact("desktop/package-lock.json", '"name": "polygon"', '"name": "polyglot"', expected=2)
+
+          # Tauri: rename public product/binary/window, but retain the published
+          # legacy identifier so existing Windows/MSI identity is not broken.
+          replace_exact(
+              "desktop/src-tauri/tauri.conf.json",
+              '  "productName": "Polygon",\n  "version": "0.1.0",',
+              '  "productName": "Polyglot",\n  "mainBinaryName": "Polyglot",\n  "version": "0.1.0",',
+          )
+          replace_exact("desktop/src-tauri/tauri.conf.json", '"title": "폴리곤"', '"title": "Polyglot"')
+
+          # User-visible UI labels.
+          replace_exact("desktop/src/launcher.html", "폴리곤", "Polyglot", expected=2)
+          replace_exact("desktop/src/index.html", "<title>폴리곤</title>", "<title>Polyglot</title>")
+          replace_exact("desktop/src/main.js", '[["앱", "폴리곤 0.1.0"]]', '[["앱", "Polyglot 0.1.0"]]')
+          replace_exact("desktop/src-tauri/src/lib.rs", '.title("폴리곤")', '.title("Polyglot")', expected=2)
+
+          # Updater text. Keep the legacy destination/shortcut path because it
+          # already exists on the developer machine; only the newly-built source
+          # binary name changes with mainBinaryName.
+          replace_exact("desktop/check-and-update.ps1", "reinstalls Polygon", "reinstalls Polyglot")
+          replace_exact("desktop/check-and-update.ps1", '"Polygon 업데이트 보류"', '"Polyglot 업데이트 보류"')
+          replace_exact("desktop/update-app.ps1", "Rebuilds Polygon", "Rebuilds Polyglot")
+          replace_exact(
+              "desktop/update-app.ps1",
+              '# Desktop shortcut\'s target, so "Polygon.lnk" always launches the latest build.',
+              '# legacy Desktop shortcut target, so "Polygon.lnk" still launches the latest build.',
+          )
+          replace_exact(
+              "desktop/update-app.ps1",
+              '$src = "$root\\src-tauri\\target\\release\\desktop.exe"',
+              '$src = "$root\\src-tauri\\target\\release\\Polyglot.exe"',
+          )
+          replace_exact(
+              "desktop/update-app.ps1",
+              'Write-Host "done — Polygon.lnk on the Desktop now launches this build."',
+              'Write-Host "done — legacy Polygon.lnk on the Desktop now launches this Polyglot build."',
+          )
+          PY
+
+      - name: Verify rename boundaries
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          conf = Path("desktop/src-tauri/tauri.conf.json").read_text(encoding="utf-8")
+          assert '"productName": "Polyglot"' in conf
+          assert '"mainBinaryName": "Polyglot"' in conf
+          assert '"identifier": "com.seong.polygon"' in conf, "legacy app identity must stay stable"
+          assert '"title": "Polyglot"' in conf
+
+          pkg = Path("desktop/package.json").read_text(encoding="utf-8")
+          lock = Path("desktop/package-lock.json").read_text(encoding="utf-8")
+          assert '"name": "polyglot"' in pkg
+          assert lock.count('"name": "polyglot"') >= 2
+
+          visible_files = [
+              "desktop/src/launcher.html",
+              "desktop/src/index.html",
+              "desktop/src/main.js",
+              "desktop/src-tauri/src/lib.rs",
+              "desktop/check-and-update.ps1",
+          ]
+          for path in visible_files:
+              text = Path(path).read_text(encoding="utf-8")
+              assert "폴리곤" not in text, f"old Korean brand remains in {path}"
+
+          update = Path("desktop/update-app.ps1").read_text(encoding="utf-8")
+          assert 'target\\release\\Polyglot.exe' in update
+          assert 'Local\\Polygon\\desktop.exe' in update, "legacy shortcut target must stay compatible"
+
+          # The current public v0.1.0 asset really is named Polygon_..., so its
+          # download URL must remain untouched until a new release is published.
+          docs = Path("docs/index.html").read_text(encoding="utf-8")
+          assert "releases/download/v0.1.0/Polygon_0.1.0_x64-setup.exe" in docs
+          PY
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Linux dependencies for Tauri
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            build-essential \
+            curl \
+            wget \
+            file \
+            libxdo-dev \
+            libssl-dev \
+            libayatana-appindicator3-dev \
+            librsvg2-dev
+
+      - name: Install frontend dependencies
+        working-directory: desktop
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: desktop
+        run: npm run build
+
+      - name: Run core Rust tests
+        run: cargo test --manifest-path polyglot-vault/Cargo.toml
+
+      - name: Build Tauri app without bundle
+        working-directory: desktop
+        run: npm run tauri build -- --no-bundle
+
+      - name: Verify renamed Tauri binary
+        shell: bash
+        run: |
+          test -f desktop/src-tauri/target/release/Polyglot
+          test ! -f desktop/src-tauri/target/release/desktop
+
+      - name: Commit verified rename and remove one-time workflow
+        shell: bash
+        run: |
+          rm .github/workflows/one-time-polyglot-brand-rename.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --check
+          git commit -m "Rename app branding from Polygon to Polyglot"
+          git push origin HEAD:chore/polyglot-brand-rename
