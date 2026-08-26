@@ -2,29 +2,41 @@
 
 # Polyglot Local Vault
 
-[![Rust](https://img.shields.io/badge/rust-000000?logo=rust&logoColor=white)](https://github.com/knox9014/polyglot-local-vault)
-[![Tauri](https://img.shields.io/badge/tauri-24C8DB?logo=tauri&logoColor=white)](https://github.com/knox9014/polyglot-local-vault)
-[![Desktop App](https://img.shields.io/badge/desktop--app-blue)](https://github.com/knox9014/polyglot-local-vault)
+**Fast local-first file search and knowledge vault.**
+
+Search files, symbols, headings, config keys, and relationships across your local workspace — entirely on your machine. Polyglot uses deterministic indexing and structure extraction; AI is optional through MCP.
+
+[![Rust](https://img.shields.io/badge/Rust-000000?logo=rust&logoColor=white)](https://www.rust-lang.org/)
+[![Tauri](https://img.shields.io/badge/Tauri-24C8DB?logo=tauri&logoColor=white)](https://tauri.app/)
 [![Local First](https://img.shields.io/badge/local--first-green)](https://github.com/knox9014/polyglot-local-vault)
-[![File Search](https://img.shields.io/badge/file--search-orange)](https://github.com/knox9014/polyglot-local-vault)
-[![Knowledge Management](https://img.shields.io/badge/knowledge--management-purple)](https://github.com/knox9014/polyglot-local-vault)
-[![MCP](https://img.shields.io/badge/MCP-model--context--protocol-lightgrey)](https://github.com/knox9014/polyglot-local-vault)
+[![MCP](https://img.shields.io/badge/MCP-model--context--protocol-lightgrey)](https://modelcontextprotocol.io/)
 [![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial-lightgrey)](LICENSE)
 
-A local desktop workspace that indexes the many kinds of files on your machine into a single Vault —
-searching them instantly, and treating what is *inside* each file (functions, headings, config keys)
-as addressable objects with their own `vault://` addresses.
+**[Website](https://knox9014.github.io/polyglot-local-vault/)** · **[Download v0.1.0](https://github.com/knox9014/polyglot-local-vault/releases/tag/v0.1.0)** · **[MCP binary](https://github.com/knox9014/polyglot-local-vault/releases/download/v0.1.0/vault-mcp-windows-x64.exe)**
 
-Indexing, search, structure extraction, and relationship inference are all done by **deterministic
-algorithms**. AI is an optional add-on that attaches over MCP.
+![Polyglot relationship graph showing files and their connections](docs/screenshots/graph-view.png)
 
-![Relationship graph over this repository's own 203 files — colored by language, with import and doc-to-code links](docs/screenshots/graph-view.png)
+## Why Polyglot?
 
-**Status (2026-08-21): Phase 0–4 complete.** Work has passed the MVP boundary (P0–P3) through P4 (MCP).
-Core `polyglot-vault/` is 6,850 lines, desktop `desktop/src-tauri/` is 1,146 lines; 142 + 21 tests pass.
-**[Download v0.1.0 for Windows →](https://github.com/knox9014/polyglot-local-vault/releases/tag/v0.1.0)**
+- **Search beyond filenames.** Functions, methods, headings, config keys, and other structures get stable `vault://` addresses and can be searched directly.
+- **Local and deterministic by default.** Indexing, search, structure extraction, and relationship inference run locally without requiring an account, cloud service, or AI model.
+- **Built for both humans and tools.** Use the desktop workspace directly, or expose the same Vault through MCP with `search`, `read`, `neighbors`, and `link`.
 
-**[View the intro page →](https://knox9014.github.io/polyglot-local-vault/)**
+## Measured, not guessed
+
+| Metric | Result |
+|---|---:|
+| Filename fuzzy search | **7.4 ms p95 @ 100K files** |
+| Cold indexing | **18.5 s @ 100K files** |
+| Supported formats | **12** |
+| File link auto-recovery | **95.7%** |
+| Symbol survival while editing | **96.9% with Tree-sitter** |
+| MCP evaluation | **20/20 correct · 1.05 calls/query** |
+| MCP token use vs grep | **17.6× fewer tokens** |
+
+> Measurements come from 18 real public repositories covering roughly 230K files and 130K commits. Methodology and limits are documented in [`docs/design/17_MEASUREMENT_BASIS.md`](docs/design/17_MEASUREMENT_BASIS.md).
+
+**Current status:** P0–P4 complete, including deterministic indexing/search, 12-format symbol extraction, relationship graph and suggestions, and MCP integration.
 
 ## Progress
 
