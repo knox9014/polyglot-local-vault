@@ -1,5 +1,5 @@
-# Rebuilds Polygon (frontend + Tauri release) and installs it over the
-# Desktop shortcut's target, so "Polygon.lnk" always launches the latest build.
+# Rebuilds Polyglot (frontend + Tauri release) and installs it over the
+# legacy Desktop shortcut target, so "Polygon.lnk" still launches the latest build.
 #
 # Usage: from anywhere, run:
 #   powershell -File desktop\update-app.ps1
@@ -16,10 +16,10 @@ Push-Location $root
 npm run tauri build -- --no-bundle
 Pop-Location
 
-$src = "$root\src-tauri\target\release\desktop.exe"
+$src = "$root\src-tauri\target\release\Polyglot.exe"
 $dest = "$env:LOCALAPPDATA\Packages\Claude_pzs8sxrjxfjjc\LocalCache\Local\Polygon\desktop.exe"
 
 Write-Host "2/2 installing to $dest"
 Copy-Item -Path $src -Destination $dest -Force
 
-Write-Host "done — Polygon.lnk on the Desktop now launches this build."
+Write-Host "done — legacy Polygon.lnk on the Desktop now launches this Polyglot build."

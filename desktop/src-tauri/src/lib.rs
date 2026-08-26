@@ -655,7 +655,7 @@ async fn open_vault_window(app: tauri::AppHandle, state: State<'_, AppState>, pa
         existing.set_focus().map_err(|e| e.to_string())?;
     } else {
         tauri::WebviewWindowBuilder::new(&app, "main", tauri::WebviewUrl::App("index.html".into()))
-            .title("폴리곤")
+            .title("Polyglot")
             .inner_size(MAIN_SIZE.0, MAIN_SIZE.1)
             .build()
             .map_err(|e| e.to_string())?;
@@ -673,7 +673,7 @@ async fn show_launcher(app: tauri::AppHandle) -> Result<(), String> {
         return Ok(());
     }
     tauri::WebviewWindowBuilder::new(&app, "launcher", tauri::WebviewUrl::App("launcher.html".into()))
-        .title("폴리곤")
+        .title("Polyglot")
         .inner_size(LAUNCHER_SIZE.0, LAUNCHER_SIZE.1)
         .resizable(false)
         .build()

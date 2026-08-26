@@ -1248,7 +1248,7 @@ function closeSettings() {
 
 async function renderAbout() {
   aboutTable.textContent = "";
-  const rows = [["앱", "폴리곤 0.1.0"]];
+  const rows = [["앱", "Polyglot 0.1.0"]];
   try {
     const stats = await invoke("vault_stats");
     rows.push(
