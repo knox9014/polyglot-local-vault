@@ -2,27 +2,41 @@
 
 # Polyglot Local Vault
 
-[![Rust](https://img.shields.io/badge/rust-000000?logo=rust&logoColor=white)](https://github.com/knox9014/polyglot-local-vault)
-[![Tauri](https://img.shields.io/badge/tauri-24C8DB?logo=tauri&logoColor=white)](https://github.com/knox9014/polyglot-local-vault)
-[![Desktop App](https://img.shields.io/badge/desktop--app-blue)](https://github.com/knox9014/polyglot-local-vault)
+**빠른 로컬 우선 파일 검색·지식 Vault.**
+
+내 컴퓨터의 파일뿐 아니라 함수, 심볼, 제목, 설정 키와 파일 간 관계까지 한 번에 검색하고 탐색하는 로컬 데스크톱 도구입니다. 인덱싱과 구조 추출은 결정론적 알고리즘으로 처리하며, AI는 MCP를 통해 선택적으로 연결합니다.
+
+[![Rust](https://img.shields.io/badge/Rust-000000?logo=rust&logoColor=white)](https://www.rust-lang.org/)
+[![Tauri](https://img.shields.io/badge/Tauri-24C8DB?logo=tauri&logoColor=white)](https://tauri.app/)
 [![Local First](https://img.shields.io/badge/local--first-green)](https://github.com/knox9014/polyglot-local-vault)
-[![File Search](https://img.shields.io/badge/file--search-orange)](https://github.com/knox9014/polyglot-local-vault)
-[![Knowledge Management](https://img.shields.io/badge/knowledge--management-purple)](https://github.com/knox9014/polyglot-local-vault)
-[![MCP](https://img.shields.io/badge/MCP-model--context--protocol-lightgrey)](https://github.com/knox9014/polyglot-local-vault)
+[![MCP](https://img.shields.io/badge/MCP-model--context--protocol-lightgrey)](https://modelcontextprotocol.io/)
 [![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial-lightgrey)](LICENSE)
 
-컴퓨터의 다양한 파일을 하나의 로컬 Vault에서 초고속으로 검색·탐색·연결하고,
-파일 내부 구조(함수·제목·설정 키)까지 `vault://` 주소를 가진 객체로 관리하는 로컬 데스크톱 Workspace.
+**[소개 페이지](https://knox9014.github.io/polyglot-local-vault/)** · **[v0.1.0 다운로드](https://github.com/knox9014/polyglot-local-vault/releases/tag/v0.1.0)** · **[MCP 바이너리](https://github.com/knox9014/polyglot-local-vault/releases/download/v0.1.0/vault-mcp-windows-x64.exe)**
 
-핵심 정리·검색·분석·관계 구성은 **결정론적 알고리즘**이 한다. AI는 MCP로 붙는 선택 요소다.
+![파일과 관계를 보여주는 Polyglot 그래프](docs/screenshots/graph-view.png)
 
-![이 저장소 자체(203개 파일)를 vault로 연 관계 그래프 — 언어별 색상, import·문서↔코드 링크까지 표시](docs/screenshots/graph-view.png)
+## 왜 Polyglot인가?
 
-**현재 상태 (2026-08-21): Phase 0~4 완료.** MVP 경계였던 P0~P3을 넘어 P4(MCP)까지 끝났다.
-코어 `polyglot-vault/` 6,850줄 + 데스크톱 `desktop/src-tauri/` 1,146줄, 테스트 142 + 21개 통과.
-**[Windows용 v0.1.0 다운로드 →](https://github.com/knox9014/polyglot-local-vault/releases/tag/v0.1.0)**
+- **파일명보다 더 깊게 검색합니다.** 함수, 메서드, 제목, 설정 키 같은 내부 구조에도 안정적인 `vault://` 주소를 부여하고 직접 검색할 수 있습니다.
+- **기본이 로컬·결정론적입니다.** 계정, 클라우드 서비스, AI 모델 없이도 인덱싱·검색·구조 추출·관계 추론이 로컬에서 동작합니다.
+- **사람과 도구가 같은 Vault를 사용합니다.** 데스크톱 앱으로 직접 쓰거나 MCP의 `search`, `read`, `neighbors`, `link`로 외부 도구에 연결할 수 있습니다.
 
-**[소개 페이지 보기 →](https://knox9014.github.io/polyglot-local-vault/)**
+## 추측이 아닌 실측
+
+| 지표 | 결과 |
+|---|---:|
+| 파일명 퍼지 검색 | **7.4 ms p95 @ 100K 파일** |
+| Cold 인덱싱 | **18.5 s @ 100K 파일** |
+| 지원 형식 | **12종** |
+| 파일 링크 자동 복구율 | **95.7%** |
+| 편집 중 심볼 보존율 | **Tree-sitter 96.9%** |
+| MCP 평가 | **20/20 정답 · 질의당 평균 1.05회 호출** |
+| grep 대비 MCP 토큰 사용량 | **17.6배 절감** |
+
+> 수치는 실제 공개 저장소 18개, 약 23만 파일과 13만 커밋을 대상으로 측정했습니다. 측정 방법과 한계는 [`docs/design/17_MEASUREMENT_BASIS.md`](docs/design/17_MEASUREMENT_BASIS.md)에 기록되어 있습니다.
+
+**현재 상태:** 결정론적 인덱싱·검색, 12개 형식 심볼 추출, 관계 그래프·제안 시스템, MCP 연동까지 P0–P4 완료.
 
 ## 진행 상황
 
