@@ -9,7 +9,7 @@
 [![File Search](https://img.shields.io/badge/file--search-orange)](https://github.com/knox9014/polyglot-local-vault)
 [![Knowledge Management](https://img.shields.io/badge/knowledge--management-purple)](https://github.com/knox9014/polyglot-local-vault)
 [![MCP](https://img.shields.io/badge/MCP-model--context--protocol-lightgrey)](https://github.com/knox9014/polyglot-local-vault)
-[![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial-lightgrey)](https://github.com/knox9014/polyglot-local-vault/blob/main/LICENSE)
+[![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial-lightgrey)](LICENSE)
 
 컴퓨터의 다양한 파일을 하나의 로컬 Vault에서 초고속으로 검색·탐색·연결하고,
 파일 내부 구조(함수·제목·설정 키)까지 `vault://` 주소를 가진 객체로 관리하는 로컬 데스크톱 Workspace.
