@@ -73,7 +73,7 @@ def analyze(repo, name, frac):
     return name, date, len(old), c
 
 
-CORPUS_ROOT = sys.argv[1] if len(sys.argv) > 1 else r"C:\Users\seong\vault-corpus"
+CORPUS_ROOT = sys.argv[1] if len(sys.argv) > 1 else os.environ.get("VAULT_CORPUS", "vault-corpus")
 REPOS = [(os.path.join(CORPUS_ROOT, "django"), "django"),
          (os.path.join(CORPUS_ROOT, "scikit-learn"), "scikit-learn"),
          (os.path.join(CORPUS_ROOT, "flask"), "flask"),

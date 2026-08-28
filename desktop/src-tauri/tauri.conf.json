@@ -3,7 +3,7 @@
   "productName": "Polyglot",
   "mainBinaryName": "Polyglot",
   "version": "0.1.0",
-  "identifier": "com.seong.polygon",
+  "identifier": "com.knox9014.polyglot",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:5173",

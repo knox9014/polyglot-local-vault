@@ -686,9 +686,10 @@ async fn show_launcher(app: tauri::AppHandle) -> Result<(), String> {
 // tell the user a newer build exists.
 const BUILD_GIT_SHA: &str = env!("BUILD_GIT_SHA");
 const UPDATE_REPO: &str = "knox9014/polyglot-local-vault";
-// This machine's checkout only — the app isn't distributed elsewhere yet,
-// so there's no install-time way to discover this path generically.
-const UPDATE_REPO_DIR: &str = r"C:\Users\seong\Desktop\claude_code_project\polyglot-local-vault";
+// The app self-updates by rebuilding from source, so the repo root is just
+// the crate dir two levels up (`.../desktop/src-tauri` -> repo root). Works
+// for any checkout without hardcoding a machine-specific path.
+const UPDATE_REPO_DIR: &str = concat!(env!("CARGO_MANIFEST_DIR"), r"\..\..");
 
 #[derive(Serialize, Clone)]
 struct UpdateInfo {

@@ -44,7 +44,7 @@ orchestra / knox-dolphin 등)의 고유 심볼명 20개. **정답 경로는 봉�
 ## 측정 조건
 
 ```text
-vault        C:\Users\seong\Desktop\claude_code_project
+vault        <PROJECT_DIR>
 파일          1,695 (vault.toml [ignore] 적용 후)
 링크          146 (imports 133 / references 13), 양쪽 끝점 노이즈 0
 서버          vault-mcp (release), stdio JSON-RPC, 인덱싱 포함 기동 약 2.0s
