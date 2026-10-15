@@ -97,7 +97,11 @@ or **[download the prebuilt Windows binary](https://github.com/knox9014/polyglot
 }
 ```
 
-It exposes four tools: `search`, `read`, `neighbors`, `link`.
+It exposes four tools: `vault_search`, `vault_read`, `vault_neighbors`, `vault_propose_link`.
+
+## Use as an agent skill
+
+`skills/polyglot-vault/SKILL.md` teaches an agent (Claude Code, Cursor, Copilot, …) when to use the MCP tools — search → outline → read only the needed symbol → follow links — and how to connect and troubleshoot. Copy the folder into your agent's skills directory (e.g. `~/.claude/skills/polyglot-vault/`) and register the MCP server as above, e.g. for Claude Code: `claude mcp add polyglot-vault -- /path/to/vault-mcp /path/to/project`.
 
 ## Layout
 

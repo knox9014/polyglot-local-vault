@@ -414,11 +414,11 @@ pub fn tool_definitions() -> serde_json::Value {
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "uri": {"type": "string"},
+                    "uri": {"type": "string", "description": "vault:// URI, from a search or read result."},
                     "rel": {"type": "array", "items": {"type": "string"}, "description": "Filter to these relations, e.g. [\"imports\"]. Empty means all."},
                     "direction": {"type": "string", "enum": ["both", "out", "in"], "description": "Default both."},
                     "depth": {"type": "integer", "description": "Hops to follow, default 1, max 5."},
-                    "limit": {"type": "integer"}
+                    "limit": {"type": "integer", "description": "Max results."}
                 },
                 "required": ["uri"]
             }
@@ -429,8 +429,8 @@ pub fn tool_definitions() -> serde_json::Value {
             "inputSchema": {
                 "type": "object",
                 "properties": {
-                    "from": {"type": "string"},
-                    "to": {"type": "string"},
+                    "from": {"type": "string", "description": "Source vault:// URI (e.g. the doc)."},
+                    "to": {"type": "string", "description": "Target vault:// URI (e.g. the code symbol)."},
                     "rel": {"type": "string", "description": "Relation name, e.g. describes, references, configures."},
                     "rationale": {"type": "string", "description": "Why this link — shown to the user at approval time."}
                 },

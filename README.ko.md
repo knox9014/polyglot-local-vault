@@ -92,7 +92,11 @@ cd polyglot-vault && cargo run --bin vault-mcp
 }
 ```
 
-`search`·`read`·`neighbors`·`link` 네 개 툴을 제공한다.
+도구는 `vault_search`, `vault_read`, `vault_neighbors`, `vault_propose_link` 네 개다.
+
+## 에이전트 스킬로 쓰기
+
+`skills/polyglot-vault/SKILL.md`는 에이전트(Claude Code, Cursor, Copilot 등)가 MCP 도구를 언제·어떻게 쓰는지(검색 → outline → 필요한 심볼만 읽기 → 링크 따라가기)와 연결·문제 해결법을 담고 있다. 폴더를 에이전트의 스킬 디렉터리(예: `~/.claude/skills/polyglot-vault/`)에 복사하고 위처럼 MCP 서버를 등록하면 된다. Claude Code 예: `claude mcp add polyglot-vault -- /path/to/vault-mcp /path/to/project`.
 
 ## 구조
 
