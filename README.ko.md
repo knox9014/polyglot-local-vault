@@ -12,7 +12,7 @@
 [![MCP](https://img.shields.io/badge/MCP-model--context--protocol-lightgrey)](https://modelcontextprotocol.io/)
 [![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial-lightgrey)](LICENSE)
 
-**[소개 페이지](https://knox9014.github.io/polyglot-local-vault/)** · **[v0.1.0 다운로드](https://github.com/knox9014/polyglot-local-vault/releases/tag/v0.1.0)** · **[MCP 바이너리](https://github.com/knox9014/polyglot-local-vault/releases/download/v0.1.0/vault-mcp-windows-x64.exe)**
+**[소개 페이지](https://knox9014.github.io/polyglot-local-vault/)** · **[최신판 다운로드](https://github.com/knox9014/polyglot-local-vault/releases/latest)** · **[MCP 바이너리](https://github.com/knox9014/polyglot-local-vault/releases/latest/download/vault-mcp-windows-x64.exe)**
 
 ![파일과 관계를 보여주는 Polyglot 그래프](docs/screenshots/graph-view.png)
 
@@ -79,7 +79,7 @@ MCP 서버는 데스크톱 앱과 별개인 stdio 바이너리다. 직접 빌드
 cd polyglot-vault && cargo run --bin vault-mcp
 ```
 
-**[미리 빌드된 Windows 바이너리 다운로드](https://github.com/knox9014/polyglot-local-vault/releases/download/v0.1.0/vault-mcp-windows-x64.exe)** 후 MCP 클라이언트(Claude Desktop, Claude Code, Codex 등)에 경로를 등록해도 된다:
+**[미리 빌드된 Windows 바이너리 다운로드](https://github.com/knox9014/polyglot-local-vault/releases/latest/download/vault-mcp-windows-x64.exe)** 후 MCP 클라이언트(Claude Desktop, Claude Code, Codex 등)에 경로를 등록해도 된다:
 
 ```json
 {

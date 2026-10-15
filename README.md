@@ -12,7 +12,7 @@ Search files, symbols, headings, config keys, and relationships across your loca
 [![MCP](https://img.shields.io/badge/MCP-model--context--protocol-lightgrey)](https://modelcontextprotocol.io/)
 [![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial-lightgrey)](LICENSE)
 
-**[Website](https://knox9014.github.io/polyglot-local-vault/)** · **[Download v0.1.0](https://github.com/knox9014/polyglot-local-vault/releases/tag/v0.1.0)** · **[MCP binary](https://github.com/knox9014/polyglot-local-vault/releases/download/v0.1.0/vault-mcp-windows-x64.exe)**
+**[Website](https://knox9014.github.io/polyglot-local-vault/)** · **[Download latest](https://github.com/knox9014/polyglot-local-vault/releases/latest)** · **[MCP binary](https://github.com/knox9014/polyglot-local-vault/releases/latest/download/vault-mcp-windows-x64.exe)**
 
 ![Polyglot relationship graph showing files and their connections](docs/screenshots/graph-view.png)
 
@@ -84,7 +84,7 @@ The MCP server is a separate stdio binary — no desktop app required. Build it 
 cd polyglot-vault && cargo run --bin vault-mcp
 ```
 
-or **[download the prebuilt Windows binary](https://github.com/knox9014/polyglot-local-vault/releases/download/v0.1.0/vault-mcp-windows-x64.exe)** and point your MCP client at it (Claude Desktop, Claude Code, Codex, or any MCP-compatible client):
+or **[download the prebuilt Windows binary](https://github.com/knox9014/polyglot-local-vault/releases/latest/download/vault-mcp-windows-x64.exe)** and point your MCP client at it (Claude Desktop, Claude Code, Codex, or any MCP-compatible client):
 
 ```json
 {
